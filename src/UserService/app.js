@@ -7,8 +7,14 @@ const adminRoutes = require('./routes/admin');
 
 const app = express();
 
+/**
+ * To parse JSON
+ */
 app.use(bodyParser.json());
 
+/**
+ * To Allow Cross Origin Resource Sharing (CORS)
+ */
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
@@ -16,10 +22,25 @@ app.use((req, res, next) => {
     next();
 })
 
+/**
+ * To Set Routes
+ */
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 
-mongoose.connect('mongodb://localhost:27017')
+/**
+ * Default Error Handling Middleware
+ */
+app.use((error, req, res, next) => {
+    const statusCode = error.statusCode || 500;
+    const message = error.message || "Something went wrong on our side. We are fixing this issue. Sorry for inconvenience."
+    res.status(statusCode).json({message});
+});
+
+/**
+ * To Connect MongoDB database and start the Server
+ */
+mongoose.connect('mongodb://localhost:27017/codestreak')
     .then(connect => {
         console.log('Database Connected!')
         app.listen(8001);
