@@ -9,4 +9,9 @@ const router = express.Router();
  */
 router.post('/login', adminController.login);
 
+/**
+ * REST Endpoint: POST /admin/signup
+ */
+router.post('/signup', adminController.signup);
+
 module.exports = router;
