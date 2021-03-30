@@ -1,5 +1,7 @@
 const User = require('../models/user');
 
+const bcrypt = require('bcryptjs');
+
 /**
  * Controller to create a User Account
  */
@@ -18,7 +20,9 @@ exports.signup = async (req, res, next) => {
             throw error;
         }
 
-        const user = new User({firstName, lastName, email, password, handle});
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        const user = new User({firstName, lastName, email, password: hashedPassword, handle});
         const result = await user.save();
         res.status(201).json({
             message: "Account Created!"
