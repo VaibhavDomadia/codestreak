@@ -1,6 +1,40 @@
+const bcrypt = require('bcryptjs');
+const jsonWebToken = require('jsonwebtoken');
+
 const User = require('../models/user');
 
-const bcrypt = require('bcryptjs');
+/**
+ * Controller to login into user account
+ */
+exports.login = async (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    try {
+        const user = await User.findOne({email});
+        if(!user) {
+            const error = new Error("Email or Password is Wrong.");
+            error.statusCode = 401;
+            throw error;
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        if(!isPasswordCorrect) {
+            const error = new Error("Email or Password is Wrong.")
+            error.statusCode = 401;
+            throw error;
+        }
+
+        const token = jsonWebToken.sign({email, userID: user._id.toString()}, 'secretKey', {expiresIn: '1h'});
+        res.status(200).json({
+            token,
+            userID: user._id.toString()
+        })
+    }
+    catch(error) {
+        next(error);
+    }
+}
 
 /**
  * Controller to create a User Account
