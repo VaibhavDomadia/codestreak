@@ -1,6 +1,7 @@
 const express = require('express');
 
 const userController = require('../controllers/user');
+const auth = require('../controllers/auth');
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.post('/signup', userController.signup);
 /**
  * REST Endpoint: PUT /user/:userID
  */
-router.put('/:userID', userController.updateProfile);
+router.put('/:userID', auth.isAuthenticated, userController.updateProfile);
 
 /**
  * REST Endpoint: GET /user/:userID

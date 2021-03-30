@@ -106,6 +106,12 @@ exports.updateProfile = async (req, res, next) => {
     const organization = req.body.organization;
 
     try {
+        if(userID != req.userID) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
         const user = await User.findById(userID);
         if(!user) {
             const error = new Error("User doesn't exist");
