@@ -1,9 +1,9 @@
 const express = require('express');
 
+const problemRoutes = require('./routes/problem');
+
 const app = express();
 
-app.get('/', (req, res, next) => {
-    console.log('Listening to get...')
-})
+app.use(problemRoutes);
 
 app.listen(8002);
