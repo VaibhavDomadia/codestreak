@@ -54,6 +54,13 @@ exports.signup = async (req, res, next) => {
             throw error;
         }
 
+        const handleTaken = await User.findOne({handle});
+        if(handleTaken) {
+            const error = new Error("Handle already taken, please select any other handle");
+            error.statusCode = 409;
+            throw error;
+        }
+
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const user = new User({firstName, lastName, email, password: hashedPassword, handle});
