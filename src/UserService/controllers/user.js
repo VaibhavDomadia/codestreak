@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jsonWebToken = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
@@ -40,6 +41,14 @@ exports.login = async (req, res, next) => {
  * Controller to create a User Account
  */
 exports.signup = async (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(422).json({
+            message: "Validation failed, please input valid data",
+            errors: errors.array()
+        });
+    }
+
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
@@ -98,6 +107,14 @@ exports.getProfile = async (req, res, next) => {
  * Controller to update user profile
  */
 exports.updateProfile = async (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(422).json({
+            message: "Validation failed, please input valid data",
+            errors: errors.array()
+        });
+    }
+    
     const userID = req.params.userID;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
