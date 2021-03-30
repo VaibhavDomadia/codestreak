@@ -66,3 +66,18 @@ exports.signup = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to get user profile
+ */
+exports.getProfile = async (req, res, next) => {
+    const userID = req.params.userID;
+
+    try {
+        const user = await User.findById(userID, 'firstName lastName handle rating');
+        res.status(200).json({user});
+    }
+    catch(error) {
+        next(error);
+    }
+}
