@@ -75,6 +75,11 @@ exports.getProfile = async (req, res, next) => {
 
     try {
         const user = await User.findById(userID, '-email -password');
+        if(!user) {
+            const error = new Error("User doesn't exist");
+            error.statusCode = 404;
+            throw error;
+        }
         res.status(200).json({user});
     }
     catch(error) {
