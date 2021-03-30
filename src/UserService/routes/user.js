@@ -17,7 +17,7 @@ router.post('/signup', userController.signup);
 /**
  * REST Endpoint: PUT /user/:userID
  */
-router.put('/:userID');
+router.put('/:userID', userController.updateProfile);
 
 /**
  * REST Endpoint: GET /user/:userID

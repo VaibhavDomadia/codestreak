@@ -86,3 +86,39 @@ exports.getProfile = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to update user profile
+ */
+exports.updateProfile = async (req, res, next) => {
+    const userID = req.params.userID;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const handle = req.body.handle;
+    const country = req.body.country;
+    const organization = req.body.organization;
+
+    try {
+        const user = await User.findById(userID);
+        if(!user) {
+            const error = new Error("User doesn't exist");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if(user.handle !== handle) {
+            const isHandleTaken = await User.findOne({handle});
+            if(isHandleTaken) {
+                const error = new Error("Handle already taken, please select any other handle");
+                error.statusCode = 409;
+                throw error;
+            }
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(userID, {firstName, lastName, handle, country, organization}, {new: true});
+        res.status(200).json({message: "Profile Updated!"});
+    }
+    catch(error) {
+        next(error);
+    }
+}
