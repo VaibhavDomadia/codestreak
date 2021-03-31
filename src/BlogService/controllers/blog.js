@@ -1,6 +1,27 @@
 const Blog = require('../models/blog');
 
 /**
+ * Controller to fetch a blog
+ */
+exports.getBlog = async (req, res, next) => {
+    const blogID = req.params.blogID;
+
+    try {
+        const blog = await Blog.findById(blogID);
+        if(!blog) {
+            throw new Error();
+        }
+
+        res.status(200).json({blog});
+    }
+    catch(error) {
+        error.message = "Blog doesn't exists";
+        error.statusCode = 404;
+        next(error);
+    }
+}
+
+/**
  * Controller to create a blog
  */
 exports.createBlog = async (req, res, next) => {

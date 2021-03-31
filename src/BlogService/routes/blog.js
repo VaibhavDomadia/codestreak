@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * REST Endpoint: GET /blog/:blogID
  */
-router.get('/:blogID');
+router.get('/:blogID', blogController.getBlog);
 
 /**
  * REST Endpoint: GET /blog/user/:userID
