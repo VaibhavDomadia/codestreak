@@ -31,7 +31,18 @@ app.use('/blog', blogRoutes);
 app.use((error, req, res, next) => {
     const statusCode = error.statusCode || 500;
     const message = error.message || "Something went wrong on our side. We are fixing this issue. Sorry for inconvenience."
-    res.status(statusCode).json({message});
-})
+    res.status(statusCode).json({ message });
+});
 
-app.listen(8004);
+/**
+ * To Connect MongoDB database and start the Server
+ */
+mongoose.connect('mongodb://localhost:27017/codestreak')
+    .then(connect => {
+        console.log('Database Connected!')
+        app.listen(8004);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+
