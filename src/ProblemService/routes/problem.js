@@ -1,12 +1,14 @@
 const express = require('express');
 
+const problemController = require('../controllers/problem');
+
 const router = express.Router();
 
 router.get('/problems');
 
 router.get('/problem/:problemID');
 
-router.post('/problem');
+router.post('/problem', problemController.addProblem);
 
 router.get('/problem/:problemID/hiddencases');
 

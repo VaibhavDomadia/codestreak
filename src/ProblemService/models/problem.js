@@ -19,11 +19,11 @@ const problemSchema = new Schema({
         type: [{
             input: {
                 type: [String],
-                require: true
+                required: true
             },
             output: {
                 type: [String],
-                require: true
+                required: true
             }
         }],
         required: true
@@ -32,18 +32,18 @@ const problemSchema = new Schema({
         type: [{
             input: {
                 type: [String],
-                require: true
+                required: true
             },
             output: {
                 type: [String],
-                require: true
+                required: true
             }
         }],
         required: true
     },
     constraints: {
         type: [String],
-        require: true
+        required: true
     },
     numberOfSubmission: {
         type: Number,
