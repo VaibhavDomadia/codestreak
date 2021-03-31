@@ -22,7 +22,7 @@ router.post('/', blogController.createBlog);
 /**
  * REST Endpoint: PUT /blog/:blogID
  */
-router.put('/:blogID');
+router.put('/:blogID', blogController.updateBlog);
 
 /**
  * REST Endpoint: DELETE /blog/:blogID

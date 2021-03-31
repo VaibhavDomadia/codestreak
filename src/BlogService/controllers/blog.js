@@ -58,3 +58,28 @@ exports.createBlog = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to update a blog
+ */
+exports.updateBlog = async (req, res, next) => {
+    const blogID = req.params.blogID;
+    const {userID, handle, title, content, tags} = req.body;
+
+    try {
+        const blog = await Blog.findById(blogID);
+        if(!blog) {
+            throw new Error();
+        }
+
+        const result = await Blog.findByIdAndUpdate(blogID, {userID, handle, title, content, tags});
+        res.status(200).json({
+            message: "Blog Updated!"
+        });
+    }
+    catch(error) {
+        error.message = "Blog doesn't exists";
+        error.statusCode = 404;
+        next(error);
+    }
+}
