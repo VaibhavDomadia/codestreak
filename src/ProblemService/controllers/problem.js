@@ -1,6 +1,28 @@
 const Problem = require('../models/problem');
 
 /**
+ * Controller to fetch problem
+ */
+exports.getProblem = async (req, res, next) => {
+    const problemID = req.params.problemID;
+
+    try {
+        const problem = await Problem.findById(problemID);
+        if(!problem) {
+            const error = new Error("Problem doesn't exists");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        res.status(200).json({problem});
+    }
+    catch(error) {
+        console.log(error);
+        next(error);
+    }
+}
+
+/**
  * Controller to add problem
  */
 exports.addProblem = async (req, res, next) => {

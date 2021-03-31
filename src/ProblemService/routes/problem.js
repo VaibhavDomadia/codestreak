@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/problems');
 
-router.get('/problem/:problemID');
+router.get('/problem/:problemID', problemController.getProblem);
 
 router.post('/problem', problemController.addProblem);
 
