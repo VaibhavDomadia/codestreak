@@ -1,9 +1,12 @@
 const express = require('express');
 
+const blogRoutes = require('./routes/blog');
+
 const app = express();
 
-app.get('/', (req, res, next) => {
-    console.log('Listening....');
-})
+/**
+ * To Set Routes
+ */
+app.use('/blog', blogRoutes);
 
 app.listen(8004);
