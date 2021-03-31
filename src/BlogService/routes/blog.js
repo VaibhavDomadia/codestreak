@@ -1,5 +1,7 @@
 const express = require('express');
 
+const blogController = require('../controllers/blog');
+
 const router = express.Router();
 
 /**
@@ -15,7 +17,7 @@ router.get('/user/:userID');
 /**
  * REST Endpoint: POST /blog
  */
-router.post('/');
+router.post('/', blogController.createBlog);
 
 /**
  * REST Endpoint: PUT /blog/:blogID

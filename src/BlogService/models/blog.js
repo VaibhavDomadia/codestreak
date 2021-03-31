@@ -7,7 +7,7 @@ const blogSchema = new Schema({
         type: mongoose.Types.ObjectId,
         required: true
     },
-    username: {
+    handle: {
         type: String,
         required: true
     },
@@ -46,7 +46,7 @@ const blogSchema = new Schema({
                     type: mongoose.Types.ObjectId,
                     required: true
                 },
-                username: {
+                handle: {
                     type: String,
                     required: true
                 },
@@ -69,7 +69,7 @@ const blogSchema = new Schema({
                                 type: mongoose.Types.ObjectId,
                                 required: true
                             },
-                            username: {
+                            handle: {
                                 type: String,
                                 required: true
                             },
