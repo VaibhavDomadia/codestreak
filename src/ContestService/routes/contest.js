@@ -12,7 +12,7 @@ router.get('/contests');
 /**
  * REST Endpoint: GET /contest/:contestID
  */
-router.get('/contest/:contestID');
+router.get('/contest/:contestID', contestController.getContest);
 
 /**
  * REST Endpoint: POST /contest
