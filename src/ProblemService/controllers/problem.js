@@ -89,3 +89,27 @@ exports.addProblem = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to delete a problem
+ */
+exports.deleteProblem = async (req, res, next) => {
+    const problemID = req.params.problemID;
+
+    try {
+        const problem = await Problem.findById(problemID);
+        if(!problem) {
+            throw new Error();
+        }
+
+        const result = await Problem.findByIdAndDelete(problemID);
+        res.status(200).json({
+            message: "Problem Deleted!"
+        })
+    }
+    catch(error) {
+        error.message = 'Please enter a valid Problem ID';
+        error.statusCode = 404;
+        next(error);
+    }
+}
