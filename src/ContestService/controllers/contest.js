@@ -22,6 +22,22 @@ exports.getContest = async (req, res, next) => {
 }
 
 /**
+ * Controller to fetch all contests
+ */
+exports.getContests = async (req, res, next) => {
+    const currentPage = req.query.page || 1;
+    const contestPerPage = 2;
+
+    try {
+        const contests = await Contest.find({}, 'name startTime duration setters', {skip: (currentPage-1)*contestPerPage, limit: contestPerPage});
+        res.status(200).json({contests});
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
  * Controller to create contest
  */
 exports.addContest = async (req, res, next) => {

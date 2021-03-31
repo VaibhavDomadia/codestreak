@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * REST Endpoint: GET /contests
  */
-router.get('/contests');
+router.get('/contests', contestController.getContests);
 
 /**
  * REST Endpoint: GET /contest/:contestID
