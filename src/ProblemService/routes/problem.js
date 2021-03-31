@@ -14,6 +14,6 @@ router.get('/problem/:problemID/hiddencases', problemController.getHiddenCases);
 
 router.delete('/problem/:problemID', problemController.deleteProblem);
 
-router.put('/problem/:problemID');
+router.put('/problem/:problemID', problemController.updateProblem);
 
 module.exports = router;

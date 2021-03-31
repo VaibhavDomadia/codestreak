@@ -113,3 +113,28 @@ exports.deleteProblem = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to update a problem
+ */
+exports.updateProblem = async (req, res, next) => {
+    const problemID = req.params.problemID;
+    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags} = req.body;
+
+    try {
+        const problem = await Problem.findById(problemID);
+        if(!problem) {
+            throw new Error();
+        }
+        
+        const result = await Problem.findByIdAndUpdate(problemID, {name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags})
+        res.status(200).json({
+            message: "Problem Updated!"
+        });
+    }
+    catch(error) {
+        error.message = 'Please enter a valid Problem ID';
+        error.statusCode = 404;
+        next(error);
+    }
+}
