@@ -1,5 +1,8 @@
 const jsonWebToken = require('jsonwebtoken');
 
+/**
+ * Controller to validate token
+ */
 exports.isAuthenticated = (req, res, next) => {
     try {
         const token = req.get('Authorization');
