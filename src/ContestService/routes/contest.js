@@ -1,5 +1,7 @@
 const express = require('express');
 
+const contestController = require('../controllers/contest');
+
 const router = express.Router();
 
 /**
@@ -15,7 +17,7 @@ router.get('/contest/:contestID');
 /**
  * REST Endpoint: POST /contest
  */
-router.post('/contest');
+router.post('/contest', contestController.addContest);
 
 /**
  * REST Endpoint: DELETE /contest/:contestID

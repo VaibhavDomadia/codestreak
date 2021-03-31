@@ -41,8 +41,7 @@ const contestSchema = new Schema({
         required: true
     },
     registeredParticipants: {
-        type: [mongoose.Types.ObjectId],
-        required: true
+        type: [mongoose.Types.ObjectId]
     }
 });
 
