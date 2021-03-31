@@ -12,7 +12,7 @@ router.get('/:blogID', blogController.getBlog);
 /**
  * REST Endpoint: GET /blog/user/:userID
  */
-router.get('/user/:userID');
+router.get('/user/:userID', blogController.getUserBlogs);
 
 /**
  * REST Endpoint: POST /blog
