@@ -80,3 +80,28 @@ exports.deleteContest = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to update a contest
+ */
+exports.updateContest = async (req, res, next) => {
+    const contestID = req.params.contestID;
+    const {name, startTime, duration, setters, information, problemIDs} = req.body;
+
+    try {
+        const contest = await Contest.findById(contestID);
+        if(!contest) {
+            throw new Error();
+        }
+
+        const result = await Contest.findByIdAndUpdate(contestID, {name, startTime, duration, setters, information, problemIDs});
+        res.status(200).json({
+            message: "Contest Updated!"
+        });
+    }
+    catch(error) {
+        error.message = 'Please enter a valid Contest ID';
+        error.statusCode = 404;
+        next(error);
+    }
+}

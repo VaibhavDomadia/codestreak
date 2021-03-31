@@ -27,6 +27,6 @@ router.delete('/contest/:contestID', contestController.deleteContest);
 /**
  * REST Endpoint: PUT /contest/:contestID
  */
-router.put('/contest/:contestID');
+router.put('/contest/:contestID', contestController.updateContest);
 
 module.exports = router;
