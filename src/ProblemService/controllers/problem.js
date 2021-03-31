@@ -57,6 +57,21 @@ exports.getProblems = async (req, res, next) => {
 }
 
 /**
+ * Controller to fetch hidden cases of a problem
+ */
+exports.getHiddenCases = async (req, res, next) => {
+    const problemID = req.params.problemID;
+
+    try {
+        const problem = await Problem.findById(problemID, 'hiddencases');
+        res.status(200).json({hiddencases: problem.hiddencases});
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
  * Controller to add problem
  */
 exports.addProblem = async (req, res, next) => {

@@ -10,7 +10,7 @@ router.get('/problem/:problemID', problemController.getProblem);
 
 router.post('/problem', problemController.addProblem);
 
-router.get('/problem/:problemID/hiddencases');
+router.get('/problem/:problemID/hiddencases', problemController.getHiddenCases);
 
 router.delete('/problem/:problemID');
 
