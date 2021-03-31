@@ -1,9 +1,9 @@
 const express = require('express');
 
+const contestRoutes = require('./routes/contest');
+
 const app = express();
 
-app.get('/', (req, res, next) => {
-    console.log("Listening....");
-})
+app.use(contestRoutes);
 
 app.listen(8003);
