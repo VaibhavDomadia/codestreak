@@ -1,5 +1,8 @@
 const jsonWebToken = require('jsonwebtoken');
 
+/**
+ * Controller to validate token and check if the user is admin or not.
+ */
 exports.isAuthenticated = (req, res, next) => {
     try {
         const token = req.get('Authorization');
