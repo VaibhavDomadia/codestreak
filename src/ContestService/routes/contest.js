@@ -1,6 +1,7 @@
 const express = require('express');
 
 const contestController = require('../controllers/contest');
+const auth = require('../controllers/auth');
 
 const router = express.Router();
 
@@ -17,16 +18,16 @@ router.get('/contest/:contestID', contestController.getContest);
 /**
  * REST Endpoint: POST /contest
  */
-router.post('/contest', contestController.addContest);
+router.post('/contest', auth.isAuthenticated, contestController.addContest);
 
 /**
  * REST Endpoint: DELETE /contest/:contestID
  */
-router.delete('/contest/:contestID', contestController.deleteContest);
+router.delete('/contest/:contestID', auth.isAuthenticated, contestController.deleteContest);
 
 /**
  * REST Endpoint: PUT /contest/:contestID
  */
-router.put('/contest/:contestID', contestController.updateContest);
+router.put('/contest/:contestID', auth.isAuthenticated, contestController.updateContest);
 
 module.exports = router;
