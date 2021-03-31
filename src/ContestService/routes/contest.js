@@ -22,7 +22,7 @@ router.post('/contest', contestController.addContest);
 /**
  * REST Endpoint: DELETE /contest/:contestID
  */
-router.delete('/contest/:contestID');
+router.delete('/contest/:contestID', contestController.deleteContest);
 
 /**
  * REST Endpoint: PUT /contest/:contestID

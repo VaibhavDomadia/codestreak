@@ -56,3 +56,27 @@ exports.addContest = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to delete a contest
+ */
+exports.deleteContest = async (req, res, next) => {
+    const contestID = req.params.contestID;
+
+    try {
+        const contest = await Contest.findById(contestID);
+        if(!contest) {
+            throw new Error();
+        }
+
+        const result = await Contest.findByIdAndDelete(contestID);
+        res.status(200).json({
+            message: "Contest Deleted!"
+        })
+    }
+    catch(error) {
+        error.message = 'Please enter a valid Contest ID';
+        error.statusCode = 404;
+        next(error);
+    }
+}
