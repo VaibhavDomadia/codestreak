@@ -4,7 +4,7 @@ const problemController = require('../controllers/problem');
 
 const router = express.Router();
 
-router.get('/problems');
+router.get('/problems', problemController.getProblems);
 
 router.get('/problem/:problemID', problemController.getProblem);
 

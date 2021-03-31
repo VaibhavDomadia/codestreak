@@ -17,7 +17,41 @@ exports.getProblem = async (req, res, next) => {
         res.status(200).json({problem});
     }
     catch(error) {
-        console.log(error);
+        next(error);
+    }
+}
+
+/**
+ * Controller to get a list of problems
+ */
+exports.getProblems = async (req, res, next) => {
+    const currentPage = req.query.page || 1;
+    const problemsPerPage = 2;
+    let problemIDs = req.query.problemIDs;
+    if(problemIDs) {
+        problemIDs = problemIDs.split(',');
+    }
+
+    try {
+        const totalNumberOfProblems = await Problem.find().countDocuments();
+        let problems = [];
+        if(problemIDs) {
+            try {
+                problems = await Problem.find({_id: problemIDs}, 'name difficulty solvedBy tags', {skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
+            }
+            catch(error) {
+                error.message = "Please Enter valid problem IDs";
+                error.statusCode = 404;
+                throw error;
+            }            
+        }
+        else {
+            problems = await Problem.find({}, 'name difficulty solvedBy tags', {skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
+        }        
+
+        res.status(200).json({problems, totalNumberOfProblems});
+    }
+    catch(error) {
         next(error);
     }
 }
