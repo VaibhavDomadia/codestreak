@@ -111,7 +111,6 @@ exports.deleteBlog = async (req, res, next) => {
             blog = await Blog.findById(blogID);
         }
         catch(error) {
-            console.log("Here....")
             error.message = "Blog doesn't exists";
             error.statusCode = 404;
             throw error;
