@@ -22,6 +22,24 @@ exports.getSubmission = async (req, res, next) => {
 }
 
 /**
+ * Controller to fetch all submissions of a user
+ */
+exports.getUserSubmissions = async (req, res, next) => {
+    const userID = req.params.userID;
+
+    try {
+        const submissions = await Submission.find({ userID });
+
+        res.status(200).json({ submissions });
+    }
+    catch (error) {
+        error.message = "User doesn't exists";
+        error.statusCode = 404;
+        next(error);
+    }
+}
+
+/**
  * Controller to create a submission
  */
 exports.createSubmission = async (req, res, next) => {

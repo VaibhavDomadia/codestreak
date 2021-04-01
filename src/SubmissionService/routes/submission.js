@@ -12,7 +12,7 @@ router.get('/:submissionID', submissionController.getSubmission);
 /**
  * REST Endpoint: GET /submission/user/:userID
  */
-router.get('/user/:userID');
+router.get('/user/:userID', submissionController.getUserSubmissions);
 
 /**
  * REST Endpoint: POST /submission
