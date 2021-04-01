@@ -1,6 +1,27 @@
 const Proposal = require('../models/proposal');
 
 /**
+ * Controller to fetch a problem proposal
+ */
+exports.getProblemProposal = async (req, res, next) => {
+    const proposalID = req.params.proposalID;
+
+    try {
+        const proposal = await Proposal.findById(proposalID);
+        if (!proposal) {
+            throw new Error();
+        }
+
+        res.status(200).json({ proposal });
+    }
+    catch (error) {
+        error.message = "Proposal doesn't exists";
+        error.statusCode = 404;
+        next(error);
+    }
+}
+
+/**
  * Controller to create a problem proposal
  */
 exports.createProblemProposal = async (req, res, next) => {
