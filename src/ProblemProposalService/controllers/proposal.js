@@ -7,16 +7,30 @@ exports.getProblemProposal = async (req, res, next) => {
     const proposalID = req.params.proposalID;
 
     try {
-        const proposal = await Proposal.findById(proposalID);
+        try {
+            const proposal = await Proposal.findById(proposalID);
+        }
+        catch (error) {
+            error.message = "Proposal doesn't exists";
+            error.statusCode = 404;
+            throw error;
+        }
+
         if (!proposal) {
-            throw new Error();
+            const error = new Error("Proposal doesn't exists");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if (proposal.userID != req.userID && !req.isAdmin) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
         }
 
         res.status(200).json({ proposal });
     }
     catch (error) {
-        error.message = "Proposal doesn't exists";
-        error.statusCode = 404;
         next(error);
     }
 }
@@ -26,6 +40,12 @@ exports.getProblemProposal = async (req, res, next) => {
  */
 exports.getProblemProposals = async (req, res, next) => {
     try {
+        if (!req.isAdmin) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
         const proposals = await Proposal.find();
 
         res.status(200).json({ proposals });
@@ -42,6 +62,12 @@ exports.createProblemProposal = async (req, res, next) => {
     const { userID, handle, problem } = req.body;
 
     try {
+        if (userID != req.userID) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
         const proposal = new Proposal({ userID, handle, problem });
         const result = await proposal.save();
 
@@ -79,6 +105,12 @@ exports.updateProblemProposal = async (req, res, next) => {
             throw error;
         }
 
+        if (proposal.userID != req.userID || proposal.userID != userID) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;
+        }
+
         const result = await Proposal.findByIdAndUpdate(proposalID, { userID, handle, problem });
         res.status(200).json({
             message: "Problem Proposal Updated!"
@@ -109,6 +141,12 @@ exports.deleteProblemProposal = async (req, res, next) => {
         if (!proposal) {
             const error = new Error("Problem Proposal doesn't exists");
             error.statusCode = 404;
+            throw error;
+        }
+
+        if (proposal.userID != req.userID || proposal.userID != userID) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
             throw error;
         }
 
