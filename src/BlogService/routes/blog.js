@@ -1,6 +1,7 @@
 const express = require('express');
 
 const blogController = require('../controllers/blog');
+const auth = require('../controllers/auth');
 
 const router = express.Router();
 
@@ -17,16 +18,16 @@ router.get('/user/:userID', blogController.getUserBlogs);
 /**
  * REST Endpoint: POST /blog
  */
-router.post('/', blogController.createBlog);
+router.post('/', auth.isAuthenticated, blogController.createBlog);
 
 /**
  * REST Endpoint: PUT /blog/:blogID
  */
-router.put('/:blogID', blogController.updateBlog);
+router.put('/:blogID', auth.isAuthenticated, blogController.updateBlog);
 
 /**
  * REST Endpoint: DELETE /blog/:blogID
  */
-router.delete('/:blogID', blogController.deleteBlog);
+router.delete('/:blogID', auth.isAuthenticated, blogController.deleteBlog);
 
 module.exports = router;

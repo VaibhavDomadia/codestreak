@@ -67,9 +67,26 @@ exports.updateBlog = async (req, res, next) => {
     const {userID, handle, title, content, tags} = req.body;
 
     try {
-        const blog = await Blog.findById(blogID);
+        let blog;
+        try {
+            blog = await Blog.findById(blogID);
+        }
+        catch(error) {
+            error.message = "Blog doesn't exists";
+            error.statusCode = 404;
+            throw error;
+        }
+        
         if(!blog) {
-            throw new Error();
+            const error = new Error("Blog doesn't exists");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if(blog.userID != req.userID) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;
         }
 
         const result = await Blog.findByIdAndUpdate(blogID, {userID, handle, title, content, tags});
@@ -78,8 +95,6 @@ exports.updateBlog = async (req, res, next) => {
         });
     }
     catch(error) {
-        error.message = "Blog doesn't exists";
-        error.statusCode = 404;
         next(error);
     }
 }
@@ -91,9 +106,27 @@ exports.deleteBlog = async (req, res, next) => {
     const blogID = req.params.blogID;
 
     try {
-        const blog = await Blog.findById(blogID);
+        let blog;
+        try {
+            blog = await Blog.findById(blogID);
+        }
+        catch(error) {
+            console.log("Here....")
+            error.message = "Blog doesn't exists";
+            error.statusCode = 404;
+            throw error;
+        }
+        
         if(!blog) {
-            throw new Error();
+            const error = new Error("Blog doesn't exists");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if(blog.userID != req.userID) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;
         }
 
         const result = await Blog.findByIdAndDelete(blogID);
@@ -102,8 +135,6 @@ exports.deleteBlog = async (req, res, next) => {
         });
     }
     catch(error) {
-        error.message = "Blog doesn't exists";
-        error.statusCode = 404;
         next(error);
     }
 }
