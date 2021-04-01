@@ -1,5 +1,7 @@
 const express = require('express');
 
+const proposalController = require('../controllers/proposal');
+
 const router = express.Router();
 
 /**
@@ -15,7 +17,7 @@ router.get('/proposals');
 /**
  * REST Endpoint: POST /proposal
  */
-router.post('/proposal');
+router.post('/proposal', proposalController.createProblemProposal);
 
 /**
  * REST Endpoint: PUT /proposal/:proposalID
