@@ -92,7 +92,7 @@ exports.updateProblemProposal = async (req, res, next) => {
 /**
  * Controller to delete a problem proposal
  */
- exports.deleteProblemProposal = async (req, res, next) => {
+exports.deleteProblemProposal = async (req, res, next) => {
     const proposalID = req.params.proposalID;
 
     try {
@@ -100,13 +100,13 @@ exports.updateProblemProposal = async (req, res, next) => {
         try {
             proposal = await Proposal.findById(proposalID);
         }
-        catch(error) {
+        catch (error) {
             error.message = "Problem Proposal doesn't exists";
             error.statusCode = 404;
             throw error;
         }
-        
-        if(!proposal) {
+
+        if (!proposal) {
             const error = new Error("Problem Proposal doesn't exists");
             error.statusCode = 404;
             throw error;
@@ -117,7 +117,7 @@ exports.updateProblemProposal = async (req, res, next) => {
             message: "Problem Proposal Deleted!"
         });
     }
-    catch(error) {
+    catch (error) {
         next(error);
     }
 }
