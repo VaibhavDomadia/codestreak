@@ -16,14 +16,17 @@ const submissionSchema = new Schema({
         required: true
     },
     verdict: {
-        result: {
-            type: String,
-            required: true
+        type: {
+            result: {
+                type: String,
+                required: true
+            },
+            log: {
+                type: String,
+                required: true
+            }
         },
-        log: {
-            type: String,
-            required: true
-        }
+        required: true
     }
 }, {timestamps: true});
 
