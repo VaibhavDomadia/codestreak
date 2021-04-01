@@ -1,9 +1,12 @@
 const express = require('express');
 
+const editorialRoutes = require('./routes/editorial');
+
 const app = express();
 
-app.get('/', (req, res, next) => {
-    console.log('Listening....');
-})
+/**
+ * To Set Routes
+ */
+app.use('/editorial', editorialRoutes);
 
 app.listen(8005);

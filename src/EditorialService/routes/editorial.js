@@ -1,0 +1,30 @@
+const express = require('express');
+
+const router = express.Router();
+
+/**
+ * REST Endpoint: GET /editorial/:editorialID
+ */
+router.get('/:editorialID');
+
+/**
+ * REST Endpoint: GET /editorial/problem/:problemID
+ */
+router.get('/problem/:problemID');
+
+/**
+ * REST Endpoint: POST /editorial
+ */
+router.post('/');
+
+/**
+ * REST Endpoint: PUT /editorial/:editorialID
+ */
+router.put('/:editorialID');
+
+/**
+ * REST Endpoint: DELETE /editorial/:editorialID
+ */
+router.delete('/:editorialID');
+
+module.exports = router;
