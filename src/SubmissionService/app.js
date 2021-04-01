@@ -1,9 +1,12 @@
 const express = require('express');
 
+const submissionRoutes = require('./routes/submission');
+
 const app = express();
 
-app.get('/', (req, res, next) => {
-    console.log('Listening....');
-})
+/**
+ * To Set Routes
+ */
+app.use('/submission', submissionRoutes);
 
 app.listen(8007);
