@@ -59,3 +59,37 @@ exports.createEditorial = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to update a editorial
+ */
+exports.updateEditorial = async (req, res, next) => {
+    const editorialID = req.params.editorialID;
+    const { userID, problemID, handle, title, content, tags } = req.body;
+
+    try {
+        let editorial;
+        try {
+            editorial = await Editorial.findById(editorialID);
+        }
+        catch (error) {
+            error.message = "Editorial doesn't exists";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if (!editorial) {
+            const error = new Error("Editorial doesn't exists");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const result = await Editorial.findByIdAndUpdate(editorialID, { userID, problemID, handle, title, content, tags });
+        res.status(200).json({
+            message: "Editorial Updated!"
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+}

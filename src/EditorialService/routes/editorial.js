@@ -22,7 +22,7 @@ router.post('/', editorialController.createEditorial);
 /**
  * REST Endpoint: PUT /editorial/:editorialID
  */
-router.put('/:editorialID');
+router.put('/:editorialID', editorialController.updateEditorial);
 
 /**
  * REST Endpoint: DELETE /editorial/:editorialID
