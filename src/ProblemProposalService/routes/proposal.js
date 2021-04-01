@@ -22,7 +22,7 @@ router.post('/proposal', proposalController.createProblemProposal);
 /**
  * REST Endpoint: PUT /proposal/:proposalID
  */
-router.put('/proposal/:proposalID');
+router.put('/proposal/:proposalID', proposalController.updateProblemProposal);
 
 /**
  * REST Endpoint: DELETE /proposal/:proposalID

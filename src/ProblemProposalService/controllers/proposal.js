@@ -24,10 +24,10 @@ exports.getProblemProposal = async (req, res, next) => {
 /**
  * Controller to fetch all problem proposals
  */
- exports.getProblemProposals = async (req, res, next) => {
+exports.getProblemProposals = async (req, res, next) => {
     try {
         const proposals = await Proposal.find();
-        
+
         res.status(200).json({ proposals });
     }
     catch (error) {
@@ -48,6 +48,40 @@ exports.createProblemProposal = async (req, res, next) => {
         res.status(201).json({
             message: 'Problem Proposal Recieved!',
             proposal: result
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to update a problem proposal
+ */
+exports.updateProblemProposal = async (req, res, next) => {
+    const proposalID = req.params.proposalID;
+    const { userID, handle, problem } = req.body;
+
+    try {
+        let proposal;
+        try {
+            proposal = await Proposal.findById(proposalID);
+        }
+        catch (error) {
+            error.message = "Problem Proposal doesn't exists";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if (!proposal) {
+            const error = new Error("Problem Proposal doesn't exists");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const result = await Proposal.findByIdAndUpdate(proposalID, { userID, handle, problem });
+        res.status(200).json({
+            message: "Problem Proposal Updated!"
         });
     }
     catch (error) {
