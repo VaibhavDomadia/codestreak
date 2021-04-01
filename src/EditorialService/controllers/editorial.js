@@ -84,6 +84,12 @@ exports.updateEditorial = async (req, res, next) => {
             throw error;
         }
 
+        if(editorial.userID != req.userID) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;
+        }
+
         const result = await Editorial.findByIdAndUpdate(editorialID, { userID, problemID, handle, title, content, tags });
         res.status(200).json({
             message: "Editorial Updated!"
@@ -114,6 +120,12 @@ exports.deleteEditorial = async (req, res, next) => {
         if (!editorial) {
             const error = new Error("Editorial doesn't exists");
             error.statusCode = 404;
+            throw error;
+        }
+
+        if(editorial.userID != req.userID) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
             throw error;
         }
 
