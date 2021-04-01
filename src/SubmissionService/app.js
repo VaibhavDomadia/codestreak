@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const submissionRoutes = require('./routes/submission');
 
@@ -34,4 +35,14 @@ app.use((error, req, res, next) => {
     res.status(statusCode).json({ message });
 });
 
-app.listen(8007);
+/**
+ * To Connect MongoDB database and start the Server
+ */
+mongoose.connect('mongodb://localhost:27017/codestreak')
+    .then(connect => {
+        console.log('Database Connected!');
+        app.listen(8007);
+    })
+    .catch(err => {
+        console.log(err);
+    })
