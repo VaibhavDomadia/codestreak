@@ -93,3 +93,36 @@ exports.updateEditorial = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to delete a editorial
+ */
+exports.deleteEditorial = async (req, res, next) => {
+    const editorialID = req.params.editorialID;
+
+    try {
+        let editorial;
+        try {
+            editorial = await Editorial.findById(editorialID);
+        }
+        catch (error) {
+            error.message = "Editorial doesn't exists";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if (!editorial) {
+            const error = new Error("Editorial doesn't exists");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const result = await Editorial.findByIdAndDelete(editorialID);
+        res.status(200).json({
+            message: "Editorial Deleted!"
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+}

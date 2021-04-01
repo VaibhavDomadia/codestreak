@@ -27,6 +27,6 @@ router.put('/:editorialID', editorialController.updateEditorial);
 /**
  * REST Endpoint: DELETE /editorial/:editorialID
  */
-router.delete('/:editorialID');
+router.delete('/:editorialID', editorialController.deleteEditorial);
 
 module.exports = router;
