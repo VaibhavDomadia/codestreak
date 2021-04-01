@@ -40,6 +40,24 @@ exports.getUserSubmissions = async (req, res, next) => {
 }
 
 /**
+ * Controller to fetch all submissions of a problem
+ */
+ exports.getProblemSubmissions = async (req, res, next) => {
+    const problemID = req.params.problemID;
+
+    try {
+        const submissions = await Submission.find({ problemID });
+
+        res.status(200).json({ submissions });
+    }
+    catch (error) {
+        error.message = "Problem doesn't exists";
+        error.statusCode = 404;
+        next(error);
+    }
+}
+
+/**
  * Controller to create a submission
  */
 exports.createSubmission = async (req, res, next) => {

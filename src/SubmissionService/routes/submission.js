@@ -22,6 +22,6 @@ router.post('/', submissionController.createSubmission);
 /**
  * REST Endpoint: GET /submission/problem/:problemID
  */
- router.get('/problem/:problemID');
+ router.get('/problem/:problemID', submissionController.getProblemSubmissions);
 
 module.exports = router;
