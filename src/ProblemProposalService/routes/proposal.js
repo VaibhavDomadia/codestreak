@@ -12,7 +12,7 @@ router.get('/proposal/:proposalID', proposalController.getProblemProposal);
 /**
  * REST Endpoint: GET /proposals
  */
-router.get('/proposals');
+router.get('/proposals', proposalController.getProblemProposals);
 
 /**
  * REST Endpoint: POST /proposal

@@ -22,6 +22,20 @@ exports.getProblemProposal = async (req, res, next) => {
 }
 
 /**
+ * Controller to fetch all problem proposals
+ */
+ exports.getProblemProposals = async (req, res, next) => {
+    try {
+        const proposals = await Proposal.find();
+        
+        res.status(200).json({ proposals });
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+/**
  * Controller to create a problem proposal
  */
 exports.createProblemProposal = async (req, res, next) => {
