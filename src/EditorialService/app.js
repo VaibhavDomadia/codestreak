@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const editorialRoutes = require('./routes/editorial');
 
@@ -28,10 +29,20 @@ app.use('/editorial', editorialRoutes);
 /**
  * Default Error Handling Middleware
  */
- app.use((error, req, res, next) => {
+app.use((error, req, res, next) => {
     const statusCode = error.statusCode || 500;
     const message = error.message || "Something went wrong on our side. We are fixing this issue. Sorry for inconvenience."
     res.status(statusCode).json({ message });
 });
 
-app.listen(8005);
+/**
+ * To Connect MongoDB database and start the Server
+ */
+mongoose.connect('mongodb://localhost:27017/codestreak')
+    .then(connect => {
+        console.log('Database Connected!')
+        app.listen(8005);
+    })
+    .catch(err => {
+        console.log(err);
+    })
