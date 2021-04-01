@@ -1,5 +1,7 @@
 const express = require('express');
 
+const editorialController = require('../controllers/editorial');
+
 const router = express.Router();
 
 /**
@@ -15,7 +17,7 @@ router.get('/problem/:problemID');
 /**
  * REST Endpoint: POST /editorial
  */
-router.post('/');
+router.post('/', editorialController.createEditorial);
 
 /**
  * REST Endpoint: PUT /editorial/:editorialID
