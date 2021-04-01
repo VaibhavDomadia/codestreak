@@ -27,6 +27,6 @@ router.put('/:blogID', blogController.updateBlog);
 /**
  * REST Endpoint: DELETE /blog/:blogID
  */
-router.delete('/:blogID');
+router.delete('/:blogID', blogController.deleteBlog);
 
 module.exports = router;

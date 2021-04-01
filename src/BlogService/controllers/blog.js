@@ -83,3 +83,27 @@ exports.updateBlog = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to delete a blog
+ */
+exports.deleteBlog = async (req, res, next) => {
+    const blogID = req.params.blogID;
+
+    try {
+        const blog = await Blog.findById(blogID);
+        if(!blog) {
+            throw new Error();
+        }
+
+        const result = await Blog.findByIdAndDelete(blogID);
+        res.status(200).json({
+            message: "Blog Deleted!"
+        });
+    }
+    catch(error) {
+        error.message = "Blog doesn't exists";
+        error.statusCode = 404;
+        next(error);
+    }
+}
