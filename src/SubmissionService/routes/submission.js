@@ -1,6 +1,7 @@
 const express = require('express');
 
 const submissionController = require('../controllers/submission');
+const auth = require('../controllers/auth');
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.get('/user/:userID', submissionController.getUserSubmissions);
 /**
  * REST Endpoint: POST /submission
  */
-router.post('/', submissionController.createSubmission);
+router.post('/', auth.isAuthenticated, submissionController.createSubmission);
 
 /**
  * REST Endpoint: GET /submission/problem/:problemID
