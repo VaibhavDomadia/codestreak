@@ -12,7 +12,7 @@ router.get('/:editorialID', editorialController.getEditorial);
 /**
  * REST Endpoint: GET /editorial/problem/:problemID
  */
-router.get('/problem/:problemID');
+router.get('/problem/:problemID', editorialController.getProblemEditorials);
 
 /**
  * REST Endpoint: POST /editorial
