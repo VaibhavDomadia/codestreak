@@ -27,6 +27,6 @@ router.put('/proposal/:proposalID', proposalController.updateProblemProposal);
 /**
  * REST Endpoint: DELETE /proposal/:proposalID
  */
-router.delete('/proposal/:proposalID');
+router.delete('/proposal/:proposalID', proposalController.deleteProblemProposal);
 
 module.exports = router;
