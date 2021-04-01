@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * REST Endpoint: GET /submission/:submissionID
  */
-router.get('/:submissionID');
+router.get('/:submissionID', submissionController.getSubmission);
 
 /**
  * REST Endpoint: GET /submission/user/:userID

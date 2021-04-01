@@ -1,6 +1,27 @@
 const Submission = require('../models/submission');
 
 /**
+ * Controller to fetch a submission
+ */
+exports.getSubmission = async (req, res, next) => {
+    const submissionID = req.params.submissionID;
+
+    try {
+        const submission = await Submission.findById(submissionID);
+        if (!submission) {
+            throw new Error();
+        }
+
+        res.status(200).json({ submission });
+    }
+    catch (error) {
+        error.message = "Submission doesn't exists";
+        error.statusCode = 404;
+        next(error);
+    }
+}
+
+/**
  * Controller to create a submission
  */
 exports.createSubmission = async (req, res, next) => {
