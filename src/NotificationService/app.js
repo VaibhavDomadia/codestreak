@@ -20,6 +20,18 @@ app.use((req, res, next) => {
     next();
 });
 
+/**
+ * To Set Routes
+ */
 app.use('/email', emailRoutes);
+
+/**
+ * Default Error Handling Middleware
+ */
+app.use((error, req, res, next) => {
+    const statusCode = error.statusCode || 500;
+    const message = error.message || "Something went wrong on our side. We are fixing this issue. Sorry for inconvenience."
+    res.status(statusCode).json({ message });
+});
 
 app.listen(8008);
