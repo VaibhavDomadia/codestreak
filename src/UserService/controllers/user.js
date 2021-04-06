@@ -152,3 +152,63 @@ exports.updateProfile = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to follow a user
+ */
+exports.followUser = async (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(422).json({
+            message: "Validation failed, please input valid data",
+            errors: errors.array()
+        });
+    }
+
+    const userIDToFollow = req.body.userID;
+
+    try {
+        let userToFollow;
+        try {
+            userToFollow = await User.findById(userIDToFollow);
+        }
+        catch(error) {
+            error.message = "Please provide a valid user id";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if(!userToFollow) {
+            const error = new Error("Please provide a valid user id");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const user = await User.findById(req.userID);
+        if(!user) {
+            const error = new Error("Not Authenticated!");
+            error.statusCode = 401;
+            throw error;
+        }
+
+        const isUserFollowed = user.following.includes(userIDToFollow);
+        if(isUserFollowed) {
+            const error = new Error("You are already following the user");
+            error.statusCode = 409;
+            throw error;
+        }
+
+        user.following.push(userIDToFollow);
+        userToFollow.followedBy.push(req.userID);
+
+        await user.save();
+        await userToFollow.save();
+        
+        res.status(200).json({
+            message: "User followed"
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}

@@ -39,7 +39,9 @@ router.get('/:userID', userController.getProfile);
 /**
  * REST Endpoint: POST /user/follow
  */
-router.post('/follow');
+router.post('/follow', auth.isAuthenticated, [
+    body('userID').trim().isLength({min: 1}).withMessage('Please provide user id')
+], userController.followUser);
 
 /**
  * REST Endpoint: GET /user/following
