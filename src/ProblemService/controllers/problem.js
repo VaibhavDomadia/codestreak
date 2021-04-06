@@ -9,14 +9,14 @@ exports.getProblem = async (req, res, next) => {
     try {
         const problem = await Problem.findById(problemID);
         if(!problem) {
-            const error = new Error("Problem doesn't exists");
-            error.statusCode = 404;
-            throw error;
+            throw Error();
         }
 
         res.status(200).json({problem});
     }
     catch(error) {
+        error.message = "Problem doesn't exists";
+        error.statusCode = 404;
         next(error);
     }
 }
