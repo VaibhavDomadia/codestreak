@@ -32,6 +32,11 @@ router.put('/:userID', auth.isAuthenticated, [
 ], userController.updateProfile);
 
 /**
+ * REST Endpoint: GET /user/following
+ */
+ router.get('/following', auth.isAuthenticated, userController.getFollowingList);
+
+/**
  * REST Endpoint: GET /user/:userID
  */
 router.get('/:userID', userController.getProfile);
@@ -42,10 +47,5 @@ router.get('/:userID', userController.getProfile);
 router.post('/follow', auth.isAuthenticated, [
     body('userID').trim().isLength({min: 1}).withMessage('Please provide user id')
 ], userController.followUser);
-
-/**
- * REST Endpoint: GET /user/following
- */
-router.get('/following');
 
 module.exports = router;

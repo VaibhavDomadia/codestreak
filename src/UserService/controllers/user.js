@@ -204,9 +204,29 @@ exports.followUser = async (req, res, next) => {
         await user.save();
         await userToFollow.save();
         
-        res.status(200).json({
+        res.status(201).json({
             message: "User followed"
         });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to fetch a list of users the current user is following
+ */
+exports.getFollowingList = async (req, res, next) => {
+    const userID = req.userID;
+
+    try {
+        const user = await User.findById(userID);
+
+        const followingUsers = await User.find({_id: user.following}, 'rating handle');
+
+        res.status(200).json({
+            users: followingUsers
+        })
     }
     catch(error) {
         next(error);
