@@ -9,14 +9,14 @@ exports.getContest = async (req, res, next) => {
     try {
         const contest = await Contest.findById(contestID);
         if(!contest) {
-            const error = new Error("No Contest Found!");
-            error.statusCode = 404;
-            throw error;
+            throw Error();
         }
 
         res.status(200).json({contest});
     }
     catch(error) {
+        error.message = "No Contest Found!"
+        error.statusCode = 404;
         next(error);
     }
 }
