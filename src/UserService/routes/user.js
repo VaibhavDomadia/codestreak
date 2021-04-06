@@ -48,4 +48,11 @@ router.post('/follow', auth.isAuthenticated, [
     body('userID').trim().isLength({min: 1}).withMessage('Please provide user id')
 ], userController.followUser);
 
+/**
+ * REST Endpoint: POST /user/unfollow
+ */
+router.post('/unfollow', auth.isAuthenticated, [
+    body('userID').trim().isLength({min: 1}).withMessage('Please provide user id')
+], userController.unfollowUser);
+
 module.exports = router;

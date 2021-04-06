@@ -214,6 +214,66 @@ exports.followUser = async (req, res, next) => {
 }
 
 /**
+ * Controller to unfollow a user
+ */
+exports.unfollowUser = async (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(422).json({
+            message: "Validation failed, please input valid data",
+            errors: errors.array()
+        });
+    }
+
+    const userIDToUnfollow = req.body.userID;
+
+    try {
+        let userToUnfollow;
+        try {
+            userToUnfollow = await User.findById(userIDToUnfollow);
+        }
+        catch(error) {
+            error.message = "Please provide a valid user id";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if(!userToUnfollow) {
+            const error = new Error("Please provide a valid user id");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const user = await User.findById(req.userID);
+        if(!user) {
+            const error = new Error("Not Authenticated!");
+            error.statusCode = 401;
+            throw error;
+        }
+
+        const isUserFollowed = user.following.includes(userIDToUnfollow);
+        if(!isUserFollowed) {
+            const error = new Error("You are already not following the user");
+            error.statusCode = 409;
+            throw error;
+        }
+
+        user.following = user.following.filter(userID => userID != userIDToUnfollow);
+        userToUnfollow.followedBy = userToUnfollow.followedBy.filter(userID => userID != req.userID);
+
+        await user.save();
+        await userToUnfollow.save();
+        
+        res.status(201).json({
+            message: "User Unfollowed"
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
  * Controller to fetch a list of users the current user is following
  */
 exports.getFollowingList = async (req, res, next) => {
