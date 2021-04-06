@@ -79,6 +79,14 @@ exports.addProblem = async (req, res, next) => {
 
     try {
         const problem = new Problem({name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags});
+
+        const problemExists = await Problem.findOne({name});
+        if(problemExists) {
+            const error = new Error("Problem name already exists, Please choose another name");
+            error.statusCode = 409;
+            throw error;
+        }
+
         const result = await problem.save();
         res.status(201).json({
             message: 'Problem Created',
