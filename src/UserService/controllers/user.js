@@ -90,7 +90,7 @@ exports.getProfile = async (req, res, next) => {
     const userID = req.params.userID;
 
     try {
-        const user = await User.findById(userID, '-email -password');
+        const user = await User.findById(userID, '-email -password -following -followedBy');
         if(!user) {
             throw Error();
         }
