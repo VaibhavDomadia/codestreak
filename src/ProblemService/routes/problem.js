@@ -21,9 +21,9 @@ router.get('/problem/:problemID', problemController.getProblem);
 router.post('/problem', auth.isAuthenticated, problemController.addProblem);
 
 /**
- * REST Endpoint: GET /problem/:problemID/hiddencases
+ * REST Endpoint: GET /problem/:problemID/testcases
  */
-router.get('/problem/:problemID/hiddencases', auth.isAuthenticated, problemController.getHiddenCases);
+router.get('/problem/:problemID/testcases');
 
 /**
  * REST Endpoint: DELETE /problem/:problemID
