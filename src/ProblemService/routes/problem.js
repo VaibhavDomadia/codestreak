@@ -23,7 +23,7 @@ router.post('/problem', auth.isAuthenticated, problemController.addProblem);
 /**
  * REST Endpoint: GET /problem/:problemID/testcases
  */
-router.get('/problem/:problemID/testcases');
+router.get('/problem/:problemID/testcases', auth.isAuthenticated, problemController.getTestCases);
 
 /**
  * REST Endpoint: DELETE /problem/:problemID
