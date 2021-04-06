@@ -30,7 +30,9 @@ const userSchema = new Schema({
     rating: {
         type: Number,
         default: 0
-    }
+    },
+    following: [mongoose.Types.ObjectId],
+    followedBy: [mongoose.Types.ObjectId]
 }, {timestamps: true});
 
 module.exports = mongoose.model('User', userSchema);
