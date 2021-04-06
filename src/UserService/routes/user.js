@@ -36,4 +36,9 @@ router.put('/:userID', auth.isAuthenticated, [
  */
 router.get('/:userID', userController.getProfile);
 
+/**
+ * REST Endpoint: POST /user/follow
+ */
+router.post('/follow');
+
 module.exports = router;
