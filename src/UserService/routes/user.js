@@ -41,4 +41,9 @@ router.get('/:userID', userController.getProfile);
  */
 router.post('/follow');
 
+/**
+ * REST Endpoint: GET /user/following
+ */
+router.get('/following');
+
 module.exports = router;
