@@ -1,11 +1,13 @@
 const express = require('express');
 
+const commentController = require('../controllers/comment');
+
 const router = express.Router();
 
 /**
  * REST Endpoint: POST /blog/:blogID/comment
  */
-router.post('/');
+router.post('/', commentController.addComment);
 
 /**
  * REST Endpoint: PUT /blog/:blogID/comment/:commentID
