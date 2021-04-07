@@ -78,3 +78,42 @@ exports.updateComment = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to delete a comment
+ */
+exports.deleteComment = async (req, res, next) => {
+    const { blogID, commentID } = req.params;
+
+    try {
+        let blog;
+        try {
+            blog = await Blog.findById(blogID);
+            if(!blog) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Blog Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const comment = blog.comments.id(commentID);
+        if(!comment) {
+            const error = new Error("Comment Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+        comment.remove();
+
+        const result = await blog.save();
+
+        res.status(201).json({
+            message: 'Comment Updated!',
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
