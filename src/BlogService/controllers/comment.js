@@ -70,7 +70,7 @@ exports.updateComment = async (req, res, next) => {
 
         const result = await blog.save();
 
-        res.status(201).json({
+        res.status(200).json({
             message: 'Comment Updated!',
         });
     }
@@ -109,8 +109,8 @@ exports.deleteComment = async (req, res, next) => {
 
         const result = await blog.save();
 
-        res.status(201).json({
-            message: 'Comment Updated!',
+        res.status(200).json({
+            message: 'Comment Deleted!',
         });
     }
     catch(error) {
@@ -203,8 +203,55 @@ exports.updateReply = async (req, res, next) => {
 
         const result = await blog.save();
 
-        res.status(201).json({
+        res.status(200).json({
             message: 'Reply Updated!',
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to delete a reply on a comment
+ */
+exports.deleteReply = async (req, res, next) => {
+    const { blogID, commentID, replyID } = req.params;
+
+    try {
+        let blog;
+        try {
+            blog = await Blog.findById(blogID);
+            if(!blog) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Blog Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const comment = blog.comments.id(commentID);
+        if(!comment) {
+            const error = new Error("Comment Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const reply = comment.replies.id(replyID);
+        if(!reply) {
+            const error = new Error("Reply Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        reply.remove();
+
+        const result = await blog.save();
+
+        res.status(200).json({
+            message: 'Reply Removed!',
         });
     }
     catch(error) {
