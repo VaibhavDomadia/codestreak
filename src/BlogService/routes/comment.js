@@ -27,7 +27,7 @@ router.post('/:commentID/reply', commentController.reply);
 /**
  * REST Endpoint: PUT /blog/:blogID/comment/:commentID/reply/:replyID
  */
-router.put('/:commentID/reply/:replyID');
+router.put('/:commentID/reply/:replyID', commentController.updateReply);
 
 /**
  * REST Endpoint: DELETE /blog/:blogID/comment/:commentID/reply/:replyID

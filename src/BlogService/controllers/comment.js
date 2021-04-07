@@ -163,3 +163,51 @@ exports.reply = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to update a reply on a comment
+ */
+exports.updateReply = async (req, res, next) => {
+    const { blogID, commentID, replyID } = req.params;
+    const content = req.body.content;
+
+    try {
+        let blog;
+        try {
+            blog = await Blog.findById(blogID);
+            if(!blog) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Blog Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const comment = blog.comments.id(commentID);
+        if(!comment) {
+            const error = new Error("Comment Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const reply = comment.replies.id(replyID);
+        if(!reply) {
+            const error = new Error("Reply Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        reply.content = content;
+
+        const result = await blog.save();
+
+        res.status(201).json({
+            message: 'Reply Updated!',
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
