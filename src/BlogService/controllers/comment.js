@@ -9,10 +9,18 @@ exports.addComment = async (req, res, next) => {
     console.log(blogID, content, req.userID, req.handle);
 
     try {
-        const blog = await Blog.findById(blogID);
-        if(!blog) {
-            throw new Error();
+        let blog;
+        try {
+            blog = await Blog.findById(blogID);
+            if(!blog) {
+                throw new Error();
+            }
         }
+        catch(error) {
+            error.message = "Blog Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }        
 
         blog.comments.push({
             userID: req.userID,
@@ -24,7 +32,7 @@ exports.addComment = async (req, res, next) => {
 
         res.status(201).json({
             message: 'Commented!',
-            comment: result
+            blog: result
         });
     }
     catch(error) {
