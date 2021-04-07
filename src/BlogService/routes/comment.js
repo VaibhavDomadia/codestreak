@@ -2,7 +2,7 @@ const express = require('express');
 
 const commentController = require('../controllers/comment');
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 /**
  * REST Endpoint: POST /blog/:blogID/comment
