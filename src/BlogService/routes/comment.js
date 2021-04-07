@@ -12,7 +12,7 @@ router.post('/', commentController.addComment);
 /**
  * REST Endpoint: PUT /blog/:blogID/comment/:commentID
  */
-router.put('/:commentID');
+router.put('/:commentID', commentController.updateComment);
 
 /**
  * REST Endpoint: DELETE /blog/:blogID/comment/:commentID
