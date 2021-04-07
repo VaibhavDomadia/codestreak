@@ -6,6 +6,7 @@ const Blog = require('../models/blog');
 exports.addComment = async (req, res, next) => {
     const blogID = req.params.blogID;
     const content = req.body.content;
+    console.log(blogID, content, req.userID, req.handle);
 
     try {
         const blog = await Blog.findById(blogID);
@@ -13,7 +14,7 @@ exports.addComment = async (req, res, next) => {
             throw new Error();
         }
 
-        blog.comment.push({
+        blog.comments.push({
             userID: req.userID,
             handle: req.handle,
             content

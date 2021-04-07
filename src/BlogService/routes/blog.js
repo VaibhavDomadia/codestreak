@@ -34,6 +34,6 @@ router.delete('/:blogID', auth.isAuthenticated, blogController.deleteBlog);
 /**
  * Routes to handle comments
  */
-router.use('/:blogID/comment', commentRoutes);
+router.use('/:blogID/comment', auth.isAuthenticated, commentRoutes);
 
 module.exports = router;
