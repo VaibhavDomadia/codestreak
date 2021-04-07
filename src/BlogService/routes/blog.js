@@ -1,5 +1,6 @@
 const express = require('express');
 
+const commentRoutes = require('./comment');
 const blogController = require('../controllers/blog');
 const auth = require('../controllers/auth');
 
@@ -29,5 +30,10 @@ router.put('/:blogID', auth.isAuthenticated, blogController.updateBlog);
  * REST Endpoint: DELETE /blog/:blogID
  */
 router.delete('/:blogID', auth.isAuthenticated, blogController.deleteBlog);
+
+/**
+ * Routes to handle comments
+ */
+router.use('/:blogID/comment', commentRoutes);
 
 module.exports = router;
