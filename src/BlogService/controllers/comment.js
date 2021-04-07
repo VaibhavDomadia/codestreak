@@ -66,6 +66,13 @@ exports.updateComment = async (req, res, next) => {
             error.statusCode = 404;
             throw error;
         }
+
+        if(comment.userID.toString() !== req.userID) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
         comment.content = content;
 
         const result = await blog.save();
@@ -105,6 +112,13 @@ exports.deleteComment = async (req, res, next) => {
             error.statusCode = 404;
             throw error;
         }
+
+        if(comment.userID.toString() !== req.userID && !req.isAdmin) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
         comment.remove();
 
         const result = await blog.save();
@@ -199,6 +213,12 @@ exports.updateReply = async (req, res, next) => {
             throw error;
         }
 
+        if(reply.userID.toString() !== req.userID) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
         reply.content = content;
 
         const result = await blog.save();
@@ -243,6 +263,12 @@ exports.deleteReply = async (req, res, next) => {
         if(!reply) {
             const error = new Error("Reply Not Found!");
             error.statusCode = 404;
+            throw error;
+        }
+
+        if(reply.userID.toString() !== req.userID && !req.isAdmin) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
             throw error;
         }
 
