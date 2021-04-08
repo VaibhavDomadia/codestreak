@@ -1,5 +1,6 @@
 const express = require('express');
 
+const commentRoutes = require('./comment');
 const editorialController = require('../controllers/editorial');
 const auth = require('../controllers/auth');
 
@@ -29,5 +30,10 @@ router.put('/:editorialID', auth.isAuthenticated, editorialController.updateEdit
  * REST Endpoint: DELETE /editorial/:editorialID
  */
 router.delete('/:editorialID', auth.isAuthenticated, editorialController.deleteEditorial);
+
+/**
+ * Routes to handle comments
+ */
+router.use('/:editorialID/comment', auth.isAuthenticated, commentRoutes);
 
 module.exports = router;
