@@ -43,19 +43,15 @@ const editorialSchema = new Schema({
         type: Number,
         default: 0
     },
-    comments: {
-        type: [
-            {
+    comments: [
+        {
+            type: new Schema({
                 userID: {
                     type: mongoose.Types.ObjectId,
                     required: true
                 },
                 handle: {
                     type: String,
-                    required: true
-                },
-                createdAt: {
-                    type: Date,
                     required: true
                 },
                 stars: {
@@ -66,19 +62,15 @@ const editorialSchema = new Schema({
                     type: String,
                     required: true
                 },
-                replies: {
-                    type: [
-                        {
+                replies: [
+                    {
+                        type: new Schema({
                             userID: {
                                 type: mongoose.Types.ObjectId,
                                 required: true
                             },
                             handle: {
                                 type: String,
-                                required: true
-                            },
-                            createdAt: {
-                                type: Date,
                                 required: true
                             },
                             stars: {
@@ -88,16 +80,16 @@ const editorialSchema = new Schema({
                             content: {
                                 type: String,
                                 required: true
-                            }   
-                        }
-                    ],
-                    required: true
-                }
-            }
-        ],
-        required: true
-    }
-
-}, {timestamps: true});
+                            }
+                        },
+                        {timestamps: true})
+                    }
+                ]
+            },
+            {timestamps: true})
+        }
+    ]
+},
+{timestamps: true});
 
 module.exports = mongoose.model('Editorial', editorialSchema);
