@@ -1,3 +1,4 @@
+const { Error } = require('mongoose');
 const Proposal = require('../models/proposal');
 
 /**
@@ -226,6 +227,58 @@ exports.getUserProblemProposals = async (req, res, next) => {
         const proposals = await Proposal.find({userID});
 
         res.status(200).json({proposals});
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to chat
+ */
+exports.chat = async (req, res, next) => {
+    const proposalID = req.params.proposalID;
+    const message = req.body.message;
+
+    try {
+        let proposal;
+        try {
+            proposal = await Proposal.findById(proposalID);
+            if(!proposal) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Problem Proposal Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        console.log(req.userID, proposal.userID.toString());
+
+        if(req.isAdmin) {
+            proposal.chat.push({
+                sentBy: 'admin',
+                message
+            });
+        }
+        else if(req.userID === proposal.userID.toString()) {
+            proposal.chat.push({
+                sentBy: 'user',
+                message
+            })
+        }
+        else {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        await proposal.save();
+
+        res.status(201).json({
+            message: 'Message Sent'
+        });
     }
     catch(error) {
         next(error);

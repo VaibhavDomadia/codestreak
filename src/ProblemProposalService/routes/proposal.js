@@ -40,4 +40,9 @@ router.post('/proposal/:proposalID/status', auth.isAuthenticated, proposalContro
  */
 router.get('/proposal/user/:userID', auth.isAuthenticated, proposalController.getUserProblemProposals);
 
+/**
+ * REST Endpoint: POST /proposal/:proposalID/chat
+ */
+router.post('/proposal/:proposalID/chat', auth.isAuthenticated, proposalController.chat);
+
 module.exports = router;
