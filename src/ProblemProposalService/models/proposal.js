@@ -11,6 +11,14 @@ const proposalSchema = new Schema({
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        default: 'Pending'
+    },
+    message: {
+        type: String,
+        default: 'Your proposal for the problem has been sent. Admin will look at your request and will get back to you soon.'
+    },
     problem: {
         type: {
             name: {
@@ -73,7 +81,23 @@ const proposalSchema = new Schema({
             }
         },
         required: true
-    }
-});
+    },
+    chat: [
+        {
+            type: new Schema({
+                sentBy: {
+                    type: String,
+                    required: true
+                },
+                message: {
+                    type: String,
+                    required: true
+                }
+            },
+            {timestamps: true})
+        }
+    ]
+},
+{timestamps: true});
 
 module.exports = mongoose.model('Proposal', proposalSchema);
