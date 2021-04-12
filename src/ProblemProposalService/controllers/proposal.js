@@ -254,8 +254,6 @@ exports.chat = async (req, res, next) => {
             throw error;
         }
 
-        console.log(req.userID, proposal.userID.toString());
-
         if(req.isAdmin) {
             proposal.chat.push({
                 sentBy: 'admin',
@@ -278,6 +276,55 @@ exports.chat = async (req, res, next) => {
 
         res.status(201).json({
             message: 'Message Sent'
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to edit a chat message
+ */
+exports.editChatMessage = async (req, res, next) => {
+    const { proposalID, messageID } = req.params;
+    const updateMessage = req.body.message;
+
+    try {
+        let proposal;
+        try {
+            proposal = await Proposal.findById(proposalID);
+            if(!proposal) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Problem Proposal Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const message = proposal.chat.id(messageID);
+        if(!message) {
+            const error = new Error("Message Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const isAuthorized = (req.isAdmin && message.sentBy === 'admin') || (!req.isAdmin && message.sentBy === 'user' && req.userID === proposal.userID.toString());
+
+        if(!isAuthorized) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;   
+        }
+
+        message.message = updateMessage;
+
+        await proposal.save();
+
+        res.status(200).json({
+            message: 'Message Edited'
         });
     }
     catch(error) {

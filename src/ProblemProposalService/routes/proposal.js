@@ -45,4 +45,9 @@ router.get('/proposal/user/:userID', auth.isAuthenticated, proposalController.ge
  */
 router.post('/proposal/:proposalID/chat', auth.isAuthenticated, proposalController.chat);
 
+/**
+ * REST Endpoint: PUT /proposal/:proposalID/chat/:messageID
+ */
+router.put('/proposal/:proposalID/chat/:messageID', auth.isAuthenticated, proposalController.editChatMessage);
+
 module.exports = router;
