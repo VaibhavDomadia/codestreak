@@ -159,3 +159,44 @@ exports.deleteProblemProposal = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to update status of a problem proposal
+ */
+exports.updateStatus = async (req, res, next) => {
+    const proposalID = req.params.proposalID;
+    const { status, message } = req.body;
+
+    try {
+        if(!req.isAdmin) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        let proposal;
+        try {
+            proposal = await Proposal.findById(proposalID);
+            if(!proposal) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Proposal Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        proposal.status = status;
+        proposal.message = message;
+
+        await proposal.save();
+
+        res.status(200).json({
+            message: 'Status Updated!'
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
