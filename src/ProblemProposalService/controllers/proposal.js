@@ -153,7 +153,7 @@ exports.deleteProblemProposal = async (req, res, next) => {
             throw error;
         }
 
-        if (proposal.userID != req.userID || proposal.userID != userID) {
+        if (proposal.userID != req.userID && !req.isAdmin) {
             const error = new Error("Not Authorized");
             error.statusCode = 403;
             throw error;
