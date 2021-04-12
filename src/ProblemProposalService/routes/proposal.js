@@ -35,4 +35,9 @@ router.delete('/proposal/:proposalID', auth.isAuthenticated, proposalController.
  */
 router.post('/proposal/:proposalID/status', auth.isAuthenticated, proposalController.updateStatus);
 
+/**
+ * REST Endpoint: GET /proposal/user/:userID
+ */
+router.get('/proposal/user/:userID', auth.isAuthenticated, proposalController.getUserProblemProposals);
+
 module.exports = router;

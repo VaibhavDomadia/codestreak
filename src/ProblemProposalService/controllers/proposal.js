@@ -200,3 +200,25 @@ exports.updateStatus = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to fetch a list of problem proposals made by a user
+ */
+exports.getUserProblemProposals = async (req, res, next) => {
+    const userID = req.params.userID;
+
+    try {
+        if(userID != req.userID) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        const proposals = await Proposal.find({userID});
+
+        res.status(200).json({proposals});
+    }
+    catch(error) {
+        next(error);
+    }
+}
