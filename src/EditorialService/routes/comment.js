@@ -22,7 +22,7 @@ router.delete('/:commentID', commentController.deleteComment);
 /**
  * REST Endpoint: POST /editorial/:editorialID/comment/:commentID/reply
  */
-router.post('/:commentID/reply');
+router.post('/:commentID/reply', commentController.reply);
 
 /**
  * REST Endpoint: PUT /editorial/:editorialID/comment/:commentID/reply/:replyID

@@ -131,3 +131,49 @@ exports.updateComment = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to reply on a comment
+ */
+ exports.reply = async (req, res, next) => {
+    const { editorialID, commentID } = req.params;
+    const content = req.body.content;
+
+    try {
+        let editorial;
+        try {
+            editorial = await Editorial.findById(editorialID);
+            if(!editorial) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Editorial Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const comment = editorial.comments.id(commentID);
+        if(!comment) {
+            const error = new Error("Editorial Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        comment.replies.push({
+            userID: req.userID,
+            handle: req.handle,
+            content
+        });
+
+        const result = await editorial.save();
+
+        res.status(201).json({
+            message: 'Replied on the comment!',
+            editorial: result
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
