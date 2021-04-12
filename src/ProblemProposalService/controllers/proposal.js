@@ -331,3 +331,51 @@ exports.editChatMessage = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to delete a chat message
+ */
+exports.deleteChatMessage = async (req, res, next) => {
+    const { proposalID, messageID } = req.params;
+
+    try {
+        let proposal;
+        try {
+            proposal = await Proposal.findById(proposalID);
+            if(!proposal) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Problem Proposal Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const message = proposal.chat.id(messageID);
+        if(!message) {
+            const error = new Error("Message Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const isAuthorized = (req.isAdmin && message.sentBy === 'admin') || (!req.isAdmin && message.sentBy === 'user' && req.userID === proposal.userID.toString());
+
+        if(!isAuthorized) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;   
+        }
+
+        message.remove();
+
+        await proposal.save();
+
+        res.status(200).json({
+            message: 'Message Deleted'
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}

@@ -50,4 +50,9 @@ router.post('/proposal/:proposalID/chat', auth.isAuthenticated, proposalControll
  */
 router.put('/proposal/:proposalID/chat/:messageID', auth.isAuthenticated, proposalController.editChatMessage);
 
+/**
+ * REST Endpoint: DELETE /proposal/:proposalID/chat/:messageID
+ */
+router.delete('/proposal/:proposalID/chat/:messageID', auth.isAuthenticated, proposalController.deleteChatMessage);
+
 module.exports = router;
