@@ -1,11 +1,13 @@
 const express = require('express');
 
+const commentController = require('../controllers/comment');
+
 const router = express.Router({mergeParams: true});
 
 /**
  * REST Endpoint: POST /editorial/:editorialID/comment
  */
-router.post('/');
+router.post('/', commentController.addComment);
 
 /**
  * REST Endpoint: PUT /editorial/:editorialID/comment/:commentID
