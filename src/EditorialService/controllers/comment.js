@@ -177,3 +177,57 @@ exports.updateComment = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to update a reply on a comment
+ */
+ exports.updateReply = async (req, res, next) => {
+    const { editorialID, commentID, replyID } = req.params;
+    const content = req.body.content;
+
+    try {
+        let editorial;
+        try {
+            editorial = await Editorial.findById(editorialID);
+            if(!editorial) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Editorial Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const comment = editorial.comments.id(commentID);
+        if(!comment) {
+            const error = new Error("Comment Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const reply = comment.replies.id(replyID);
+        if(!reply) {
+            const error = new Error("Reply Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if(reply.userID.toString() !== req.userID) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        reply.content = content;
+
+        const result = await editorial.save();
+
+        res.status(200).json({
+            message: 'Reply Updated!',
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
