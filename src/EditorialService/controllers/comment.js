@@ -85,3 +85,49 @@ exports.updateComment = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to delete a comment
+ */
+ exports.deleteComment = async (req, res, next) => {
+    const { editorialID, commentID } = req.params;
+
+    try {
+        let editorial;
+        try {
+            editorial = await Editorial.findById(editorialID);
+            if(!editorial) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Editorial Not Found!";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const comment = editorial.comments.id(commentID);
+        if(!comment) {
+            const error = new Error("Comment Not Found!");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        if(comment.userID.toString() !== req.userID && !req.isAdmin) {
+            const error = new Error("Not Authorized!");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        comment.remove();
+
+        const result = await editorial.save();
+
+        res.status(200).json({
+            message: 'Comment Deleted!',
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}

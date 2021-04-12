@@ -17,7 +17,7 @@ router.put('/:commentID', commentController.updateComment);
 /**
  * REST Endpoint: DELETE /editorial/:editorialID/comment/:commentID
  */
-router.delete('/:commentID');
+router.delete('/:commentID', commentController.deleteComment);
 
 /**
  * REST Endpoint: POST /editorial/:editorialID/comment/:commentID/reply
