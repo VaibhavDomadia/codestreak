@@ -32,6 +32,6 @@ router.put('/:commentID/reply/:replyID', commentController.updateReply);
 /**
  * REST Endpoint: DELETE /editorial/:editorialID/comment/:commentID/reply/:replyID
  */
-router.delete('/:commentID/reply/:replyID');
+router.delete('/:commentID/reply/:replyID', commentController.deleteReply);
 
 module.exports = router;
