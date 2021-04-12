@@ -39,6 +39,8 @@ exports.getProblemProposal = async (req, res, next) => {
  * Controller to fetch all problem proposals
  */
 exports.getProblemProposals = async (req, res, next) => {
+    const status = req.query.status;
+
     try {
         if (!req.isAdmin) {
             const error = new Error("Not Authorized!");
@@ -46,7 +48,14 @@ exports.getProblemProposals = async (req, res, next) => {
             throw error;
         }
 
-        const proposals = await Proposal.find();
+        let proposals;
+
+        if(status === 'Approved' || status === 'Pending' || status === 'ChangeRequired' || status === 'Rejected') {
+            proposals = await Proposal.find({status});
+        }
+        else {
+            proposals = await Proposal.find();
+        }
 
         res.status(200).json({ proposals });
     }
