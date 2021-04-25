@@ -106,6 +106,11 @@ exports.getProfile = async (req, res, next) => {
 
         let response = await axios.get(`http://localhost:8007/submission/user/${userID}`);
         const submissions = response.data.submissions;
+
+        response = await axios.get(`http://localhost:8004/blog/user/${userID}`);
+        const blogs = response.data.blogs;
+
+        console.log(blogs);
         
         res.status(200).json({user});
     }
