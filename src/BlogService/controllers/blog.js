@@ -26,13 +26,15 @@ exports.getBlog = async (req, res, next) => {
  */
 exports.getUserBlogs = async (req, res, next) => {
     const userID = req.params.userID;
+    const limit = parseInt(req.query.limit) || 0;
 
     try {
-        const blogs = await Blog.find({userID});
+        const blogs = await Blog.find({userID}, '-content -comments', {limit});
 
         res.status(200).json({blogs});
     }
     catch(error) {
+        console.log(error);
         error.message = "User doesn't exists";
         error.statusCode = 404;
         next(error);
