@@ -26,9 +26,10 @@ exports.getSubmission = async (req, res, next) => {
  */
 exports.getUserSubmissions = async (req, res, next) => {
     const userID = req.params.userID;
+    const limit = parseInt(req.query.limit) || 0;
 
     try {
-        const submissions = await Submission.find({ userID });
+        const submissions = await Submission.find({ userID }, '-content', {limit});
 
         res.status(200).json({ submissions });
     }
@@ -42,7 +43,7 @@ exports.getUserSubmissions = async (req, res, next) => {
 /**
  * Controller to fetch all submissions of a problem
  */
- exports.getProblemSubmissions = async (req, res, next) => {
+exports.getProblemSubmissions = async (req, res, next) => {
     const problemID = req.params.problemID;
 
     try {
@@ -61,14 +62,15 @@ exports.getUserSubmissions = async (req, res, next) => {
  * Controller to create a submission
  */
 exports.createSubmission = async (req, res, next) => {
-    const { problemID, userID, content } = req.body;
+    const { problemID, problemName, userID, content } = req.body;
+    const handle = req.handle;    
     const verdict = {
         result: "Accepted",
         log: "Correct Answer!"
     }
 
     try {
-        const submission = new Submission({ problemID, userID, content, verdict });
+        const submission = new Submission({ problemID, problemName, userID, handle, content, verdict });
         const result = await submission.save();
 
         res.status(201).json({

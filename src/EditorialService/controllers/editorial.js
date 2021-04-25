@@ -44,10 +44,10 @@ exports.getProblemEditorials = async (req, res, next) => {
  * Controller to create a Editorial
  */
 exports.createEditorial = async (req, res, next) => {
-    const { userID, problemID, handle, title, content, tags } = req.body;
+    const { userID, problemID, problemName, handle, title, content, tags } = req.body;
 
     try {
-        const editorial = new Editorial({ userID, problemID, handle, title, content, tags });
+        const editorial = new Editorial({ userID, problemID, problemName, handle, title, content, tags });
         const result = await editorial.save();
 
         res.status(201).json({
@@ -65,7 +65,7 @@ exports.createEditorial = async (req, res, next) => {
  */
 exports.updateEditorial = async (req, res, next) => {
     const editorialID = req.params.editorialID;
-    const { userID, problemID, handle, title, content, tags } = req.body;
+    const { title, content, tags } = req.body;
 
     try {
         let editorial;
@@ -90,7 +90,7 @@ exports.updateEditorial = async (req, res, next) => {
             throw error;
         }
 
-        const result = await Editorial.findByIdAndUpdate(editorialID, { userID, problemID, handle, title, content, tags });
+        const result = await Editorial.findByIdAndUpdate(editorialID, { title, content, tags });
         res.status(200).json({
             message: "Editorial Updated!"
         });

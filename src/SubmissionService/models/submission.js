@@ -7,8 +7,16 @@ const submissionSchema = new Schema({
         type: mongoose.Types.ObjectId,
         required: true
     },
+    problemName: {
+        type: String,
+        required: true
+    },
     userID: {
         type: mongoose.Types.ObjectId,
+        required: true
+    },
+    handle: {
+        type: String,
         required: true
     },
     content: {
