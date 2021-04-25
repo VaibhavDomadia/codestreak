@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const Contest = require('../models/contest');
 
 /**
@@ -7,16 +9,29 @@ exports.getContest = async (req, res, next) => {
     const contestID = req.params.contestID;
 
     try {
-        const contest = await Contest.findById(contestID);
-        if(!contest) {
-            throw Error();
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+            if(!contest) {
+                throw new Error();
+            }
         }
+        catch(error) {
+            error.message = "No Contest Found!"
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const problemIDs = contest.problemIDs.join(',');
+
+        const response = await axios.get(`http://localhost:8002/problems?ids=${problemIDs}`);
+        const problems = response.data.problems;
+
+        contest = {...contest._doc, problems};        
 
         res.status(200).json({contest});
     }
     catch(error) {
-        error.message = "No Contest Found!"
-        error.statusCode = 404;
         next(error);
     }
 }
