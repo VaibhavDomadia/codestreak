@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jsonWebToken = require('jsonwebtoken');
+const axios = require('axios');
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
@@ -90,15 +91,25 @@ exports.getProfile = async (req, res, next) => {
     const userID = req.params.userID;
 
     try {
-        const user = await User.findById(userID, '-email -password -following -followedBy');
-        if(!user) {
-            throw Error();
+        let user;
+        try {
+            user = await User.findById(userID, '-email -password -following -followedBy');
+            if(!user) {
+                throw Error();
+            }
         }
+        catch(error) {
+            error.message = "User doesn't exist";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        let response = await axios.get(`http://localhost:8007/submission/user/${userID}`);
+        const submissions = response.data.submissions;
+        
         res.status(200).json({user});
     }
     catch(error) {
-        error.message = "User doesn't exist";
-        error.statusCode = 404;
         next(error);
     }
 }
