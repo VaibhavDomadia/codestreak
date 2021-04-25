@@ -89,6 +89,7 @@ exports.signup = async (req, res, next) => {
  */
 exports.getProfile = async (req, res, next) => {
     const userID = req.params.userID;
+    const limit = 5;
 
     try {
         let user;
@@ -104,13 +105,13 @@ exports.getProfile = async (req, res, next) => {
             throw error;
         }
 
-        let response = await axios.get(`http://localhost:8007/submission/user/${userID}`);
+        let response = await axios.get(`http://localhost:8007/submission/user/${userID}?limit=${limit}`);
         const submissions = response.data.submissions;
 
-        response = await axios.get(`http://localhost:8004/blog/user/${userID}`);
+        response = await axios.get(`http://localhost:8004/blog/user/${userID}?limit=${limit}`);
         const blogs = response.data.blogs;
 
-        console.log(blogs);
+        user = {...user._doc, submissions, blogs};
         
         res.status(200).json({user});
     }
