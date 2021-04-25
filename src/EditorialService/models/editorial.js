@@ -11,6 +11,10 @@ const editorialSchema = new Schema({
         type: mongoose.Types.ObjectId,
         required: true
     },
+    problemName: {
+        type: String,
+        required: true
+    },
     handle: {
         type: String,
         required: true
