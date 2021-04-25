@@ -26,9 +26,10 @@ exports.getSubmission = async (req, res, next) => {
  */
 exports.getUserSubmissions = async (req, res, next) => {
     const userID = req.params.userID;
+    const limit = parseInt(req.query.limit) || 0;
 
     try {
-        const submissions = await Submission.find({ userID });
+        const submissions = await Submission.find({ userID }, '-content', {limit});
 
         res.status(200).json({ submissions });
     }
