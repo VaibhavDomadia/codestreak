@@ -1,8 +1,14 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const apiRoutes = require('./routes/api');
 
 const app = express();
+
+/**
+ * To parse JSON
+ */
+app.use(bodyParser.json());
 
 /**
  * To Allow Cross Origin Resource Sharing (CORS)
@@ -25,7 +31,8 @@ app.use('/api', apiRoutes);
 app.use((error, req, res, next) => {
     const statusCode = error.statusCode || 500;
     const message = error.message || "Something went wrong on our side. We are fixing this issue. Sorry for inconvenience."
-    res.status(statusCode).json({message});
+    const errorBody = error.body;
+    res.status(statusCode).json(errorBody);
 });
 
 app.listen(8000);
