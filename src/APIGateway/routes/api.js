@@ -115,4 +115,19 @@ router.use('/contests', async (req, res, next) => {
     }
 })
 
+router.use('/blog', async (req, res, next) => {
+    const host = 'http://localhost:8004';
+    const path = `/blog${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
 module.exports = router;
