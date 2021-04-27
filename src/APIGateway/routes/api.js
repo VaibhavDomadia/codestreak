@@ -145,4 +145,34 @@ router.use('/editorial', async (req, res, next) => {
     }
 })
 
+router.use('/proposal', async (req, res, next) => {
+    const host = 'http://localhost:8006';
+    const path = `/proposal${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
+router.use('/proposals', async (req, res, next) => {
+    const host = 'http://localhost:8006';
+    const path = `/proposals${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
 module.exports = router;

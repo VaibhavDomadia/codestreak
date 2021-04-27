@@ -8,8 +8,9 @@ exports.getProblemProposal = async (req, res, next) => {
     const proposalID = req.params.proposalID;
 
     try {
+        let proposal;
         try {
-            const proposal = await Proposal.findById(proposalID);
+            proposal = await Proposal.findById(proposalID);
         }
         catch (error) {
             error.message = "Proposal doesn't exists";
