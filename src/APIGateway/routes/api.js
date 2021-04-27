@@ -85,4 +85,34 @@ router.use('/problems', async (req, res, next) => {
     }
 })
 
+router.use('/contest', async (req, res, next) => {
+    const host = 'http://localhost:8003';
+    const path = `/contest${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
+router.use('/contests', async (req, res, next) => {
+    const host = 'http://localhost:8003';
+    const path = `/contests${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
 module.exports = router;
