@@ -40,4 +40,19 @@ router.use('/user', async (req, res, next) => {
     }
 })
 
+router.use('/admin', async (req, res, next) => {
+    const host = 'http://localhost:8001';
+    const path = `/admin${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
 module.exports = router;
