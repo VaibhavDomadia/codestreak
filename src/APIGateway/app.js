@@ -1,5 +1,7 @@
 const express = require('express');
 
+const apiRoutes = require('./routes/api');
+
 const app = express();
 
 /**
@@ -12,8 +14,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', (req, res, next) => {
-    console.log('Listening....');
-})
+/**
+ * To Manage Rest API Routes
+ */
+app.use('/api', apiRoutes);
 
 app.listen(8000);
