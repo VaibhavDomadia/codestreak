@@ -175,4 +175,19 @@ router.use('/proposals', async (req, res, next) => {
     }
 })
 
+router.use('/submission', async (req, res, next) => {
+    const host = 'http://localhost:8007';
+    const path = `/submission${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
 module.exports = router;
