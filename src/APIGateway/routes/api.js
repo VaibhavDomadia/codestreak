@@ -55,4 +55,34 @@ router.use('/admin', async (req, res, next) => {
     }
 })
 
+router.use('/problem', async (req, res, next) => {
+    const host = 'http://localhost:8002';
+    const path = `/problem${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
+router.use('/problems', async (req, res, next) => {
+    const host = 'http://localhost:8002';
+    const path = `/problems${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
 module.exports = router;
