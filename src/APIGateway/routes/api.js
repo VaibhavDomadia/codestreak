@@ -190,4 +190,19 @@ router.use('/submission', async (req, res, next) => {
     }
 })
 
+router.use('/email', async (req, res, next) => {
+    const host = 'http://localhost:8008';
+    const path = `/email${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
 module.exports = router;
