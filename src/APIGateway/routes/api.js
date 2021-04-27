@@ -130,4 +130,19 @@ router.use('/blog', async (req, res, next) => {
     }
 })
 
+router.use('/editorial', async (req, res, next) => {
+    const host = 'http://localhost:8005';
+    const path = `/editorial${req.url}`;
+    const { method, headers, body } = req;
+
+    try {
+        const response = await sendRequest(host, path, method, headers, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
 module.exports = router;
