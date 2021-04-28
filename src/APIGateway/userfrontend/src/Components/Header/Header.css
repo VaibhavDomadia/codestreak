@@ -1,0 +1,20 @@
+.Header-Container {
+    display: grid;
+    grid-template-columns: min-content min-content;
+    justify-items: center;
+    align-items: center;
+    padding: 8px;
+}
+
+.Header-Title {
+    font-size: 24px;
+    color: #1389f4;
+    margin: 8px;
+    font-weight: bold;
+}
+
+.Header-Icon {
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+}
