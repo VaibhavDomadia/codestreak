@@ -1,0 +1,23 @@
+.NavigationBar-Container {
+    display: grid;
+    grid-template-columns: min-content min-content min-content;
+    background-color: #fafafa;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+}
+
+.NavigationBar-Tile {
+    color: #606060;
+    padding: 8px 24px;
+    text-decoration: none;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.NavigationBar-Tile:hover:not(.NavigationBar-Tile-Active) {
+    color: #202020;
+}
+
+.NavigationBar-Tile-Active {
+    color: #202020;
+    border-bottom: 2px solid #1389f4;
+}
