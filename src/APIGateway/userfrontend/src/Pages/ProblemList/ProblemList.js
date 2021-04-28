@@ -15,7 +15,6 @@ const ProblemList = (props) => {
     useEffect(() => {
         const fetchProblems = async () => {
             const response = await axios.get(`/api/problems?page=${currentPage}`);
-            console.log(response.data);
             const problems = response.data.problems;
             const totalNumberOfProblems = response.data.totalNumberOfProblems;
             

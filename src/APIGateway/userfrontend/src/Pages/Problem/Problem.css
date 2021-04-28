@@ -1,0 +1,105 @@
+.Problem-Container {
+    margin: 32px 64px;
+}
+
+.Problem-Header-Container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+}
+
+.Problem-Difficulty {
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+    margin: 8px 16px;
+    color: #ffffff;
+}
+
+.Problem-Name {
+    color: #404040;
+    font-size: 20px;
+}
+
+.Problem-Tab-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content max-content;
+}
+
+.Problem-Seperator {
+    width: 100%;
+    border-top: 1px solid #808080;
+    margin: 16px 0px;
+}
+
+.Problem-Tab {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    align-items: center;
+    margin: 8px;
+    padding: 2px 16px;
+    border-radius: 8px;
+    border: 1px solid #d0d0d0;
+}
+
+.Problem-Tab-Title {
+    padding: 2px 4px;
+    color: #1389f4;
+    font-size: 12px;
+}
+
+.Problem-Tab-Value {
+    padding: 2px 4px;
+    color: #a0a0a0;
+    font-size: 12px;
+}
+
+.Problem-Tab-Icon {
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+}
+
+.Problem-Field-Title {
+    color: #404040;
+    font-size: 16px;
+}
+
+.Problem-Field-Value {
+    color: #606060;
+    font-size: 12px;
+}
+
+.Problem-Samplecase {
+    display: grid;
+    margin: 8px 0px;
+}
+
+.Problem-Samplecase-Box {
+    font-size: 12px;
+    border-radius: 8px;
+    margin: 8px 0px;
+}
+
+.Problem-Samplecase-Subtitle {
+    color: #606060;
+    font-size: 12px;
+    justify-self: center;
+    padding: 8px;
+    text-transform: uppercase;
+    border: 1px solid #282c34;
+    border-radius: 8px 8px 0px 0px;
+    font-weight: bold;
+}
+
+.Problem-Samplecase-Innerbox {
+    font-size: 12px;
+    padding: 16px;
+    background-color: #282c34;
+    border-radius: 0px 0px 8px 8px;
+    color: #ffffff;
+}
+
+.Problem-Samplecase-Innerbox p {
+    margin: 2px;
+}
