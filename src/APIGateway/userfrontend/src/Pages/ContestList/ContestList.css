@@ -1,6 +1,6 @@
 .ContestList {
     display: grid;
-    margin: 64px;
+    margin: 32px 64px;
 }
 
 .ContestGroup-Container {

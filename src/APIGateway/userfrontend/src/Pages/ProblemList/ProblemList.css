@@ -1,0 +1,34 @@
+.ProblemList-Container {
+    display: grid;
+    margin: 32px 64px;
+}
+
+.ProblemList-Header {
+    color: #808080;
+    font-weight: normal;
+}
+
+.ProblemList-Pagination-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    align-items: center;
+    margin: 32px;
+    justify-self: center;
+}
+
+.ProblemList-Pagination-Button {
+    display: grid;
+    align-items: center;
+}
+
+.ProblemList-Pagination-Icon {
+    width: 20px;
+    height: 20px;
+    padding: 8px;
+}
+
+.ProblemList-Pagination-CurrentPage {
+    color: #404040;
+    font-size: 24px;
+    padding: 8px;
+}

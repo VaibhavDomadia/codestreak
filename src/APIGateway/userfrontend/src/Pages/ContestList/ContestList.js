@@ -32,8 +32,6 @@ const ContestList = (props) => {
         }
     }
 
-    console.log(contests);
-
     return (
         <div className='ContestList'>
             {

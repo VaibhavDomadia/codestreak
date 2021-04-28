@@ -8,10 +8,6 @@ import Hourglass from '../../../Icons/hourglass-start-solid.svg';
 const ContestTile = (props) => {
     const contest = props.contest;
 
-    const date = new Date(contest.startTime);
-
-    console.log(date);
-
     return (
         <div className='ContestTile-Container'>
             <div className='ContestTile-Inner-Container'>

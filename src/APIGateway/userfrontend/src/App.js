@@ -6,6 +6,7 @@ import Header from './Components/Header/Header';
 import NavigationBar from './Components/NavigationBar/NavigationBar';
 
 import ContestList from './Pages/ContestList/ContestList';
+import ProblemList from './Pages/ProblemList/ProblemList';
 
 const App = (props) => {
     return (
@@ -14,6 +15,7 @@ const App = (props) => {
             <NavigationBar />
             <Switch>
                 <Route path='/contest' component={ContestList}/>
+                <Route path='/problem' component={ProblemList}/>
             </Switch>
         </div>
     )

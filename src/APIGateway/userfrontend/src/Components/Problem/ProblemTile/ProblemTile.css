@@ -1,0 +1,67 @@
+.ProblemTile-Container {
+    display: grid;
+    margin: 8px 0px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 8px 0px;
+}
+
+.ProblemTile-Inner-Container {
+    display: grid;
+    align-items: center;
+    grid-template-columns: max-content auto max-content;
+}
+
+.ProblemTile-Difficulty {
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+    margin: 8px 16px;
+    color: #ffffff;
+}
+
+.ProblemTile-Name {
+    color: #404040;
+    padding: 8px;
+    margin: 0px;
+}
+
+.ProblemTile-Go-To-Problem-Link {
+    padding: 8px 16px;
+    color: #1389f4;
+    text-decoration: none;
+}
+
+.ProblemTile-Field-Container {
+    display: grid;
+    padding: 0px 16px;
+    grid-template-columns: max-content max-content;
+}
+
+.ProblemTile-Field {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    align-items: center;
+    margin: 8px;
+    padding: 2px 16px;
+    border-radius: 8px;
+    border: 1px solid #d0d0d0;
+}
+
+.ProblemTile-Field-Title {
+    padding: 2px 4px;
+    color: #1389f4;
+    font-size: 12px;
+}
+
+.ProblemTile-Field-Icon {
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+}
+
+.ProblemTile-Field-Value {
+    padding: 2px 4px;
+    color: #a0a0a0;
+    font-size: 12px;
+}
