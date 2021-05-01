@@ -31,34 +31,6 @@
     background-color: rgba(19, 135, 244, 0.03)
 }
 
-.ContestTile-Field {
-    display: grid;
-    grid-template-columns: max-content max-content max-content;
-    align-items: center;
-    margin: 8px;
-    padding: 2px 16px;
-    border-radius: 8px;
-    border: 1px solid #d0d0d0;
-}
-
-.ContestTile-Field-Title {
-    padding: 2px 4px;
-    color: #1389f4;
-    font-size: 12px;
-}
-
-.ContestTile-Field-Value {
-    padding: 2px 4px;
-    color: #a0a0a0;
-    font-size: 12px;
-}
-
-.ContestTile-Field-Icon {
-    width: 16px;
-    height: 16px;
-    padding: 4px;
-}
-
 .ContestTile-Collaboration-Container {
     display: grid;
     justify-content: center;

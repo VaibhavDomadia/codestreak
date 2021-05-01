@@ -3,6 +3,7 @@ import './ProblemTile.css';
 import { Link } from 'react-router-dom';
 import Tag from '../../../Icons/tag-solid.svg';
 import Correct from '../../../Icons/check-solid.svg';
+import TagCard from '../../TagCard/TagCard';
 
 
 const ProblemTile = (props) => {
@@ -24,24 +25,8 @@ const ProblemTile = (props) => {
                 <Link to={`/problem/${problem._id}`} className='ProblemTile-Go-To-Problem-Link'>Go to Problem-&gt;</Link>
             </div>
             <div className='ProblemTile-Field-Container'>
-                <div className='ProblemTile-Field'>
-                    <img src={Correct} className='ProblemTile-Field-Icon' alt='Correct'></img>
-                    <div className='ProblemTile-Field-Title'>
-                        Solved By:
-                    </div>
-                    <div className='ProblemTile-Field-Value'>
-                        {problem.solvedBy}
-                    </div>
-                </div>
-                <div className='ProblemTile-Field'>
-                    <img src={Tag} className='ProblemTile-Field-Icon' alt='Tag'></img>
-                    <div className='ProblemTile-Field-Title'>
-                        Tags:
-                    </div>
-                    <div className='ProblemTile-Field-Value'>
-                        {problem.tags.join(', ')}
-                    </div>
-                </div>
+                <TagCard icon={Correct} alt='Correct' title='Solved By' value={problem.solvedBy}/>
+                <TagCard icon={Tag} alt='Tag' title='Tags' value={problem.tags.join(', ')}/>
             </div>
         </div>
     )

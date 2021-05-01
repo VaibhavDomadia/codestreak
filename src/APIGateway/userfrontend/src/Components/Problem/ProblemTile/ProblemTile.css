@@ -37,31 +37,3 @@
     padding: 0px 16px;
     grid-template-columns: max-content max-content;
 }
-
-.ProblemTile-Field {
-    display: grid;
-    grid-template-columns: max-content max-content max-content;
-    align-items: center;
-    margin: 8px;
-    padding: 2px 16px;
-    border-radius: 8px;
-    border: 1px solid #d0d0d0;
-}
-
-.ProblemTile-Field-Title {
-    padding: 2px 4px;
-    color: #1389f4;
-    font-size: 12px;
-}
-
-.ProblemTile-Field-Icon {
-    width: 16px;
-    height: 16px;
-    padding: 4px;
-}
-
-.ProblemTile-Field-Value {
-    padding: 2px 4px;
-    color: #a0a0a0;
-    font-size: 12px;
-}

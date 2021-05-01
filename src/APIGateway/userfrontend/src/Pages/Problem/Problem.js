@@ -6,6 +6,7 @@ import Clock from '../../Icons/clock-regular.svg';
 import Memory from '../../Icons/database-solid.svg';
 import Tag from '../../Icons/tag-solid.svg';
 import Code from '../../Icons/code-solid-light.svg';
+import TagCard from '../../Components/TagCard/TagCard';
 
 
 const Problem = (props) => {
@@ -44,55 +45,11 @@ const Problem = (props) => {
                 </div>
 
                 <div className='Problem-Tab-Container'>
-                    <div className='Problem-Tab'>
-                        <img src={Correct} className='Problem-Tab-Icon' alt='Correct'></img>
-                        <div className='Problem-Tab-Title'>
-                            Solved By:
-                        </div>
-                        <div className='Problem-Tab-Value'>
-                            {problem.solvedBy}
-                        </div>
-                    </div>
-
-                    <div className='Problem-Tab'>
-                        <img src={Code} className='Problem-Tab-Icon' alt='Code'></img>
-                        <div className='Problem-Tab-Title'>
-                            Submissions:
-                        </div>
-                        <div className='Problem-Tab-Value'>
-                            {problem.numberOfSubmission}
-                        </div>
-                    </div>
-
-                    <div className='Problem-Tab'>
-                        <img src={Clock} className='Problem-Tab-Icon' alt='Clock'></img>
-                        <div className='Problem-Tab-Title'>
-                            Time Limit:
-                        </div>
-                        <div className='Problem-Tab-Value'>
-                            {`${parseInt(problem.timeLimit)/1000} s`}
-                        </div>
-                    </div>
-
-                    <div className='Problem-Tab'>
-                        <img src={Memory} className='Problem-Tab-Icon' alt='Memory'></img>
-                        <div className='Problem-Tab-Title'>
-                            Memory Limit:
-                        </div>
-                        <div className='Problem-Tab-Value'>
-                            {`${problem.memory} MB`}
-                        </div>
-                    </div>
-
-                    <div className='Problem-Tab'>
-                        <img src={Tag} className='Problem-Tab-Icon' alt='Tag'></img>
-                        <div className='Problem-Tab-Title'>
-                            Tags:
-                        </div>
-                        <div className='Problem-Tab-Value'>
-                            {problem.tags.join(', ')}
-                        </div>
-                    </div>
+                    <TagCard icon={Correct} alt='Correct' title='Solved By' value={problem.solvedBy}/>
+                    <TagCard icon={Code} alt='Code' title='Submissions' value={problem.numberOfSubmission}/>
+                    <TagCard icon={Clock} alt='Clock' title='Time Limit' value={`${parseInt(problem.timeLimit)/1000} s`}/>
+                    <TagCard icon={Memory} alt='Memory' title='Memory Limit' value={`${problem.memory} MB`}/>
+                    <TagCard icon={Tag} alt='Tag' title='Tags' value={problem.tags.join(', ')}/>
                 </div>
 
                 <div className='Problem-Seperator'></div>

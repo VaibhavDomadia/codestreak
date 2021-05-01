@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getDuration, getDateAndTime } from '../../../util/helper';
 import Clock from '../../../Icons/clock-regular.svg';
 import Hourglass from '../../../Icons/hourglass-start-solid.svg';
+import TagCard from '../../TagCard/TagCard';
 
 const ContestTile = (props) => {
     const contest = props.contest;
@@ -15,16 +16,8 @@ const ContestTile = (props) => {
                 <Link to={`/contest/${contest._id}`} className='ContestTile-Go-To-Contest-Link'>Go To Contest-&gt;</Link>
             </div>
             <div className='ContestTile-Field-Container'>
-                <div className='ContestTile-Field'>
-                    <img src={Hourglass} className='ContestTile-Field-Icon' alt='Hourglass'></img>
-                    <div className='ContestTile-Field-Title'>Duration:</div>
-                    <div className='ContestTile-Field-Value'>{getDuration(contest.duration)}</div>
-                </div>
-                <div className='ContestTile-Field'>
-                    <img src={Clock} className='ContestTile-Field-Icon' alt='Clock'></img>
-                    <div className='ContestTile-Field-Title'>Start Time:</div>    
-                    <div className='ContestTile-Field-Value'>{getDateAndTime(contest.startTime)}</div>
-                </div>
+                <TagCard icon={Hourglass} alt='Duration' title='Duration' value={getDuration(contest.duration)}/>
+                <TagCard icon={Clock} alt='Clock' title='Start Time' value={getDateAndTime(contest.startTime)}/>
             </div>
             <div className='ContestTile-Collaboration-Container'>
                 <div className='ContestTile-Collaboration-Title'>In Collaboration With:</div>
