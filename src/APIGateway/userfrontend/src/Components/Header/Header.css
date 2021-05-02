@@ -1,7 +1,6 @@
 .Header-Container {
     display: grid;
-    grid-template-columns: min-content min-content;
-    justify-items: center;
+    grid-template-columns: min-content auto min-content max-content;
     align-items: center;
     padding: 8px;
 }
