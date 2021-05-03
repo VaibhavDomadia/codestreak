@@ -1,0 +1,43 @@
+.LoginPage-Container {
+    display: grid;
+    justify-self: center;
+    margin: 64px;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.1);
+}
+
+.LoginPage-Form {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.LoginPage-InputField {
+    padding: 12px 24px;
+    color: #404040;
+    font-size: 16px;
+    border: 1px solid #808080;
+    outline: none;
+    margin: 12px;
+    border-radius: 8px;
+}
+
+.LoginPage-InputField:focus {
+    border: 2px solid #808080;
+}
+
+.LoginPage-SubmitButton {
+    color: #1389f4;
+    border-radius: 8px;
+    padding: 8px 32px;
+    font-size: 16px;
+    margin: 12px;
+    outline: none;
+    border: 2px solid #1389f4;
+    background-color: #ffffff;
+    justify-self: center;
+}
+
+.LoginPage-SubmitButton:hover {
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}

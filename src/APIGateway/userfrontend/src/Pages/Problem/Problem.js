@@ -23,7 +23,7 @@ const Problem = (props) => {
         }
 
         fetchProblem();
-    }, []);
+    }, [problemID]);
 
     let renderProblem = null;
     if(problem) {

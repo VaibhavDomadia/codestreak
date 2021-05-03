@@ -6,11 +6,15 @@ import './ContestList.css';
 const ContestList = (props) => {
     const [contests, setContests] = useState([]);
 
-    useEffect(async () => {
-        const response = await axios.get('/api/contests');
-        const contests = response.data.contests;
+    useEffect(() => {
+        const fetchContests = async () => {
+            const response = await axios.get('/api/contests');
+            const contests = response.data.contests;
 
-        setContests(contests);
+            setContests(contests);
+        }
+
+        fetchContests();
     }, []);
 
     const upcomingContests = [];
@@ -35,7 +39,7 @@ const ContestList = (props) => {
     return (
         <div className='ContestList'>
             {
-                ongoingContests.length != 0 &&
+                ongoingContests.length !== 0 &&
                 <div className='ContestGroup-Container'>
                     <div className='ContestGroup-Title'>
                         Ongoing Contest
@@ -44,7 +48,7 @@ const ContestList = (props) => {
                 </div>
             }
             {
-                upcomingContests.length != 0 &&
+                upcomingContests.length !== 0 &&
                 <div className='ContestGroup-Container'>
                     <div className='ContestGroup-Title'>
                         Upcoming Contest
@@ -53,7 +57,7 @@ const ContestList = (props) => {
                 </div>
             }
             {
-                pastContests.length != 0 &&
+                pastContests.length !== 0 &&
                 <div className='ContestGroup-Container'>
                     <div className='ContestGroup-Title'>
                         Past Contest

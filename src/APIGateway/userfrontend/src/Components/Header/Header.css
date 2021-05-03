@@ -1,6 +1,6 @@
 .Header-Container {
     display: grid;
-    grid-template-columns: min-content auto min-content max-content;
+    grid-template-columns: min-content auto max-content;
     align-items: center;
     padding: 8px;
 }
@@ -16,4 +16,29 @@
     width: 32px;
     height: 32px;
     margin: 8px;
+}
+
+.Header-LoginButton {
+    text-decoration: none;
+    color: #1389f4;
+    border: 2px solid #1389f4;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 4px 24px;
+    margin: 4px;
+    font-size: 12px;
+}
+
+.Header-LoginButton:hover {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Header-UserControlls {
+    display: grid;
+    margin: 4px 16px;
+}
+
+.Header-UserControlls-UserIcon {
+    width: 32px;
+    height: 32px;
 }
