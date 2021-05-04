@@ -1,0 +1,23 @@
+.UserSubmissions-Container {
+    display: grid;
+    margin: 32px 64px;
+    gap: 32px;
+}
+
+.UserSubmissions-Header {
+    font-size: 24px;
+    justify-self: center;
+    color: #606060;
+}
+
+.UserSubmissions-NoSubmissionsYetBanner {
+    display: grid;
+    justify-self: center;
+    font-size: 20px;
+    color: #808080;
+}
+
+.UserSubmissions-SubmissionContainer {
+    display: grid;
+    gap: 12px;
+}
