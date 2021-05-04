@@ -1,0 +1,29 @@
+.UserBlogs-Container {
+    display: grid;
+    margin: 32px 64px;
+    gap: 32px;
+}
+
+.UserBlogs-Title {
+    color: #606060;
+    font-size: 24px;
+    justify-self: center;
+}
+
+.UserBlogs-NoBlogsWrittenYetBanner {
+    color: #808080;
+    font-size: 20px;
+    justify-self: center;
+}
+
+.UserBlogs-BlogsContainer {
+    display: grid;
+    border-top: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+}
+
+.UserBlogs-Blog {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 16px;
+}
