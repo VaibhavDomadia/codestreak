@@ -31,7 +31,7 @@ const App = (props) => {
 
     return (
         <div className='App'>
-            <Header user={user} />
+            <Header user={user} setUser={setUser}/>
             <NavigationBar />
             <Switch>
                 <Route path='/login'>

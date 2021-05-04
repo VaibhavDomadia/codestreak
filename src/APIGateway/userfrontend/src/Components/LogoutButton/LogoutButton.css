@@ -1,0 +1,23 @@
+.LogoutButton {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.LogoutButton:hover {
+    background-color: #f0f0f0;
+}
+
+.LogoutButton-Icon {
+    width: 20px;
+    height: 20px;
+    margin: 8px 16px;
+}
+
+.LogoutButton-Title {
+    font-size: 16px;
+    padding-right: 64px;
+    color: #606060;
+}
