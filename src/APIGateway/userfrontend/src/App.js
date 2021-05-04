@@ -10,6 +10,7 @@ import Problem from './Pages/Problem/Problem';
 import Login from './Pages/Login/Login';
 import { useEffect, useState } from 'react';
 import { getUser, isTokenExpired } from './util/authentication';
+import Profile from './Pages/Profile/Profile';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -40,6 +41,7 @@ const App = (props) => {
                 <Route path='/contest' component={ContestList}/>
                 <Route path='/problem' exact component={ProblemList}/>
                 <Route path='/problem/:problemID' component={Problem}/>
+                <Route path='/user/:userID' component={Profile}/>
             </Switch>
         </div>
     )

@@ -1,0 +1,72 @@
+.BlogTile-Container {
+    display: grid;
+    grid-template-columns: auto max-content;
+    color: #404040;
+    text-decoration: none;
+    gap: 8px;
+    padding: 8px 16px;
+}
+
+.BlogTile-Title {
+    font-weight: bold;
+    color: #404040;
+}
+
+.BlogTile-Stats-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content;
+    gap: 16px;
+}
+
+.BlogTile-Stats {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    align-items: center;
+}
+
+.BlogTile-Stats-Icon {
+    width: 16px;
+    height: 16px;
+}
+
+.BlogTile-Stats-Value {
+    color: #808080;
+    font-size: 12px;
+}
+
+.BlogTile-BlogInfo {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 32px;
+    grid-column: 1/3;
+}
+
+.BlogTile-CreationInfo {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content;
+    color: #a0a0a0;
+    font-size: 12px;
+    gap: 8px;
+}
+
+.BlogTile-CreationInfo-Value {
+    text-decoration: none;
+    color: #808080;
+}
+
+.blogTile-Tags-Container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+}
+
+.BlogTile-Tag-Title {
+    color: #a0a0a0;
+    font-size: 12px;
+}
+
+.BlogTile-Tag-Value {
+    color: #808080;
+    font-size: 12px;
+}

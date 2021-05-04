@@ -1,0 +1,42 @@
+.SubmissionTile-Container {
+    display: grid;
+    grid-template-columns: max-content auto max-content;
+    padding: 8px 16px;
+    text-decoration: none;
+    align-items: center;
+}
+
+.SubmissionTile-ProblemName {
+    text-decoration: none;
+    color: #606060;
+    font-weight: bold;
+}
+
+.SubmissionTile-SubmissionInfo {
+    color: #a0a0a0;
+    font-size: 12px;
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content;
+    align-items: center;
+    margin: 0px 16px;
+}
+
+.SubmissionTile-Handle {
+    color: #808080;
+    margin: 4px 8px;
+    text-decoration: none;
+}
+
+.SubmissionTile-SubmissionTime {
+    color: #808080;
+    margin: 4px 8px;
+
+}
+
+.SubmissionTile-VerdictResult {
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 8px;
+    color: #ffffff;
+}

@@ -37,3 +37,15 @@ export const getDateAndTime = (dateString) => {
 
     return `${month}/${date}/${year} ${hours}:${minutes}:${seconds}`;
 }
+
+export const getDate = (dateString) => {
+    const dateObject = new Date(dateString);
+
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+    const year = dateObject.getFullYear();
+    const month = months[dateObject.getMonth()];
+    const date = dateObject.getDate();
+
+    return `${month}/${date}/${year}`;
+}
