@@ -14,7 +14,6 @@ import Profile from './Pages/Profile/Profile';
 import UserSubmissions from './Pages/UserSubmissions/UserSubmissions';
 import UserBlogs from './Pages/UserBlogs/UserBlogs';
 import Blog from './Pages/Blog/Blog';
-import MarkdownEditor from './Components/MarkdownEditor/MarkdownEditor';
 
 const App = (props) => {
     const [user, setUser] = useState(null);

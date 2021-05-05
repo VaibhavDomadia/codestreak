@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Header.css';
 import CodeIcon from '../../Icons/code-solid.svg';
 import LinkButtonSolid from '../LinkButtonSolid/LinkButtonSolid';
@@ -9,7 +9,6 @@ import ProfileIcon from '../../Icons/id-badge-solid.svg';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
 const Header = (props) => {
-    const [showControlls, setShowControlls] = useState(false);
     let controlls = (
         <div className='Header-AuthenticationControlls'>
             <Link to={{pathname: '/login', state: {from: 'Login Button'}}} className='Header-LoginButton'>Login</Link>

@@ -16,7 +16,6 @@ import 'github-markdown-css';
 
 const Blog = (props) => {
     const [blog, setBlog] = useState(null);
-    const [content, setContent] = useState('');
 
     const blogID = props.match.params.blogID;
 

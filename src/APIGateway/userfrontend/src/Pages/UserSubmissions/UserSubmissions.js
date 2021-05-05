@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import SubmissionTile from '../../Components/Submission/SubmissionTile/SubmissionTile';
 import './UserSubmissions.css';
 
