@@ -1,0 +1,92 @@
+.Comment {
+    display: grid;
+    gap: 8px;
+}
+
+.Comment-Info-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    gap: 8px;
+    align-items: center;
+}
+
+.Comment-Info-ProfileImage {
+    width: 32px;
+    height: 32px;
+}
+
+.Comment-Info-Handle {
+    color: #808080;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.Comment-Info-CreatedAt {
+    color: #a0a0a0;
+    font-size: 12px;
+}
+
+.Comment-Content-Container {
+    padding-left: 40px;
+}
+
+.Comment-Controls {
+    display: grid;
+    padding-left: 40px;
+    grid-template-columns: max-content;
+}
+
+.Comment-ShowReplyButton {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.Comment-Icon {
+    width: 16px;
+    height: 16px;
+}
+
+.Comment-ShowReplyButton-Title {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.Comment-ShowReplyButton:hover .Comment-ShowReplyButton-Title {
+    color: #606060
+}
+
+.Reply {
+    display: grid;
+    gap: 8px;
+    padding: 16px 40px;
+}
+
+.Reply-Info-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    gap: 8px;
+    align-items: center;
+}
+
+.Reply-Info-ProfileImage {
+    width: 32px;
+    height: 32px;
+}
+
+.Reply-Info-Handle {
+    color: #808080;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.Reply-Info-CreatedAt {
+    color: #a0a0a0;
+    font-size: 12px;
+}
+
+.Reply-Content-Container {
+    padding-left: 40px;
+}

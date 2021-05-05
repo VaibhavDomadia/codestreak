@@ -1,0 +1,59 @@
+.MarkdownEditor {
+    display: grid;
+    margin: 8px;
+}
+
+.MarkdownEditor-Header {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    background-color: #f0f0f0;
+    gap: 8px;
+    padding: 0px 16px;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.MarkdownEditor-Header-Button {
+    display: grid;
+    padding: 8px 16px;
+    cursor: pointer;
+    color: #404040;
+    font-weight: bold;
+}
+
+.MarkdownEditor-Header-ActiveButton {
+    border-bottom: 2px solid #1389f4;
+    color: #1389f4;
+}
+
+.MarkdownEditor-Header-Button:hover:not(.MarkdownEditor-Header-ActiveButton) {
+    background-color: #dddddd;
+}
+
+.MarkdownEditor-Body {
+    padding: 16px;
+    display: grid;
+    border-left: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+    border-radius: 0px 0px 8px 8px;
+}
+
+.MarkdownEditor-Body-Write {
+    padding: 8px;
+    resize: vertical;
+    font-size: 16px;
+    color: #404040;
+    border: 1px solid #d0d0d0;
+    background-color: #fdfdfd;
+    outline: none;
+    border-radius: 8px;
+    height: 150px;
+}
+
+.MarkdownEditor-Body-Write:focus {
+    border: 2px solid #d0d0d0;
+}
+
+.MarkdownEditor-Body-Preview {
+    padding: 8px;
+}

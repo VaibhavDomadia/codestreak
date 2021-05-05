@@ -25,7 +25,7 @@ export const getDuration = (duration) => {
 export const getDateAndTime = (dateString) => {
     const dateObject = new Date(dateString);
 
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     const year = dateObject.getFullYear();
     const month = months[dateObject.getMonth()];
@@ -33,19 +33,18 @@ export const getDateAndTime = (dateString) => {
 
     const hours = dateObject.getHours();
     const minutes = dateObject.getMinutes();
-    const seconds = dateObject.getSeconds();
 
-    return `${month}/${date}/${year} ${hours}:${minutes}:${seconds}`;
+    return `${month} ${date},${year} ${hours}:${minutes}`;
 }
 
 export const getDate = (dateString) => {
     const dateObject = new Date(dateString);
 
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     const year = dateObject.getFullYear();
     const month = months[dateObject.getMonth()];
     const date = dateObject.getDate();
 
-    return `${month}/${date}/${year}`;
+    return `${month} ${date},${year}`;
 }

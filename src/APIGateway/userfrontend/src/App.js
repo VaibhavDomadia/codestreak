@@ -13,6 +13,8 @@ import { getUser, isTokenExpired } from './util/authentication';
 import Profile from './Pages/Profile/Profile';
 import UserSubmissions from './Pages/UserSubmissions/UserSubmissions';
 import UserBlogs from './Pages/UserBlogs/UserBlogs';
+import Blog from './Pages/Blog/Blog';
+import MarkdownEditor from './Components/MarkdownEditor/MarkdownEditor';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -46,6 +48,7 @@ const App = (props) => {
                 <Route path='/user/:userID' component={Profile}/>
                 <Route path='/submission/user/:userID' component={UserSubmissions}/>
                 <Route path='/blog/user/:userID' component={UserBlogs}/>
+                <Route path='/blog/:blogID' component={Blog}/>
             </Switch>
         </div>
     )
