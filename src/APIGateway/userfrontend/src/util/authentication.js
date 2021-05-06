@@ -16,3 +16,7 @@ export const isTokenExpired = (token) => {
 
     return Date.now() > expiryTime;
 }
+
+export const getToken = () => {
+    return localStorage.getItem('token');
+}
