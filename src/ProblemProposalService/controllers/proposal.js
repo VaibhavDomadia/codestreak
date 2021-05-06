@@ -270,7 +270,7 @@ exports.chat = async (req, res, next) => {
         await proposal.save();
 
         res.status(201).json({
-            message: 'Message Sent'
+            proposal
         });
     }
     catch(error) {
@@ -319,7 +319,7 @@ exports.editChatMessage = async (req, res, next) => {
         await proposal.save();
 
         res.status(200).json({
-            message: 'Message Edited'
+            proposal
         });
     }
     catch(error) {
@@ -367,7 +367,7 @@ exports.deleteChatMessage = async (req, res, next) => {
         await proposal.save();
 
         res.status(200).json({
-            message: 'Message Deleted'
+            proposal
         });
     }
     catch(error) {

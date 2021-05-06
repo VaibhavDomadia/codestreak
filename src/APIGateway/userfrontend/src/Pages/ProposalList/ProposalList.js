@@ -23,15 +23,13 @@ const ProposalList = (props) => {
                     history.replace('/500');
                 }
                 else {
-                    history.replace('/400');
+                    history.replace('/404');
                 }
             }
         }
 
         fetchProposals();
     }, []);
-
-    console.log(proposals);
 
     let userProposals = null;
     if(proposals) {

@@ -18,6 +18,8 @@ import BlogList from './Pages/BlogList/BlogList';
 import ProposalList from './Pages/ProposalList/ProposalList';
 import Error500 from './Pages/Error/Error500/Error500';
 import Error404 from './Pages/Error/Error404/Error404';
+import Proposal from './Pages/Proposal/Proposal';
+import Error403 from './Pages/Error/Error403/Error403';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -45,15 +47,17 @@ const App = (props) => {
                 <Route path='/login'>
                     <Login user={user} setUser={setUser}/>
                 </Route>
-                <Route path='/contest' component={ContestList}/>
+                <Route path='/user/:userID' component={Profile}/>
                 <Route path='/problem' exact component={ProblemList}/>
                 <Route path='/problem/:problemID' component={Problem}/>
-                <Route path='/user/:userID' component={Profile}/>
-                <Route path='/submission/user/:userID' component={UserSubmissions}/>
+                <Route path='/contest' component={ContestList}/>
                 <Route path='/blog/user/:userID' component={UserBlogs}/>
                 <Route path='/blog/:blogID' component={Blog}/>
                 <Route path='/blog' exact component={BlogList}/>
                 <Route path='/proposal' exact component={ProposalList}/>
+                <Route path='/proposal/:proposalID' component={Proposal}/>
+                <Route path='/submission/user/:userID' component={UserSubmissions}/>
+                <Route path='/403' exact component={Error403}/>
                 <Route path='/500' exact component={Error500}/>
                 <Route path='*' exact component={Error404}/>
             </Switch>
