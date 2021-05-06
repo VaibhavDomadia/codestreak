@@ -7,10 +7,25 @@ import Memory from '../../Icons/database-solid.svg';
 import Tag from '../../Icons/tag-solid.svg';
 import Code from '../../Icons/code-solid-light.svg';
 import TagCard from '../../Components/TagCard/TagCard';
+import MonacoEditor from '../../Components/MonacoEditor/MonacoEditor';
 
 
 const Problem = (props) => {
     const [problem, setProblem] = useState(null);
+    const [code, setCode] = useState('');
+    const [language, setLanguage] = useState('Java');
+
+    const onCodeChange = (value, event) => {
+        setCode(value);
+    }
+
+    const onLanguageChange = (value) => {
+        setLanguage(value);
+    }
+
+    const onCodeSubmit = () => {
+        console.log('Code Submitted');
+    }
 
     const problemID = props.match.params.problemID;
 
@@ -113,6 +128,14 @@ const Problem = (props) => {
                         })
                     }
                 </div>
+
+                <MonacoEditor
+                    code={code}
+                    language={language}
+                    onCodeChange={onCodeChange}
+                    onLanguageChange={onLanguageChange}
+                    onCodeSubmit={onCodeSubmit}
+                    />
             </div>
         )
     }

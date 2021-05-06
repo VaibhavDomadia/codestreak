@@ -1,0 +1,28 @@
+.MonacoEditor-Container {
+    display: grid;
+    border: 1px solid #e0e0e0;
+    margin: 32px 0px;
+}
+
+.MonacoEditor-Controls {
+    display: grid;
+    padding: 8px 32px;
+}
+
+.MonacoEditor-Language-Control {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    align-items: center;
+    justify-self: end;
+}
+
+.MonacoEditor-Language-Title {
+    color: #808080;
+}
+
+.MonacoEditor-Code-Submission-Buttons {
+    padding: 8px 32px;
+    display: grid;
+    grid-template-columns: max-content;
+}
