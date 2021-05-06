@@ -17,6 +17,9 @@ const NavigationBar = (props) => {
             <NavLink to='/blog' className='NavigationBar-Tile' activeClassName='NavigationBar-Tile-Active'>
                 Blogs
             </NavLink>
+            <NavLink to='/proposal' className='NavigationBar-Tile' activeClassName='NavigationBar-Tile-Active'>
+                Proposals
+            </NavLink>
         </div>
     )
 }
