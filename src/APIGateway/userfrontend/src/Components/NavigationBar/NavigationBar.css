@@ -1,6 +1,6 @@
 .NavigationBar-Container {
     display: grid;
-    grid-template-columns: min-content min-content min-content;
+    grid-template-columns: min-content min-content min-content min-content;
     background-color: #fafafa;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 }
