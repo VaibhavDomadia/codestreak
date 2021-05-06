@@ -1,0 +1,16 @@
+.Error500-Container {
+    margin: 64px;
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+}
+
+.Error500-StatusCode {
+    color: #404040;
+    font-size: 32px;
+}
+
+.Error500-Message {
+    color: #808080;
+    font-size: 24px;
+}

@@ -31,8 +31,16 @@ export const getDateAndTime = (dateString) => {
     const month = months[dateObject.getMonth()];
     const date = dateObject.getDate();
 
-    const hours = dateObject.getHours();
-    const minutes = dateObject.getMinutes();
+    let hours = dateObject.getHours();
+    let minutes = dateObject.getMinutes();
+
+    if(hours < 10) {
+        hours = `0${hours}`;
+    }
+
+    if(minutes < 10) {
+        minutes = `0${minutes}`;
+    }
 
     return `${month} ${date},${year} ${hours}:${minutes}`;
 }

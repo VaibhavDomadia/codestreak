@@ -16,6 +16,8 @@ import UserBlogs from './Pages/UserBlogs/UserBlogs';
 import Blog from './Pages/Blog/Blog';
 import BlogList from './Pages/BlogList/BlogList';
 import ProposalList from './Pages/ProposalList/ProposalList';
+import Error500 from './Pages/Error/Error500/Error500';
+import Error404 from './Pages/Error/Error404/Error404';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -52,6 +54,8 @@ const App = (props) => {
                 <Route path='/blog/:blogID' component={Blog}/>
                 <Route path='/blog' exact component={BlogList}/>
                 <Route path='/proposal' exact component={ProposalList}/>
+                <Route path='/500' exact component={Error500}/>
+                <Route path='*' exact component={Error404}/>
             </Switch>
         </div>
     )
