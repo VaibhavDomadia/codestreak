@@ -61,40 +61,42 @@ const Profile = (props) => {
                         </div>
                     </div>
                 </div>
-                
-                {
-                    user.submissions.length !== 0 &&
-                    <div className='Profile-Card'>
-                        <div className='Profile-Card-Title'>Recent Submissions</div>
-                        <div className='Profile-Card-Submissions-Container'>
-                            {
-                                user.submissions.map(submission => {
-                                    return <SubmissionTile key={submission._id} submission={submission}/>
-                                })
-                            }
-                        </div>
-                        <Link to={`/submission/user/${user._id}`} className='Profile-Card-AllSubmissionButton'>
-                            All Submissions
-                        </Link>
-                    </div>
-                }
 
-                {
-                    user.blogs.length !== 0 &&
-                    <div className='Profile-Card'>
-                        <div className='Profile-Card-Title'>Recent Blogs</div>
-                        <div className='Profile-Card-Submissions-Container'>
-                            {
-                                user.blogs.map(blog => {
-                                    return <BlogTile key={blog._id} blog={blog}/>
-                                })
-                            }
-                        </div>
-                        <Link to={`/blog/user/${user._id}`} className='Profile-Card-AllBlogsButton'>
-                            All Blogs
-                        </Link>
+                <div className='Profile-Card'>
+                    <div className='Profile-Card-Title'>Recent Submissions</div>
+                    <div className='Profile-Card-Submissions-Container'>
+                        {
+                            user.submissions.length === 0 ?
+                            <div className='Profile-Card-Submissions-NoSubmission'>
+                                No Submission Made Yet
+                            </div> :
+                            user.submissions.map(submission => {
+                                return <SubmissionTile key={submission._id} submission={submission}/>
+                            })
+                        }
                     </div>
-                }
+                    <Link to={`/submission/user/${user._id}`} className='Profile-Card-AllSubmissionButton'>
+                        All Submissions
+                    </Link>
+                </div>
+
+                <div className='Profile-Card'>
+                    <div className='Profile-Card-Title'>Recent Blogs</div>
+                    <div className='Profile-Card-Blogs-Container'>
+                        {
+                            user.blogs.length === 0 ?
+                            <div className='Profile-Card-Blogs-NoBlogs'>
+                                No Blogs Written Yet
+                            </div> :
+                            user.blogs.map(blog => {
+                                return <BlogTile key={blog._id} blog={blog}/>
+                            })
+                        }
+                    </div>
+                    <Link to={`/blog/user/${user._id}`} className='Profile-Card-AllBlogsButton'>
+                        All Blogs
+                    </Link>
+                </div>
             </div>
         )
     }
