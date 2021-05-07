@@ -43,14 +43,9 @@ const Contest = (props) => {
         fetchContest();
     }, [contestID]);
 
-    //console.log(contest);
-
     const onRegister = async () => {
         try {
             const response = await axiosInterceptor.post(`/api/contest/${contestID}/register`);
-
-            console.log(response.data.contest);
-            console.log(`/api/contest/${contestID}/register`);
 
             setContest(response.data.contest);
         }

@@ -22,12 +22,16 @@ exports.getContest = async (req, res, next) => {
             throw error;
         }
 
-        const problemIDs = contest.problemIDs.join(',');
+        const currentTime = new Date().getTime();
 
-        const response = await axios.get(`http://localhost:8002/problems?ids=${problemIDs}`);
-        const problems = response.data.problems;
+        if(currentTime >= contest.startTime) {
+            const problemIDs = contest.problemIDs.join(',');
 
-        contest = {...contest._doc, problems};        
+            const response = await axios.get(`http://localhost:8002/problems?ids=${problemIDs}`);
+            const problems = response.data.problems;
+
+            contest = {...contest._doc, problems};
+        }
 
         res.status(200).json({contest});
     }
