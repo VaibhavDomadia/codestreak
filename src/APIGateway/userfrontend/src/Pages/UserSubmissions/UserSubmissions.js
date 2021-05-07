@@ -1,17 +1,29 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import SubmissionTile from '../../Components/Submission/SubmissionTile/SubmissionTile';
 import './UserSubmissions.css';
 
 const UserSubmissions = (props) => {
     const userID = props.match.params.userID;
     const [submissions, setSubmissions] = useState(null);
+    const history = useHistory();
 
     useEffect(() => {
         const fetchUserSubmissions = async () => {
-            const response = await axios.get(`/api/submission/user/${userID}`);
+            try {
+                const response = await axios.get(`/api/submission/user/${userID}`);
 
-            setSubmissions(response.data.submissions);
+                setSubmissions(response.data.submissions);
+            }
+            catch(error) {
+                if(error.response.status === 500) {
+                    history.replace('/500');
+                }
+                else {
+                    history.replace('/404');
+                }
+            }
         }
 
         fetchUserSubmissions();

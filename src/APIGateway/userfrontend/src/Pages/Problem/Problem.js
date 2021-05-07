@@ -9,12 +9,15 @@ import Code from '../../Icons/code-solid-light.svg';
 import TagCard from '../../Components/TagCard/TagCard';
 import MonacoEditor from '../../Components/MonacoEditor/MonacoEditor';
 import ProblemDetails from '../../Components/Problem/ProblemDetails/ProblemDetails';
+import { useHistory } from 'react-router';
 
 
 const Problem = (props) => {
     const [problem, setProblem] = useState(null);
     const [code, setCode] = useState('');
     const [language, setLanguage] = useState('Java');
+
+    const history = useHistory();
 
     const onCodeChange = (value, event) => {
         setCode(value);
@@ -32,10 +35,20 @@ const Problem = (props) => {
 
     useEffect(() => {
         const fetchProblem = async () => {
-            const response = await axios.get(`/api/problem/${problemID}`);
-            const currentProblem = response.data.problem;
+            try {
+                const response = await axios.get(`/api/problem/${problemID}`);
+                const currentProblem = response.data.problem;
 
-            setProblem(currentProblem);
+                setProblem(currentProblem);
+            }
+            catch(error) {
+                if(error.response.status === 500) {
+                    history.replace('/500');
+                }
+                else {
+                    history.replace('/404');
+                }
+            }
         }
 
         fetchProblem();

@@ -2,16 +2,28 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ContestTile from '../../Components/Contest/ContestTile/ContestTile';
 import './ContestList.css';
+import { useHistory } from 'react-router';
 
 const ContestList = (props) => {
     const [contests, setContests] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         const fetchContests = async () => {
-            const response = await axios.get('/api/contests');
-            const contests = response.data.contests;
+            try {
+                const response = await axios.get('/api/contests');
+                const contests = response.data.contests;
 
-            setContests(contests);
+                setContests(contests);
+            }
+            catch(error) {
+                if(error.response.status === 500) {
+                    history.replace('/500');
+                }
+                else {
+                    history.replace('/404');
+                }
+            }
         }
 
         fetchContests();

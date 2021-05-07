@@ -7,7 +7,7 @@ import DislikesIcon from '../../Icons/thumbs-down-regular.svg';
 import CommentsIcon from '../../Icons/comment-dots-regular.svg';
 import ViewsIcon from '../../Icons/eye-regular.svg';
 import { getDateAndTime } from '../../util/helper';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Comment from '../../Components/Comment/Comment';
 
 import ReactMarkdown from 'react-markdown';
@@ -19,11 +19,23 @@ const Blog = (props) => {
 
     const blogID = props.match.params.blogID;
 
+    const history = useHistory();
+
     useEffect(() => {
         const fetchBlog = async () => {
-            const response = await axios.get(`/api/blog/${blogID}`);
+            try {
+                const response = await axios.get(`/api/blog/${blogID}`);
 
-            setBlog(response.data.blog);
+                setBlog(response.data.blog);
+            }
+            catch(error) {
+                if(error.response.status === 500) {
+                    history.replace('/500');
+                }
+                else {
+                    history.replace('/404');
+                }
+            }
         }
 
         fetchBlog();

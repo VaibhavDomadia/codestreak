@@ -9,7 +9,7 @@ import FlagIcon from '../../Icons/flag-regular.svg';
 import OrganizationIcon from '../../Icons/building-regular.svg';
 import { getDate } from '../../util/helper';
 import SubmissionTile from '../../Components/Submission/SubmissionTile/SubmissionTile';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import BlogTile from '../../Components/Blog/BlogTile/BlogTile';
 
 const Profile = (props) => {
@@ -17,11 +17,23 @@ const Profile = (props) => {
 
     const userID = props.match.params.userID;
 
+    const history = useHistory();
+
     useEffect(() => {
         const fetchUserProfile = async () => {
-            const response = await axios.get(`/api/user/${userID}`);
+            try {
+                const response = await axios.get(`/api/user/${userID}`);
 
-            setUser(response.data.user);
+                setUser(response.data.user);
+            }
+            catch(error) {
+                if(error.response.status === 500) {
+                    history.replace('/500');
+                }
+                else {
+                    history.replace('/404');
+                }
+            }
         }
 
         fetchUserProfile();

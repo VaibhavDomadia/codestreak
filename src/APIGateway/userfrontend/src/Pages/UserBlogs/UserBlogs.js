@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import BlogTile from '../../Components/Blog/BlogTile/BlogTile';
 import './UserBlogs.css';
 
@@ -8,11 +9,23 @@ const UserBlogs = (props) => {
 
     const userID = props.match.params.userID;
 
+    const history = useHistory();
+
     useEffect(() => {
         const fetchUserBlogs = async () => {
-            const response = await axios.get(`/api/blog/user/${userID}`);
+            try {
+                const response = await axios.get(`/api/blog/user/${userID}`);
 
-            setBlogs(response.data.blogs);
+                setBlogs(response.data.blogs);
+            }
+            catch(error) {
+                if(error.response.status === 500) {
+                    history.replace('/500');
+                }
+                else {
+                    history.replace('/404');
+                }
+            }
         }
 
         fetchUserBlogs();
