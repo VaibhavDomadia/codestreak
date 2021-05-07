@@ -30,4 +30,14 @@ router.delete('/contest/:contestID', auth.isAuthenticated, contestController.del
  */
 router.put('/contest/:contestID', auth.isAuthenticated, contestController.updateContest);
 
+/**
+ * REST Endpoint: POST /contest/:contestID/register
+ */
+router.post('/contest/:contestID/register', auth.isAuthenticated, contestController.registerForContest);
+
+/**
+ * REST Endpoint: POST /contest/:contestID/unregister
+ */
+router.post('/contest/:contestID/unregister', auth.isAuthenticated, contestController.unregisterForContest);
+
 module.exports = router;

@@ -20,6 +20,7 @@ import Error500 from './Pages/Error/Error500/Error500';
 import Error404 from './Pages/Error/Error404/Error404';
 import Proposal from './Pages/Proposal/Proposal';
 import Error403 from './Pages/Error/Error403/Error403';
+import Contest from './Pages/Contest/Contest';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -50,7 +51,8 @@ const App = (props) => {
                 <Route path='/user/:userID' component={Profile}/>
                 <Route path='/problem' exact component={ProblemList}/>
                 <Route path='/problem/:problemID' component={Problem}/>
-                <Route path='/contest' component={ContestList}/>
+                <Route path='/contest' exact component={ContestList}/>
+                <Route path='/contest/:contestID' component={Contest}/>
                 <Route path='/blog/user/:userID' component={UserBlogs}/>
                 <Route path='/blog/:blogID' component={Blog}/>
                 <Route path='/blog' exact component={BlogList}/>

@@ -56,3 +56,60 @@ export const getDate = (dateString) => {
 
     return `${month} ${date},${year}`;
 }
+
+export const getTimeBeforeContest = (timeInMilliseconds) => {
+    let duration = timeInMilliseconds/1000;
+    
+    let seconds = Math.floor(duration%60);
+    duration /= 60;
+    
+    let minutes = Math.floor(duration%60);
+    duration /= 60;
+    
+    let hours = Math.floor(duration%24);
+    duration /= 24;
+
+    let days = Math.floor(duration);
+
+    let value = '';
+    if(days !== 0) {
+        value += days === 1 ? ` ${days} day` : ` ${days} days`;
+    }
+    if(hours !== 0) {
+        value += hours === 1 ? ` ${hours} hour` : ` ${hours} hours`;
+    }
+    if(minutes !== 0) {
+        value += minutes === 1 ? ` ${minutes} minute` : ` ${minutes} minutes`;
+    }
+    if(seconds !== 0) {
+        value += seconds === 1 ? ` ${seconds} second` : ` ${seconds} seconds`;
+    }
+    
+
+    return value;
+}
+
+export const getTimeLeftForContestToEnd = (timeInMilliseconds) => {
+    let duration = timeInMilliseconds/1000;
+    
+    let seconds = Math.floor(duration%60);
+    duration /= 60;
+    
+    let minutes = Math.floor(duration%60);
+    duration /= 60;
+    
+    let hours = Math.floor(duration);
+
+    let value = '';
+    if(hours !== 0) {
+        value += hours === 1 ? ` ${hours} hour` : ` ${hours} hours`;
+    }
+    if(minutes !== 0) {
+        value += minutes === 1 ? ` ${minutes} minute` : ` ${minutes} minutes`;
+    }
+    if(seconds !== 0) {
+        value += seconds === 1 ? ` ${seconds} second` : ` ${seconds} seconds`;
+    }
+
+    return value;
+}

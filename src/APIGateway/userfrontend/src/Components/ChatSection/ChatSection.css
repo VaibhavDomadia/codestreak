@@ -49,6 +49,7 @@
     padding: 8px 16px;
     display: grid;
     align-items: center;
+    cursor: pointer;
 }
 
 .Chat-Control-Delete-Icon {

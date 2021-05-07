@@ -41,7 +41,7 @@ exports.getContest = async (req, res, next) => {
  */
 exports.getContests = async (req, res, next) => {
     const currentPage = req.query.page || 1;
-    const contestPerPage = 2;
+    const contestPerPage = 10;
 
     try {
         const contests = await Contest.find({}, 'name startTime duration setters', {skip: (currentPage-1)*contestPerPage, limit: contestPerPage});
@@ -59,6 +59,12 @@ exports.addContest = async (req, res, next) => {
     const {name, startTime, duration, setters, information, problemIDs} = req.body;
 
     try {
+        if(!req.isAdmin) {
+            const error = new Error('Not Authorized!');
+            error.statusCode = 403;
+            throw error;
+        }
+
         const contest = new Contest({name, startTime, duration, setters, information, problemIDs});
         
         const result = await contest.save();
@@ -79,6 +85,12 @@ exports.deleteContest = async (req, res, next) => {
     const contestID = req.params.contestID;
 
     try {
+        if(!req.isAdmin) {
+            const error = new Error('Not Authorized!');
+            error.statusCode = 403;
+            throw error;
+        }
+
         const contest = await Contest.findById(contestID);
         if(!contest) {
             throw new Error();
@@ -104,6 +116,12 @@ exports.updateContest = async (req, res, next) => {
     const {name, startTime, duration, setters, information, problemIDs} = req.body;
 
     try {
+        if(!req.isAdmin) {
+            const error = new Error('Not Authorized!');
+            error.statusCode = 403;
+            throw error;
+        }
+
         const contest = await Contest.findById(contestID);
         if(!contest) {
             throw new Error();
@@ -117,6 +135,99 @@ exports.updateContest = async (req, res, next) => {
     catch(error) {
         error.message = 'Please enter a valid Contest ID';
         error.statusCode = 404;
+        next(error);
+    }
+}
+
+/**
+ * Controller to register for a contest
+ */
+exports.registerForContest = async (req, res, next) => {
+    const userID = req.userID;
+    const contestID = req.params.contestID;
+
+    try {
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+            if(!contest) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = 'Please enter a valid Contest ID';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const currentTime = new Date().getTime();
+        if(currentTime >= contest.startTime) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        const userFound = contest.registeredParticipants.find(user => user.userID == userID);
+        if(!userFound) {
+            contest.registeredParticipants.push({
+                userID,
+                handle: req.handle
+            })
+            contest.numberOfRegisteredParticipants++;
+        }
+
+        const result = await contest.save();
+
+        res.status(200).json({
+            contest: result
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to register for a contest
+ */
+exports.unregisterForContest = async (req, res, next) => {
+    const userID = req.userID;
+    const contestID = req.params.contestID;
+
+    try {
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+            if(!contest) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = 'Please enter a valid Contest ID';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const currentTime = new Date().getTime();
+        if(currentTime >= contest.startTime) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        const userFound = contest.registeredParticipants.find(user => user.userID == userID);
+        if(userFound) {
+            userFound.remove();
+            contest.numberOfRegisteredParticipants--;
+        }
+
+        const result = await contest.save();
+
+        res.status(200).json({
+            contest: result
+        });
+    }
+    catch(error) {
         next(error);
     }
 }

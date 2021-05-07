@@ -20,3 +20,11 @@ export const isTokenExpired = (token) => {
 export const getToken = () => {
     return localStorage.getItem('token');
 }
+
+export const getUserID = (token) => {
+    if(!token) {
+        return null;
+    }
+
+    return JSON.parse(atob(token.split('.')[1])).userID;
+}

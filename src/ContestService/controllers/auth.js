@@ -20,12 +20,8 @@ exports.isAuthenticated = (req, res, next) => {
         }
 
         req.userID = decodedToken.userID;
+        req.handle = decodedToken.handle;
         req.isAdmin = decodedToken.isAdmin;
-        if(!req.isAdmin) {
-            const error = new Error('Not Authorized!');
-            error.statusCode = 403;
-            throw error;
-        }
         next();
     }
     catch(error) {

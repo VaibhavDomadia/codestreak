@@ -26,8 +26,8 @@ const ContestTile = (props) => {
                         contest.setters.map(setter => {
                             return (
                                 <div key={setter.userID} className='ContestTile-Collaboration-Setter'>
-                                    <Link to={`/user/${setter._id}`} className='ContestTile-Collaboration-Setter-Link'>
-                                        {setter.name}
+                                    <Link to={`/user/${setter.userID}`} className='ContestTile-Collaboration-Setter-Link'>
+                                        {setter.handle}
                                     </Link>
                                 </div>
                             )
