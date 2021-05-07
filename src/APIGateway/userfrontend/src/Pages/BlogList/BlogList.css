@@ -1,0 +1,28 @@
+.BlogList-Container {
+    display: grid;
+    gap: 16px;
+    margin: 32px 64px;
+}
+
+.BlogList-Header {
+    display: grid;
+    padding: 16px;
+    justify-items: center;
+}
+
+.BlogList-Header-Title {
+    color: #606060;
+    font-size: 24px;
+}
+
+.BlogList-Blog-Container {
+    display: grid;
+    border-top: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+}
+
+.BlogList-Blog {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 16px;
+}

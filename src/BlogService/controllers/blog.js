@@ -22,6 +22,25 @@ exports.getBlog = async (req, res, next) => {
 }
 
 /**
+ * Controller to fetch all blogs
+ */
+exports.getAllBlogs = async (req, res, next) => {
+    const currentPage = req.query.page || 1;
+    const blogsPerPage = 2;
+
+    try {
+        const totalNumberOfBlogs = await Blog.find().countDocuments();
+
+        const blogs = await Blog.find({}, '-content -comments', {skip: (currentPage-1)*blogsPerPage, limit: blogsPerPage});
+
+        res.status(200).json({blogs, totalNumberOfBlogs});
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
  * Controller to fetch all blogs of a user
  */
 exports.getUserBlogs = async (req, res, next) => {
