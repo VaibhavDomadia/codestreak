@@ -3,18 +3,23 @@ import axios from 'axios';
 import ContestTile from '../../Components/Contest/ContestTile/ContestTile';
 import './ContestList.css';
 import { useHistory } from 'react-router';
+import Pagination from '../../Components/Pagination/Pagination';
 
 const ContestList = (props) => {
     const [contests, setContests] = useState([]);
     const history = useHistory();
+    const [numberOfContests, setNumberOfContests] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const contestsPerPage = 10;
 
     useEffect(() => {
         const fetchContests = async () => {
             try {
-                const response = await axios.get('/api/contests');
+                const response = await axios.get(`/api/contests?page=${currentPage}`);
                 const contests = response.data.contests;
 
                 setContests(contests);
+                setNumberOfContests(response.data.totalNumberOfContests);
             }
             catch(error) {
                 if(error.response.status === 500) {
@@ -27,7 +32,7 @@ const ContestList = (props) => {
         }
 
         fetchContests();
-    }, []);
+    }, [currentPage]);
 
     const upcomingContests = [];
     const ongoingContests = [];
@@ -48,37 +53,48 @@ const ContestList = (props) => {
         }
     }
 
-    return (
-        <div className='ContestList'>
-            {
-                ongoingContests.length !== 0 &&
-                <div className='ContestGroup-Container'>
-                    <div className='ContestGroup-Title'>
-                        Ongoing Contest
+    let renderContests = null;
+    if(contests) {
+        renderContests = (
+            <div className='ContestList'>
+                {
+                    ongoingContests.length !== 0 &&
+                    <div className='ContestGroup-Container'>
+                        <div className='ContestGroup-Title'>
+                            Ongoing Contest
+                        </div>
+                        {ongoingContests}
                     </div>
-                    {ongoingContests}
-                </div>
-            }
-            {
-                upcomingContests.length !== 0 &&
-                <div className='ContestGroup-Container'>
-                    <div className='ContestGroup-Title'>
-                        Upcoming Contest
+                }
+                {
+                    upcomingContests.length !== 0 &&
+                    <div className='ContestGroup-Container'>
+                        <div className='ContestGroup-Title'>
+                            Upcoming Contest
+                        </div>
+                        {upcomingContests}
                     </div>
-                    {upcomingContests}
-                </div>
-            }
-            {
-                pastContests.length !== 0 &&
-                <div className='ContestGroup-Container'>
-                    <div className='ContestGroup-Title'>
-                        Past Contest
-                    </div>
-                    {pastContests}
-                </div>  
-            } 
-        </div>
-    )
+                }
+                {
+                    pastContests.length !== 0 &&
+                    <div className='ContestGroup-Container'>
+                        <div className='ContestGroup-Title'>
+                            Past Contest
+                        </div>
+                        {pastContests}
+                    </div>  
+                }
+                <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    numberOfItems={numberOfContests}
+                    itemsPerPage={contestsPerPage}
+                    />
+            </div>
+        )
+    }
+
+    return renderContests;
 }
 
 export default ContestList;

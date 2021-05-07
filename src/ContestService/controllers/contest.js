@@ -48,8 +48,9 @@ exports.getContests = async (req, res, next) => {
     const contestPerPage = 10;
 
     try {
+        const totalNumberOfContests = await Contest.find().countDocuments();
         const contests = await Contest.find({}, 'name startTime duration setters', {skip: (currentPage-1)*contestPerPage, limit: contestPerPage});
-        res.status(200).json({contests});
+        res.status(200).json({contests, totalNumberOfContests});
     }
     catch(error) {
         next(error);
