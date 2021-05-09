@@ -21,6 +21,7 @@ import Error404 from './Pages/Error/Error404/Error404';
 import Proposal from './Pages/Proposal/Proposal';
 import Error403 from './Pages/Error/Error403/Error403';
 import Contest from './Pages/Contest/Contest';
+import Submission from './Pages/Submission/Submission';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -58,6 +59,7 @@ const App = (props) => {
                 <Route path='/blog' exact component={BlogList}/>
                 <Route path='/proposal' exact component={ProposalList}/>
                 <Route path='/proposal/:proposalID' component={Proposal}/>
+                <Route path='/submission/:submissionID' exact component={Submission}/>
                 <Route path='/submission/user/:userID' component={UserSubmissions}/>
                 <Route path='/403' exact component={Error403}/>
                 <Route path='/500' exact component={Error500}/>
