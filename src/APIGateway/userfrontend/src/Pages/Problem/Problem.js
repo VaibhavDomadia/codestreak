@@ -12,6 +12,7 @@ import MonacoEditor from '../../Components/MonacoEditor/MonacoEditor';
 import ProblemDetails from '../../Components/Problem/ProblemDetails/ProblemDetails';
 import { useHistory } from 'react-router';
 import VerdictCard from '../../Components/VerdictCard/VerdictCard';
+import LinkButton from '../../Components/LinkButton/LinkButton';
 
 
 const Problem = (props) => {
@@ -95,21 +96,24 @@ const Problem = (props) => {
         renderProblem = (
             <div className='Problem-Container'>
                 <div className='Problem-Header-Container'>
-                    <div className='Problem-Difficulty' style={{backgroundColor: difficultyColor}}>
-                        {problem.difficulty}
+                    <div className='Problem-Header-Problem-Title'>
+                        <div className='Problem-Difficulty' style={{backgroundColor: difficultyColor}}>
+                            {problem.difficulty}
+                        </div>
+                        <h3 className='Problem-Name'>{problem.name}</h3>
                     </div>
-                    <h3 className='Problem-Name'>{problem.name}</h3>
+                    <div className='Problem-Tab-Container'>
+                        <TagCard icon={Correct} alt='Correct' title='Solved By' value={problem.solvedBy}/>
+                        <TagCard icon={Code} alt='Code' title='Submissions' value={problem.numberOfSubmission}/>
+                        <TagCard icon={Clock} alt='Clock' title='Time Limit' value={`${parseInt(problem.timeLimit)/1000} s`}/>
+                        <TagCard icon={Memory} alt='Memory' title='Memory Limit' value={`${problem.memory} MB`}/>
+                        <TagCard icon={Tag} alt='Tag' title='Tags' value={problem.tags.join(', ')}/>
+                    </div>
+                    <div className='Problem-Buttons-Container'>
+                        <LinkButton path={`/submission/problem/${problem._id}`} value='View All Submissions' color='#1389f4'/>
+                        <LinkButton path={`/editorial/problem/${problem._id}`} value='View All Editorials' color='#1389f4'/>
+                    </div>
                 </div>
-
-                <div className='Problem-Tab-Container'>
-                    <TagCard icon={Correct} alt='Correct' title='Solved By' value={problem.solvedBy}/>
-                    <TagCard icon={Code} alt='Code' title='Submissions' value={problem.numberOfSubmission}/>
-                    <TagCard icon={Clock} alt='Clock' title='Time Limit' value={`${parseInt(problem.timeLimit)/1000} s`}/>
-                    <TagCard icon={Memory} alt='Memory' title='Memory Limit' value={`${problem.memory} MB`}/>
-                    <TagCard icon={Tag} alt='Tag' title='Tags' value={problem.tags.join(', ')}/>
-                </div>
-
-                <div className='Problem-Seperator'></div>
 
                 <ProblemDetails problem={problem}/>
 

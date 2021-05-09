@@ -3,9 +3,15 @@ import './LinkButton.css';
 import { Link } from 'react-router-dom';
 
 const LinkButton = (props) => {
+    const { color, path, value } = props;
+    
+    const style = {
+        color
+    }
+
     return (
-        <Link to={props.path} className='LinkButton'>
-            {props.value}
+        <Link to={path} className='LinkButton' style={style}>
+            {value}
         </Link>
     )
 }
