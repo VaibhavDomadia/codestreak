@@ -31,3 +31,13 @@
     border-top: 1px solid #808080;
     margin: 16px 0px;
 }
+
+.Problem-VerdictCard-Container {
+    display: grid;
+    gap: 16px;
+}
+
+.Problem-VerdictCard-Title {
+    font-size: 24px;
+    color: #606060;
+}

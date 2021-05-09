@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosInterceptor from '../../util/interceptor';
 import React, { useState, useEffect } from 'react';
 import './Problem.css';
 import Correct from '../../Icons/check-solid.svg';
@@ -10,12 +11,14 @@ import TagCard from '../../Components/TagCard/TagCard';
 import MonacoEditor from '../../Components/MonacoEditor/MonacoEditor';
 import ProblemDetails from '../../Components/Problem/ProblemDetails/ProblemDetails';
 import { useHistory } from 'react-router';
+import VerdictCard from '../../Components/VerdictCard/VerdictCard';
 
 
 const Problem = (props) => {
     const [problem, setProblem] = useState(null);
     const [code, setCode] = useState('');
     const [language, setLanguage] = useState('Java');
+    const [verdict, setVerdict] = useState(null);
 
     const history = useHistory();
 
@@ -27,8 +30,33 @@ const Problem = (props) => {
         setLanguage(value);
     }
 
-    const onCodeSubmit = () => {
-        console.log('Code Submitted');
+    const onCodeSubmit = async () => {
+        try {
+            const response = await axiosInterceptor.post('/api/submission', {
+                problemID: problem._id,
+                problemName: problem.name,
+                code,
+                language
+            });
+
+            console.log(response.data.submission.verdict);
+            setVerdict(response.data.submission.verdict);
+        }
+        catch(error) {
+            console.log(error.response);
+            if(error.response.status === 401) {
+                history.push('/login', {from: 'Proposal List'});
+            }
+            else if(error.response.status === 403) {
+                history.push('/403');
+            }
+            else if(error.response.status === 500) {
+                history.push('/500');
+            }
+            else {
+                history.push('/404');
+            }
+        }
     }
 
     const problemID = props.match.params.problemID;
@@ -92,6 +120,19 @@ const Problem = (props) => {
                     onLanguageChange={onLanguageChange}
                     onCodeSubmit={onCodeSubmit}
                     />
+
+                {
+                    verdict &&
+                    <div className='Problem-VerdictCard-Container'>
+                        <div className='Problem-VerdictCard-Title'>Verdict</div>
+                        <VerdictCard
+                            result={verdict.result}
+                            message={verdict.message}
+                            time={verdict.time}
+                            logs={verdict.log}/>
+                    </div>
+                    
+                }
             </div>
         )
     }

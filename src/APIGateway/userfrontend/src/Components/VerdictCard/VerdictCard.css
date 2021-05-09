@@ -1,0 +1,39 @@
+.VerdictCard {
+    display: grid;
+    padding: 16px;
+    border-left: 4px solid #808080;
+    gap: 8px;
+}
+
+.VerdictCard-Result {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    align-items: center;
+    font-size: 24px;
+}
+
+.VerdictCard-Result-Icon {
+    width: 20px;
+    height: 20px;
+}
+
+.VerdictCard-Message {
+    font-size: 20px;
+    color: #404040;
+}
+
+.VerdictCard-Time {
+    color: #606060;
+}
+
+.VerdictCard-Logs {
+    display: grid;
+    gap: 4px;
+    font-size: 12px;
+    color: #808080;
+}
+
+.VerdictCard-Logs p {
+    margin: 0px;
+}

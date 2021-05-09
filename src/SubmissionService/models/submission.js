@@ -19,9 +19,13 @@ const submissionSchema = new Schema({
         type: String,
         required: true
     },
-    content: {
+    language: {
         type: String,
-        required: true
+        require: true
+    },
+    code: {
+        type: String,
+        default: ''
     },
     verdict: {
         type: {
@@ -29,8 +33,16 @@ const submissionSchema = new Schema({
                 type: String,
                 required: true
             },
-            log: {
+            message: {
                 type: String,
+                required: true
+            },
+            time: {
+                type: Number,
+                required: true
+            },
+            log: {
+                type: [String],
                 required: true
             }
         },

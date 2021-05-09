@@ -63,12 +63,15 @@ exports.getTestCases = async (req, res, next) => {
     const problemID = req.params.problemID;
 
     try {
-        const problem = await Problem.findById(problemID, 'samplecases hiddencases');
+        const problem = await Problem.findById(problemID, 'samplecases hiddencases timeLimit memory');
         if(!problem) {
             throw Error();
         }
         res.status(200).json({
-            cases: [...problem.samplecases, ...problem.hiddencases]
+            samplecases: problem.samplecases,
+            hiddencases: problem.hiddencases,
+            timeLimit: problem.timeLimit,
+            memory: problem.memory
         });
     }
     catch(error) {

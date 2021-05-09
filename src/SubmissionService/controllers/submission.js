@@ -1,4 +1,8 @@
+const axios = require('axios');
+
 const Submission = require('../models/submission');
+const { executeJava } = require('../util/executeJava');
+const { cleanupJava } = require('../util/helper');
 
 /**
  * Controller to fetch a submission
@@ -62,7 +66,39 @@ exports.getProblemSubmissions = async (req, res, next) => {
  * Controller to create a submission
  */
 exports.createSubmission = async (req, res, next) => {
-    const { problemID, problemName, userID, content } = req.body;
+    const { problemID, problemName, language, code } = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
+
+    try {
+        const response = await axios.get(`http://localhost:8002/problem/${problemID}/testcases`);
+        let testcases = [...response.data.samplecases, ...response.data.hiddencases];
+        let timeLimit = response.data.timeLimit;
+        let memory = response.data.memory;
+
+        const verdict = await executeJava(code, testcases, timeLimit, memory);
+
+        await cleanupJava();
+
+        const submission = new Submission({ problemID, problemName, userID, handle, language, code, verdict });
+        const result = await submission.save();
+
+        res.status(201).json({
+            message: 'Submission Created!',
+            submission: result
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to check a submission for sample test cases
+ */
+exports.checkSubmissionForSampleTestCases = async (req, res, next) => {
+    const { problemID, problemName, language, content } = req.body;
+    const userID = req.userID;
     const handle = req.handle;    
     const verdict = {
         result: "Accepted",
@@ -70,7 +106,10 @@ exports.createSubmission = async (req, res, next) => {
     }
 
     try {
-        const submission = new Submission({ problemID, problemName, userID, handle, content, verdict });
+        const response = await axios.get(`http://localhost:8002/problem/${problemID}/testcases`);
+        let testcases = [...response.data.samplecases, ...response.data.hiddencases];
+
+        const submission = new Submission({ problemID, problemName, userID, handle, language, content, verdict });
         const result = await submission.save();
 
         res.status(201).json({
