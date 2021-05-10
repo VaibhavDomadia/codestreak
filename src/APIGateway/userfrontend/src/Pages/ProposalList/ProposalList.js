@@ -3,6 +3,8 @@ import './ProposalList.css';
 import axios from '../../util/interceptor';
 import ProposalTile from '../../Components/Proposal/ProposalTile/ProposalTile';
 import { useHistory } from 'react-router';
+import DarkLinkIconButton from '../../Components/DarkLinkIconButton/DarkLinkIconButton';
+import AddIcon from '../../Icons/plus-solid.svg';
 
 const ProposalList = (props) => {
     const [proposals, setProposals] = useState();
@@ -41,6 +43,11 @@ const ProposalList = (props) => {
                         <div className='ProposalList-Header-Title'>No Problem Proposals Made by You Yet</div> :
                         <div className='ProposalList-Header-Title'>Problem Proposals Made by You</div>
                     }
+                    <DarkLinkIconButton
+                        to='/create/proposal'
+                        icon={AddIcon}
+                        alt='CreateProposal'
+                        title='New Proposal'/>
                 </div>
                 <div className='ProposalList-Proposals'>
                     {

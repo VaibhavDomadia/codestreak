@@ -1,15 +1,19 @@
 .ProposalList-Container {
     display: grid;
-    margin: 32px;
+    margin: 32px 64px;
+    gap: 16px;
 }
 
 .ProposalList-Header {
     display: grid;
+    grid-template-columns: auto max-content;
+    align-items: center;
 }
 
 .ProposalList-Header-Title {
     padding: 8px;
-    color: #808080
+    color: #606060;
+    font-size: 24px;
 }
 
 .ProposalList-Proposals {
