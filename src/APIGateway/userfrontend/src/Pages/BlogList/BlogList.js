@@ -4,6 +4,8 @@ import './BlogList.css';
 import { useHistory } from 'react-router';
 import BlogTile from '../../Components/Blog/BlogTile/BlogTile';
 import Pagination from '../../Components/Pagination/Pagination';
+import DarkLinkIconButton from '../../Components/DarkLinkIconButton/DarkLinkIconButton';
+import AddIcon from '../../Icons/plus-solid.svg';
 
 const BlogList = (props) => {
     const [blogs, setBlogs] = useState(null);
@@ -41,6 +43,7 @@ const BlogList = (props) => {
                     <div className='BlogList-Header-Title'>
                         { blogs.length === 0 ? 'No Blogs Found' : 'All Blogs'}
                     </div>
+                    <DarkLinkIconButton to='/create/blog' icon={AddIcon} alt='Add' title='New Blog'/>
                 </div>
                 <div className='BlogList-Blog-Container'>
                     {

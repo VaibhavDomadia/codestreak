@@ -6,8 +6,8 @@
 
 .BlogList-Header {
     display: grid;
+    grid-template-columns: auto max-content;
     padding: 16px;
-    justify-items: center;
 }
 
 .BlogList-Header-Title {
