@@ -1,6 +1,6 @@
 import React from 'react';
 import './LogoCard.css';
-import LogoIcon from '../../Icons/code-solid-light.svg';
+import LogoIcon from '../../Icons/code-solid.svg';
 
 const LogoCard = (props) => {
     return (

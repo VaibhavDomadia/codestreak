@@ -1,10 +1,8 @@
 .ResponseMessageCard {
     display: grid;
-    margin: 8px;
-    border-radius: 8px;
-    padding: 16px;
+    padding: 8px 16px;
 }
 
 .ResponseMessageCard-Title {
-    font-size: 16px;
+    font-size: 12px;
 }

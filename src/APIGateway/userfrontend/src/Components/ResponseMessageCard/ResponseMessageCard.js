@@ -8,7 +8,7 @@ const ResponseMessageCard = (props) => {
     const blue = parseInt(color.substring(4, 6), 16);
 
     const conatinerStyle = {
-        border: `2px solid #${color}`,
+        borderLeft: `4px solid #${color}`,
         backgroundColor: `rgba(${red}, ${green}, ${blue}, 0.1)`,
         color: `#${color}`
     }
