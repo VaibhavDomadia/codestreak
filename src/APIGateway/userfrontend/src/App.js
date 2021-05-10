@@ -24,6 +24,7 @@ import Contest from './Pages/Contest/Contest';
 import Submission from './Pages/Submission/Submission';
 import ProblemSubmissions from './Pages/ProblemSubmissions/ProblemSubmissions';
 import CreateBlog from './Pages/CreateBlog/CreateBlog';
+import CreateProposal from './Pages/CreateProposal/CreateProposal';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -62,6 +63,7 @@ const App = (props) => {
                 <Route path='/create/blog' component={CreateBlog}/>
                 <Route path='/proposal' exact component={ProposalList}/>
                 <Route path='/proposal/:proposalID' component={Proposal}/>
+                <Route path='/create/proposal' component={CreateProposal}/>
                 <Route path='/submission/:submissionID' exact component={Submission}/>
                 <Route path='/submission/user/:userID' component={UserSubmissions}/>
                 <Route path='/submission/problem/:problemID' component={ProblemSubmissions}/>

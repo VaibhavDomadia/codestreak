@@ -70,15 +70,11 @@ exports.getProblemProposals = async (req, res, next) => {
  * Controller to create a problem proposal
  */
 exports.createProblemProposal = async (req, res, next) => {
-    const { userID, handle, problem } = req.body;
+    const { problem } = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
-        if (userID != req.userID) {
-            const error = new Error("Not Authorized!");
-            error.statusCode = 403;
-            throw error;
-        }
-
         const proposal = new Proposal({ userID, handle, problem });
         const result = await proposal.save();
 

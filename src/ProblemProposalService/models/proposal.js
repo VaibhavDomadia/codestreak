@@ -71,7 +71,7 @@ const proposalSchema = new Schema({
                 type: Number,
                 required: true
             },
-            memoryLimit: {
+            memory: {
                 type: Number,
                 required: true
             },

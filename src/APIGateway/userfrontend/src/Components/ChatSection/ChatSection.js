@@ -12,6 +12,12 @@ const ChatSection = (props) => {
         setValue(event.target.value);
     }
 
+    const onEnter = (event) => {
+        if(event.keyCode === 13) {
+            onSubmit();
+        }
+    }
+
     const onSubmit = () => {
         onMessage(value);
         setValue('');
@@ -61,7 +67,7 @@ const ChatSection = (props) => {
                 }
             </div>
             <div className='ChatSection-Write'>
-                <input type='text' value={value} onChange={onChange} className='ChatSection-Input'></input>
+                <input type='text' value={value} onChange={onChange} placeholder='Enter Your Message' className='ChatSection-Input' onKeyDown={onEnter}></input>
                 <button className='ChatSection-SendButton' onClick={onSubmit}>Send</button>
             </div>
         </div>

@@ -1,22 +1,24 @@
-.InputError {
+.TextareaError {
     display: grid;
     gap: 8px;
 }
 
-.InputError-Input {
+.TextareaError-Textarea {
     padding: 8px 16px;
     font-size: 16px;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
     outline: none;
+    resize: vertical;
     color: #404040;
+    font: inherit;
 }
 
-.InputError-Input:focus {
+.TextareaError-Textarea:focus {
     border-width: 2px;
 }
 
-.InputError-Error {
+.TextareaError-Error {
     padding: 8px 16px;
     font-size: 12px;
     color: rgb(235, 64, 52);

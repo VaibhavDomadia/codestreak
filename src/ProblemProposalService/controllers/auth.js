@@ -20,6 +20,7 @@ exports.isAuthenticated = (req, res, next) => {
         }
 
         req.userID = decodedToken.userID;
+        req.handle = decodedToken.handle;
         req.isAdmin = decodedToken.isAdmin;
         next();
     }

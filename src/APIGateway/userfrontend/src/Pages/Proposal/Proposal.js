@@ -6,10 +6,12 @@ import DifficultyTag from '../../Components/DifficultyTag/DifficultyTag';
 import TagCard from '../../Components/TagCard/TagCard';
 import { getDateAndTime } from '../../util/helper';
 import ProblemDetails from '../../Components/Problem/ProblemDetails/ProblemDetails';
+import ChatSection from '../../Components/ChatSection/ChatSection';
 
 import ClockIcon from '../../Icons/clock-regular.svg';
 import StatusIcon from '../../Icons/hashtag-solid.svg';
-import ChatSection from '../../Components/ChatSection/ChatSection';
+import MemoryIcon from '../../Icons/database-solid.svg';
+import TagIcon from '../../Icons/tag-solid.svg';
 
 const Proposal = (props) => {
     const [proposal, setProposal] = useState(null);
@@ -98,6 +100,9 @@ const Proposal = (props) => {
                 <div className='Proposal-Tag-Container'>
                     <TagCard icon={ClockIcon} title='Submitted At' value={getDateAndTime(proposal.createdAt)}/>
                     <TagCard icon={StatusIcon} title='Status' value={proposal.status}/>
+                    <TagCard icon={ClockIcon} title='Time Limit' value={`${proposal.problem.timeLimit/1000}s`}/>
+                    <TagCard icon={MemoryIcon} title='Memory' value={`${proposal.problem.memory} MB`}/>
+                    <TagCard icon={TagIcon} title='Tags' value={proposal.problem.tags.join(', ')}/>
                 </div>
                 <div className='Proposal-Message-Container'>
                     <div className='Proposal-Message'>{proposal.message}</div>

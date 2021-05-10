@@ -76,6 +76,7 @@
     padding: 8px 16px;
     outline: none;
     border: 1px solid #808080;
+    color: #404040;
 }
 
 .ChatSection-SendButton {
@@ -84,9 +85,9 @@
     color: #ffffff;
     outline: none;
     border: 1px solid #282c34;
+    cursor: pointer;
 }
 
 .ChatSection-SendButton:hover {
-    background-color: #ffffff;
-    color: #282c34;
+    opacity: 0.8;
 }
