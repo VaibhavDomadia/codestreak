@@ -7,11 +7,7 @@ import 'github-markdown-css';
 
 const MarkdownEditor = (props) => {
     const [write, setWrite] = useState(true);
-    const { content, setContent } = props;
-
-    const changeContent = (event) => {
-        setContent(event.target.value);
-    }
+    const { content, onContentChange, error } = props;
 
     const onWrite = () => {
         setWrite(true);
@@ -43,7 +39,7 @@ const MarkdownEditor = (props) => {
             <div className='MarkdownEditor-Body'>
                 {
                     write ?
-                    <textarea value={content} onChange={changeContent} placeholder='Write your content here' className='MarkdownEditor-Body-Write'></textarea> :
+                    <textarea value={content} onChange={onContentChange} placeholder='Write your content here, Markdown is supported' className='MarkdownEditor-Body-Write'></textarea> :
                     <div className='MarkdownEditor-Body-Preview'>
                         <ReactMarkdown remarkPlugins={[gfm]} className='markdown-body'>
                             {content}
@@ -51,6 +47,12 @@ const MarkdownEditor = (props) => {
                     </div>
                 }
             </div>
+            {
+                error.length !== 0 &&
+                <div className='MarkdownEditor-Error-Container'>
+                    <div className='MarkdownEditor-Error'>{error}</div>
+                </div>
+            }
         </div>
     )
 }

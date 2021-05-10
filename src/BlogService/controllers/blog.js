@@ -64,7 +64,9 @@ exports.getUserBlogs = async (req, res, next) => {
  * Controller to create a blog
  */
 exports.createBlog = async (req, res, next) => {
-    const {userID, handle, title, content, tags} = req.body;
+    const {title, content, tags} = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
         const blog = new Blog({userID, handle, title, content, tags});

@@ -1,0 +1,24 @@
+.InputError {
+    display: grid;
+    gap: 8px;
+}
+
+.InputError-Input {
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    outline: none;
+}
+
+.InputError-Input:focus {
+    border-width: 2px;
+}
+
+.InputError-Error {
+    padding: 8px 16px;
+    font-size: 12px;
+    color: rgb(235, 64, 52);
+    border-left: 4px solid rgb(235, 64, 52);
+    background-color: rgba(235, 64, 52, 0.1);
+}
