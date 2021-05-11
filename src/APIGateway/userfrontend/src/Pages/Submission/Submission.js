@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../util/interceptor';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';

@@ -80,7 +80,7 @@ exports.getTestCases = async (req, res, next) => {
     const problemID = req.params.problemID;
 
     try {
-        const problem = await Problem.findById(problemID, 'samplecases hiddencases timeLimit memory accessTime, duration');
+        const problem = await Problem.findById(problemID, 'samplecases hiddencases timeLimit memory accessTime duration');
         if(!problem) {
             throw Error();
         }
@@ -96,6 +96,41 @@ exports.getTestCases = async (req, res, next) => {
     catch(error) {
         error.message = "Problem doesn't exist";
         error.statusCode = 404;
+        next(error);
+    }
+}
+
+/**
+ * Controller to update number of submissions of a problem
+ */
+exports.updateNumberOfSubmissions = async (req, res, next) => {
+    const problemID = req.params.problemID;
+    const result = req.body.result;
+
+    try {
+        let problem;
+        try {
+            problem = await Problem.findById(problemID);
+            if(!problem) {
+                throw Error();
+            }
+        }
+        catch(error) {
+            error.message = "Problem doesn't exists";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        problem.numberOfSubmission++;
+        if(result === 'Accepted') {
+            problem.solvedBy++;
+        }
+
+        const savedProblem = await problem.save();
+
+        res.status(200).json({problem: savedProblem});
+    }
+    catch(error) {
         next(error);
     }
 }

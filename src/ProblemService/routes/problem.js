@@ -26,6 +26,11 @@ router.post('/problem', auth.isAuthenticated, problemController.addProblem);
 router.get('/problem/:problemID/testcases', problemController.getTestCases);
 
 /**
+ * REST Endpoint: POST /problem/:problemID/submission
+ */
+router.post('/problem/:problemID/submission', problemController.updateNumberOfSubmissions);
+
+/**
  * REST Endpoint: DELETE /problem/:problemID
  */
 router.delete('/problem/:problemID', auth.isAuthenticated, problemController.deleteProblem);

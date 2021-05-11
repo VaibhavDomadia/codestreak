@@ -27,7 +27,7 @@ exports.getSubmission = async (req, res, next) => {
         const currentTime = new Date().getTime();
         const accessTime = submission.accessTime;
 
-        const isAccessAllowedToUser = req.userID === submission.userID;
+        const isAccessAllowedToUser = req.userID === submission.userID.toString();
 
         if(currentTime < accessTime && !isAccessAllowedToUser) {
             const error = new Error("Access Denied!");
@@ -109,6 +109,8 @@ exports.createSubmission = async (req, res, next) => {
 
         const submission = new Submission({ problemID, problemName, userID, handle, language, code, verdict, accessTime: accessTime + duration });
         const result = await submission.save();
+
+        await axios.post(`http://localhost:8002/problem/${problemID}/submission`, {result: verdict.result});
 
         res.status(201).json({
             message: 'Submission Created!',

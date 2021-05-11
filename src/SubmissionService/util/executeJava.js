@@ -26,8 +26,6 @@ exports.executeJava = async (code, testcases, timeLimit, memory) => {
             try {
                 const { stdout, stderr } = await exec('java -cp util/code Solution < util/code/input.txt > util/code/output.txt', {timeout: timeLimit, maxBuffer: memory*1024*1024});
 
-                console.log('Why Here?');
-
                 const timeAfterExecution = new Date().getTime();
 
                 const timeToExecute = timeAfterExecution - timeBeforeExecution;
@@ -35,7 +33,6 @@ exports.executeJava = async (code, testcases, timeLimit, memory) => {
                 maxTime = Math.max(maxTime, timeToExecute);
             }
             catch(error) {
-                console.log(error);
                 const timeAfterExecution = new Date().getTime();
 
                 const timeToExecute = timeAfterExecution - timeBeforeExecution;
