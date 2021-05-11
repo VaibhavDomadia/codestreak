@@ -87,7 +87,9 @@ exports.createBlog = async (req, res, next) => {
  */
 exports.updateBlog = async (req, res, next) => {
     const blogID = req.params.blogID;
-    const {userID, handle, title, content, tags} = req.body;
+    const {title, content, tags} = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
         let blog;
