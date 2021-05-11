@@ -12,7 +12,7 @@ const BlogList = (props) => {
     const history = useHistory();
     const [numberOfBlogs, setNumberOfBlogs] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const blogsPerPage = 2;
+    const blogsPerPage = 10;
 
     useEffect(() => {
         const fetchBlogs = async () => {

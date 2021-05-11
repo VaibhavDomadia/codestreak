@@ -34,7 +34,7 @@ exports.getBlog = async (req, res, next) => {
  */
 exports.getAllBlogs = async (req, res, next) => {
     const currentPage = req.query.page || 1;
-    const blogsPerPage = 2;
+    const blogsPerPage = 10;
 
     try {
         const totalNumberOfBlogs = await Blog.find().countDocuments();
