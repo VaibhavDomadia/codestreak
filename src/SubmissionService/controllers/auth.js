@@ -28,3 +28,23 @@ exports.isAuthenticated = (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to validate token if present and store userID
+ */
+exports.optionalAuthentication = (req, res, next) => {
+    try {
+        const token = req.get('Authorization');
+        if(token) {
+            const decodedToken = jsonWebToken.verify(token, 'secretKey');
+            if(decodedToken) {
+                req.userID = decodedToken.userID;
+            }
+        }
+
+        next();
+    }
+    catch(error) {
+        next(error);
+    }
+}

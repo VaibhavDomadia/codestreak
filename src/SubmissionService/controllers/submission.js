@@ -11,16 +11,33 @@ exports.getSubmission = async (req, res, next) => {
     const submissionID = req.params.submissionID;
 
     try {
-        const submission = await Submission.findById(submissionID);
-        if (!submission) {
-            throw new Error();
+        let submission;
+        try {
+            submission = await Submission.findById(submissionID);
+            if (!submission) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Submission doesn't exists";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const currentTime = new Date().getTime();
+        const accessTime = submission.accessTime;
+
+        const isAccessAllowedToUser = req.userID === submission.userID;
+
+        if(currentTime < accessTime && !isAccessAllowedToUser) {
+            const error = new Error("Access Denied!");
+            error.statusCode = 403;
+            throw error;
         }
 
         res.status(200).json({ submission });
     }
     catch (error) {
-        error.message = "Submission doesn't exists";
-        error.statusCode = 404;
         next(error);
     }
 }
@@ -75,12 +92,22 @@ exports.createSubmission = async (req, res, next) => {
         let testcases = [...response.data.samplecases, ...response.data.hiddencases];
         let timeLimit = response.data.timeLimit;
         let memory = response.data.memory;
+        let accessTime = new Date(response.data.accessTime).getTime();
+        let duration = response.data.duration;
+
+        let currentTime = new Date().getTime();
+
+        if(currentTime < accessTime) {
+            const error = new Error("Access Denied!");
+            error.statusCode = 403;
+            throw error;
+        }
 
         const verdict = await executeJava(code, testcases, timeLimit, memory);
 
         await cleanupJava();
 
-        const submission = new Submission({ problemID, problemName, userID, handle, language, code, verdict });
+        const submission = new Submission({ problemID, problemName, userID, handle, language, code, verdict, accessTime: accessTime + duration });
         const result = await submission.save();
 
         res.status(201).json({
@@ -89,35 +116,6 @@ exports.createSubmission = async (req, res, next) => {
         });
     }
     catch(error) {
-        next(error);
-    }
-}
-
-/**
- * Controller to check a submission for sample test cases
- */
-exports.checkSubmissionForSampleTestCases = async (req, res, next) => {
-    const { problemID, problemName, language, content } = req.body;
-    const userID = req.userID;
-    const handle = req.handle;    
-    const verdict = {
-        result: "Accepted",
-        log: "Correct Answer!"
-    }
-
-    try {
-        const response = await axios.get(`http://localhost:8002/problem/${problemID}/testcases`);
-        let testcases = [...response.data.samplecases, ...response.data.hiddencases];
-
-        const submission = new Submission({ problemID, problemName, userID, handle, language, content, verdict });
-        const result = await submission.save();
-
-        res.status(201).json({
-            message: 'Submission Created!',
-            submission: result
-        });
-    }
-    catch (error) {
         next(error);
     }
 }

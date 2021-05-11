@@ -27,6 +27,10 @@ const submissionSchema = new Schema({
         type: String,
         default: ''
     },
+    accessTime: {
+        type: Date,
+        required: true
+    },
     verdict: {
         type: {
             result: {
