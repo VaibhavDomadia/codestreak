@@ -21,7 +21,7 @@
 
 .Blog-Info-Container {
     display: grid;
-    grid-template-columns: max-content max-content auto max-content max-content max-content;
+    grid-template-columns: max-content max-content auto max-content;
     align-items: center;
     gap: 16px;
     padding: 8px 16px;
@@ -44,19 +44,20 @@
     font-size: 12px;
 }
 
-.Blog-Views, .Blog-Likes, .Blog-Dislikes {
+.Blog-Views {
     display: grid;
     grid-template-columns: max-content max-content;
     gap: 8px;
+    align-items: center;
 }
 
-.Blog-Views-Icon, .Blog-Likes-Icon, .Blog-Dislikes-Icon {
+.Blog-Views-Icon {
     width: 16px;
     height: 16px;
 }
 
-.Blog-Views-Value, .Blog-Likes-Value, .Blog-Dislikes-Value {
-    font-size: 12px;
+.Blog-Views-Value {
+    font-size: 16px;
     color: #a0a0a0;
 }
 

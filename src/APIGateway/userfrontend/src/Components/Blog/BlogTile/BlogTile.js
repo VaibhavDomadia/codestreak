@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './BlogTile.css';
 
-import LikesIcon from '../../../Icons/thumbs-up-regular.svg';
-import DislikesIcon from '../../../Icons/thumbs-down-regular.svg';
 import CommentsIcon from '../../../Icons/comment-dots-regular.svg';
 import ViewsIcon from '../../../Icons/eye-regular.svg';
 import { getDate } from '../../../util/helper';
@@ -16,14 +14,6 @@ const BlogTile = (props) => {
                 {blog.title}
             </div>
             <div className='BlogTile-Stats-Container'>
-                <div className='BlogTile-Stats'>
-                    <img src={LikesIcon} alt='Likes' className='BlogTile-Stats-Icon'></img>
-                    <div className='BlogTile-Stats-Value'>{blog.likes}</div>
-                </div>
-                <div className='BlogTile-Stats'>
-                    <img src={DislikesIcon} alt='Dislikes' className='BlogTile-Stats-Icon'></img>
-                    <div className='BlogTile-Stats-Value'>{blog.dislikes}</div>
-                </div>
                 <div className='BlogTile-Stats'>
                     <img src={ViewsIcon} alt='Views' className='BlogTile-Stats-Icon'></img>
                     <div className='BlogTile-Stats-Value'>{blog.views}</div>

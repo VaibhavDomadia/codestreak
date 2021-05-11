@@ -49,7 +49,7 @@ const Comment = (props) => {
                     {
                         comment.replies.map(reply => {
                             return (
-                                <div className='Reply'>
+                                <div key={reply._id} className='Reply'>
                                     <div className='Reply-Info-Container'>
                                         <img src={ProfileIcon} alt='ProfileImage' className='Reply-Info-ProfileImage'></img>
                                         <Link to={`/user/${reply.userID}`} className='Reply-Info-Handle'>

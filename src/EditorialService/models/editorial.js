@@ -27,14 +27,6 @@ const editorialSchema = new Schema({
         type: String,
         required: true
     },
-    likes: {
-        type: Number,
-        default: 0
-    },
-    dislikes: {
-        type: Number,
-        default: 0
-    },
     tags: {
         type: [String],
         required: true
@@ -58,10 +50,6 @@ const editorialSchema = new Schema({
                     type: String,
                     required: true
                 },
-                stars: {
-                    type: Number,
-                    default: 0
-                },
                 content: {
                     type: String,
                     required: true
@@ -76,10 +64,6 @@ const editorialSchema = new Schema({
                             handle: {
                                 type: String,
                                 required: true
-                            },
-                            stars: {
-                                type: Number,
-                                default: 0
                             },
                             content: {
                                 type: String,

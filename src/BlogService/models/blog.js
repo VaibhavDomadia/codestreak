@@ -19,14 +19,6 @@ const blogSchema = new Schema({
         type: String,
         required: true
     },
-    likes: {
-        type: Number,
-        default: 0
-    },
-    dislikes: {
-        type: Number,
-        default: 0
-    },
     tags: {
         type: [String],
         required: true
@@ -50,10 +42,6 @@ const blogSchema = new Schema({
                     type: String,
                     required: true
                 },
-                stars: {
-                    type: Number,
-                    default: 0
-                },
                 content: {
                     type: String,
                     required: true
@@ -68,10 +56,6 @@ const blogSchema = new Schema({
                             handle: {
                                 type: String,
                                 required: true
-                            },
-                            stars: {
-                                type: Number,
-                                default: 0
                             },
                             content: {
                                 type: String,

@@ -3,8 +3,6 @@ import axiosInterceptor from '../../util/interceptor';
 import React, { useEffect, useState } from 'react';
 import './Blog.css';
 import ProfileIcon from '../../Icons/user-circle-solid.svg';
-import LikesIcon from '../../Icons/thumbs-up-regular.svg';
-import DislikesIcon from '../../Icons/thumbs-down-regular.svg';
 import CommentsIcon from '../../Icons/comment-dots-regular.svg';
 import ViewsIcon from '../../Icons/eye-regular.svg';
 import DeleteIcon from '../../Icons/trash-solid.svg';
@@ -93,14 +91,6 @@ const Blog = (props) => {
                         <img src={ViewsIcon} alt='Views' className='Blog-Views-Icon'></img>
                         <div className='Blog-Views-Value'>{blog.views}</div>
                     </div>
-                    <div className='Blog-Likes'>
-                        <img src={LikesIcon} alt='Likes' className='Blog-Likes-Icon'></img>
-                        <div className='Blog-Likes-Value'>{blog.likes}</div>
-                    </div>
-                    <div className='Blog-Dislikes'>
-                        <img src={DislikesIcon} alt='Dislikes' className='Blog-Dislikes-Icon'></img>
-                        <div className='Blog-Dislikes-Value'>{blog.dislikes}</div>
-                    </div>
                 </div>
                 <div className='Blog-Tags-Container'>
                     <div className='Blog-Tags-Title'>Tags:</div>
@@ -130,7 +120,7 @@ const Blog = (props) => {
                 <div className='Blog-Comments-Container'>
                     {
                         blog.comments.map(comment => {
-                            return <Comment key={Comment._id} comment={comment}/>
+                            return <Comment key={comment._id} comment={comment}/>
                         })
                     }
                 </div>
