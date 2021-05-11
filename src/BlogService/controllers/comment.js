@@ -5,7 +5,9 @@ const Blog = require('../models/blog');
  */
 exports.addComment = async (req, res, next) => {
     const blogID = req.params.blogID;
-    const content = req.body.content;    
+    const content = req.body.content;
+    console.log(content);
+    console.log('Hello Route are you living????');
 
     try {
         let blog;
@@ -35,6 +37,7 @@ exports.addComment = async (req, res, next) => {
         });
     }
     catch(error) {
+        console.log(error);
         next(error);
     }
 }

@@ -119,4 +119,5 @@
 .Blog-Comments-Container {
     display: grid;
     padding: 16px;
+    gap: 16px;
 }

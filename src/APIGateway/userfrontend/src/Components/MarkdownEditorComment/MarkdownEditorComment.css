@@ -1,0 +1,83 @@
+.MarkdownEditorComment {
+    display: grid;
+}
+
+.MarkdownEditorComment-Header {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    background-color: rgba(0, 0, 0, 0.05);
+    gap: 8px;
+    padding: 0px 16px;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.MarkdownEditorComment-Header-Button {
+    display: grid;
+    padding: 8px 16px;
+    cursor: pointer;
+    color: #404040;
+}
+
+.MarkdownEditorComment-Header-ActiveButton {
+    border-bottom: 2px solid #1389f4;
+    color: #1389f4;
+}
+
+.MarkdownEditorComment-Header-Button:hover:not(.MarkdownEditorComment-Header-ActiveButton) {
+    background-color: #dddddd;
+}
+
+.MarkdownEditorComment-Body {
+    display: grid;
+    border-left: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.MarkdownEditorComment-Body-Write {
+    padding: 16px;
+    resize: vertical;
+    font-size: 16px;
+    color: #404040;
+    border: none;
+    outline: none;
+    height: 150px;
+    font: inherit;
+}
+
+.MarkdownEditorComment-Body-Preview {
+    padding: 16px;
+}
+
+.MarkdownEditorComment-Error-Container {
+    padding: 8px 0px;
+}
+
+.MarkdownEditorComment-Error {
+    padding: 8px 16px;
+    font-size: 12px;
+    color: rgb(235, 64, 52);
+    border-left: 4px solid rgb(235, 64, 52);
+    background-color: rgba(235, 64, 52, 0.1);
+}
+
+.MarkdownEditorComment-Controls {
+    padding: 8px 16px;
+    border-radius: 0px 0px 4px 4px;
+    border-left: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.MarkdownEditorComment-SaveButton {
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #282c34;
+    border: none;
+    cursor: pointer;
+}
+
+.MarkdownEditorComment-SaveButton:hover {
+    opacity: 0.8;
+}

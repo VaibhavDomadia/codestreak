@@ -33,15 +33,17 @@
 .Comment-Controls {
     display: grid;
     padding-left: 40px;
-    grid-template-columns: max-content;
+    grid-template-columns: max-content max-content max-content;
+    gap: 16px;
 }
 
-.Comment-ShowReplyButton {
+.Comment-Controls-Field {
     display: grid;
     grid-template-columns: max-content max-content;
     align-items: center;
     gap: 12px;
     cursor: pointer;
+    padding: 4px 8px;
 }
 
 .Comment-Icon {
@@ -49,12 +51,13 @@
     height: 16px;
 }
 
-.Comment-ShowReplyButton-Title {
+.Comment-Controls-Field-Value {
     font-size: 12px;
     color: #a0a0a0;
 }
 
-.Comment-ShowReplyButton:hover .Comment-ShowReplyButton-Title {
+.Comment-Controls-Field:hover {
+    background-color: rgba(0, 0, 0, 0.05);
     color: #606060
 }
 

@@ -17,9 +17,12 @@ import 'github-markdown-css';
 import { getUserID } from '../../util/authentication';
 import DarkSmallIconButton from '../../Components/DarkSmallIconButton/DarkSmallIconButton';
 import DarkSmallLinkIconButton from '../../Components/DarkSmallLinkIconButton/DarkSmallLinkIconButton';
+import MarkdownEditorComment from '../../Components/MarkdownEditorComment/MarkdownEditorComment';
 
 const Blog = (props) => {
     const [blog, setBlog] = useState(null);
+    const [commentContent, setCommentContent] = useState('');
+    const [commentContentError, setCommentContentError] = useState('');
 
     const blogID = props.match.params.blogID;
 
@@ -53,7 +56,7 @@ const Blog = (props) => {
         }
         catch(error) {
             if(error.response.status === 401) {
-                history.push('/login', {from: 'Proposal List'});
+                history.push('/login', {from: 'Blog'});
             }
             else if(error.response.status === 403) {
                 history.push('/403');
@@ -63,6 +66,44 @@ const Blog = (props) => {
             }
             else {
                 history.push('/404');
+            }
+        }
+    }
+
+    const onCommentContentChange = (event) => {
+        setCommentContentError('');
+        setCommentContent(event.target.value);
+    }
+
+    console.log(commentContent);
+
+    const onComment = async (event) => {
+        let isErrorPresent = false;
+        if(commentContent.trim() === '') {
+            setCommentContentError('This Field is Required');
+            isErrorPresent = true;
+        }
+        if(!isErrorPresent) {
+            try {
+                const response = await axiosInterceptor.post(`/api/blog/${blogID}/comment`, {content: commentContent});
+
+                setBlog(response.data.blog);
+            }
+            catch(error) {
+                console.log('What is wrong');
+                console.log(error);
+                if(error.response.status === 401) {
+                    history.push('/login', {from: 'Blog'});
+                }
+                else if(error.response.status === 403) {
+                    history.push('/403');
+                }
+                else if(error.response.status === 500) {
+                    history.push('/500');
+                }
+                else {
+                    history.push('/404');
+                }
             }
         }
     }
@@ -118,9 +159,15 @@ const Blog = (props) => {
                     Comments: {blog.numberOfComments}
                 </div>
                 <div className='Blog-Comments-Container'>
+                    <MarkdownEditorComment
+                        content={commentContent}
+                        onContentChange={onCommentContentChange}
+                        error={commentContentError}
+                        saveTitle='Comment'
+                        onSave={onComment}/>
                     {
                         blog.comments.map(comment => {
-                            return <Comment key={comment._id} comment={comment}/>
+                            return <Comment key={comment._id} comment={comment} userID={userID}/>
                         })
                     }
                 </div>

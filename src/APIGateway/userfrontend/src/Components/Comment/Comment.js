@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import { getDateAndTime } from '../../util/helper';
 import './Comment.css';
 import ProfileIcon from '../../Icons/user-circle-solid.svg';
-import CommentsIcon from '../../Icons/comment-dots-regular.svg';
+import CommentsIcon from '../../Icons/comment-dots-solid.svg';
+import EditIcon from '../../Icons/pen-solid-dark.svg';
+import DeleteIcon from '../../Icons/trash-solid-dark.svg';
 import { Link } from 'react-router-dom';
 
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import 'github-markdown-css';
+import MarkdownEditor from '../MarkdownEditor/MarkdownEditor';
 
 const Comment = (props) => {
-    const { comment } = props;
+    const { comment, userID } = props;
     const [showReply, setShowReply] = useState(false);
 
     const toggleShowReply = () => {
@@ -25,7 +28,7 @@ const Comment = (props) => {
                     {comment.handle}
                 </Link>
                 <div className='Comment-Info-CreatedAt'>
-                    Created At: {getDateAndTime(comment.createdAt)}
+                    Written At: {getDateAndTime(comment.createdAt)}
                 </div>
             </div>
             <div className='Comment-Content-Container'>
@@ -34,14 +37,28 @@ const Comment = (props) => {
                 </ReactMarkdown>
             </div>
             <div className='Comment-Controls'>
-                <div className='Comment-ShowReplyButton' onClick={toggleShowReply}>
+                <div className='Comment-Controls-Field' onClick={toggleShowReply}>
                     <img src={CommentsIcon} alt='Comment' className='Comment-Icon'></img>
-                    <div className='Comment-ShowReplyButton-Title'>
+                    <div className='Comment-Controls-Field-Value'>
                         {
                             showReply ? 'Hide Replies' : 'Show Replies'
                         }
                     </div>
                 </div>
+                {
+                    userID &&
+                    <div className='Comment-Controls-Field'>
+                        <img src={EditIcon} alt='Edit' className='Comment-Icon'></img>
+                        <div className='Comment-Controls-Field-Value'>Edit</div>
+                    </div>
+                }
+                {
+                    userID &&
+                    <div className='Comment-Controls-Field'>
+                        <img src={DeleteIcon} alt='Delete' className='Comment-Icon'></img>
+                        <div className='Comment-Controls-Field-Value'>Delete</div>
+                    </div>
+                }
             </div>
             {
                 showReply &&
@@ -56,7 +73,7 @@ const Comment = (props) => {
                                             {reply.handle}
                                         </Link>
                                         <div className='Reply-Info-CreatedAt'>
-                                            Created At: {getDateAndTime(reply.createdAt)}
+                                            Written At: {getDateAndTime(reply.createdAt)}
                                         </div>
                                     </div>
                                     <div className='Reply-Content-Container'>
