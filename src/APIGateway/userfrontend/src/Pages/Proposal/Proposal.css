@@ -6,15 +6,15 @@
 
 .Proposal-Header {
     display: grid;
-    grid-template-columns: max-content max-content;
+    grid-template-columns: max-content auto max-content max-content;
     gap: 8px;
-    align-items: center;
     padding: 8px 16px;
     border-bottom: 1px solid #e0e0e0;
 }
 
 .Proposal-Header-Title {
     color: #404040;
+    align-self: center;
 }
 
 .Proposal-Tag-Container {

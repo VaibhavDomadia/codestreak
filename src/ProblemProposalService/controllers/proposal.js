@@ -93,7 +93,9 @@ exports.createProblemProposal = async (req, res, next) => {
  */
 exports.updateProblemProposal = async (req, res, next) => {
     const proposalID = req.params.proposalID;
-    const { userID, handle, problem } = req.body;
+    const { problem } = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
         let proposal;
@@ -112,7 +114,7 @@ exports.updateProblemProposal = async (req, res, next) => {
             throw error;
         }
 
-        if (proposal.userID != req.userID || proposal.userID != userID) {
+        if (proposal.userID != req.userID) {
             const error = new Error("Not Authorized");
             error.statusCode = 403;
             throw error;

@@ -7,11 +7,17 @@ import TagCard from '../../Components/TagCard/TagCard';
 import { getDateAndTime } from '../../util/helper';
 import ProblemDetails from '../../Components/Problem/ProblemDetails/ProblemDetails';
 import ChatSection from '../../Components/ChatSection/ChatSection';
+import DarkSmallIconButton from '../../Components/DarkSmallIconButton/DarkSmallIconButton';
+import DarkSmallLinkIconButton from '../../Components/DarkSmallLinkIconButton/DarkSmallLinkIconButton';
+
 
 import ClockIcon from '../../Icons/clock-regular.svg';
 import StatusIcon from '../../Icons/hashtag-solid.svg';
 import MemoryIcon from '../../Icons/database-solid.svg';
 import TagIcon from '../../Icons/tag-solid.svg';
+import DeleteIcon from '../../Icons/trash-solid.svg';
+import EditIcon from '../../Icons/pen-solid.svg';
+
 
 const Proposal = (props) => {
     const [proposal, setProposal] = useState(null);
@@ -89,6 +95,28 @@ const Proposal = (props) => {
         fetchProposal();
     }, [proposalID]);
 
+    const onProposalDelete = async () => {
+        try {
+            const response = await axios.delete(`/api/proposal/${proposalID}`);
+
+            history.push('/proposal');
+        }
+        catch(error) {
+            if(error.response.status === 401) {
+                history.push('/login', {from: 'Proposal List'});
+            }
+            else if(error.response.status === 403) {
+                history.push('/403');
+            }
+            else if(error.response.status === 500) {
+                history.push('/500');
+            }
+            else {
+                history.push('/404');
+            }
+        }
+    }
+
     let renderProposal = null;
     if(proposal) {
         renderProposal = (
@@ -96,6 +124,8 @@ const Proposal = (props) => {
                 <div className='Proposal-Header'>
                     <DifficultyTag difficulty='Easy'/>
                     <div className='Proposal-Header-Title'>{proposal.problem.name}</div>
+                    <DarkSmallLinkIconButton icon={EditIcon} to={`/edit/proposal/${proposalID}`} alt='Edit' title='Edit'/>
+                    <DarkSmallIconButton icon={DeleteIcon} alt='Delete' title='Delete' onClick={onProposalDelete}/>
                 </div>
                 <div className='Proposal-Tag-Container'>
                     <TagCard icon={ClockIcon} title='Submitted At' value={getDateAndTime(proposal.createdAt)}/>

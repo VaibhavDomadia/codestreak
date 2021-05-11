@@ -1,16 +1,16 @@
 import axios from '../../util/interceptor';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DarkIconButton from '../../Components/DarkIconButton/DarkIconButton';
 import InputError from '../../Components/InputError/InputError';
 import Select from '../../Components/Select/Select';
 import TagInput from '../../Components/TagInput/TagInput';
 import TextareaError from '../../Components/TextareaError/TextareaError';
-import PlaneIcon from '../../Icons/paper-plane-solid.svg';
+import EditIcon from '../../Icons/pen-solid.svg';
 import AddIcon from '../../Icons/plus-solid.svg';
-import './CreateProposal.css';
+import './EditProposal.css';
 import { useHistory } from 'react-router';
 
-const CreateProposal = (props) => {
+const EditProposal = (props) => {
     const [name, setName] = useState('');
     const [difficulty, setDifficulty] = useState('Easy');
     const [statement, setStatement] = useState('');
@@ -28,6 +28,61 @@ const CreateProposal = (props) => {
     const [memoryLimitError, setMemoryLimitError] = useState('');
 
     const history = useHistory();
+
+    const proposalID = props.match.params.proposalID;
+
+    useEffect(() => {
+        const fetchProposal = async () => {
+            try {
+                const response = await axios.get(`/api/proposal/${proposalID}`);
+
+                const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memory, tags } = response.data.proposal.problem;
+
+                const stateStatement = statement.join('\n');
+                const stateSamplecases = samplecases.map(samplecase => {
+                    return {
+                        input: samplecase.input.join('\n'),
+                        output: samplecase.output.join('\n')
+                    }
+                });
+                const stateHiddencases = hiddencases.map(hiddencase => {
+                    return {
+                        input: hiddencase.input.join('\n'),
+                        output: hiddencase.output.join('\n')
+                    }
+                });
+                const stateConstraints = constraints.join('\n');
+
+                setName(name);
+                setDifficulty(difficulty)
+                setStatement(stateStatement)
+                setSamplecases(stateSamplecases);
+                setHiddencases(stateHiddencases);
+                setConstraints(stateConstraints);
+                setTimeLimit(timeLimit);
+                setMemoryLimit(memory);
+                setTags(tags);
+            }
+            catch(error) {
+                if(error.response.status === 401) {
+                    history.push('/login', {from: 'Edit Blog Page'});
+                }
+                else if(error.response.status === 403) {
+                    history.replace('/403');
+                }
+                else if(error.response.status === 500) {
+                    history.replace('/500');
+                }
+                else {
+                    history.replace('/404');
+                }
+            }
+        }
+
+        fetchProposal();
+    }, [proposalID]);
+
+    console.log('Memory Limit', memoryLimit);
 
     const onNameChange = (event) => {
         setNameError('');
@@ -78,7 +133,7 @@ const CreateProposal = (props) => {
         setHiddencases(changedHiddenCase);
     }
 
-    const onPost = async () => {
+    const onEdit = async () => {
         let isErrorPresent = false;
         if(name.trim() === '') {
             setNameError('This field is required');
@@ -124,12 +179,11 @@ const CreateProposal = (props) => {
             }
 
             try {
-                const response = await axios.post('/api/proposal', { problem });
+                const response = await axios.put(`/api/proposal/${proposalID}`, { problem });
 
                 console.log(response);
 
-                const proposal = response.data.proposal;
-                history.push(`/proposal/${proposal._id}`);
+                history.push(`/proposal/${proposalID}`);
             }
             catch(error) {
                 if(error.response.status === 401) {
@@ -149,20 +203,20 @@ const CreateProposal = (props) => {
     }
 
     return (
-        <div className='CreateProposal-Container'>
-            <div className='CreateProposal-Header'>
-                <div className='CreateProposal-Header-Title'>
-                    Create Proposal
+        <div className='EditProposal-Container'>
+            <div className='EditProposal-Header'>
+                <div className='EditProposal-Header-Title'>
+                    Edit Proposal
                 </div>
                 <DarkIconButton
-                    icon={PlaneIcon}
-                    alt='CreateProposal'
-                    title='Post Proposal'
-                    onClick={onPost}/>
+                    icon={EditIcon}
+                    alt='EditProposal'
+                    title='Edit'
+                    onClick={onEdit}/>
             </div>
-            <div className='CreateProposal-Field-Container'>
-                <div className='CreateProposal-Field'>
-                    <div className='CreateProposal-Field-Title'>
+            <div className='EditProposal-Field-Container'>
+                <div className='EditProposal-Field'>
+                    <div className='EditProposal-Field-Title'>
                         Problem Name:
                     </div>
                     <InputError
@@ -172,19 +226,19 @@ const CreateProposal = (props) => {
                         value={name}
                         onValueChange={onNameChange}/>
                 </div>
-                <div className='CreateProposal-Field'>
-                    <div className='CreateProposal-Field-Title'>
+                <div className='EditProposal-Field'>
+                    <div className='EditProposal-Field-Title'>
                         Difficulty:
                     </div>
-                    <div className='CreateProposal-Difficulty-Select'>
+                    <div className='EditProposal-Difficulty-Select'>
                         <Select
                             value={difficulty}
                             setValue={onDifficultyChange}
                             options={['Easy', 'Medium', 'Hard']}/>
                     </div>
                 </div>
-                <div className='CreateProposal-Field'>
-                    <div className='CreateProposal-Field-Title'>
+                <div className='EditProposal-Field'>
+                    <div className='EditProposal-Field-Title'>
                         Problem Statement:
                     </div>
                     <TextareaError
@@ -193,21 +247,21 @@ const CreateProposal = (props) => {
                         value={statement}
                         onValueChange={onStatementChange}/>
                 </div>
-                <div className='CreateProposal-Field'>
-                    <div className='CreateProposal-Field-Title'>
+                <div className='EditProposal-Field'>
+                    <div className='EditProposal-Field-Title'>
                         Sample Cases:
                     </div>
                     {
                         samplecases.map((samplecase, index) => {
                             return (
-                                <div key={index} className='CreateProposal-Case-Container'>
-                                    <div className='CreateProposal-Case-Title'>Sample Input:</div>
+                                <div key={index} className='EditProposal-Case-Container'>
+                                    <div className='EditProposal-Case-Title'>Sample Input:</div>
                                     <TextareaError
                                         placeholder='Enter Sample Input:'
                                         error=''
                                         value={samplecase.input}
                                         onValueChange={event => onSampleCaseChange(index, 'input', event)}/>
-                                    <div className='CreateProposal-Case-Title'>Sample Output:</div>
+                                    <div className='EditProposal-Case-Title'>Sample Output:</div>
                                     <TextareaError
                                         placeholder='Enter Sample Output:'
                                         error=''
@@ -217,7 +271,7 @@ const CreateProposal = (props) => {
                             )
                         })
                     }
-                    <div className='CreateProposal-Add-Case-Button'>
+                    <div className='EditProposal-Add-Case-Button'>
                         <DarkIconButton
                             icon={AddIcon}
                             alt='Addcase'
@@ -225,21 +279,21 @@ const CreateProposal = (props) => {
                             onClick={onAddSampleCase}/>
                     </div>
                 </div>
-                <div className='CreateProposal-Field'>
-                    <div className='CreateProposal-Field-Title'>
+                <div className='EditProposal-Field'>
+                    <div className='EditProposal-Field-Title'>
                         Hidden Cases:
                     </div>
                     {
                         hiddencases.map((hiddencase, index) => {
                             return (
-                                <div key={index} className='CreateProposal-Case-Container'>
-                                    <div className='CreateProposal-Case-Title'>Hidden Input:</div>
+                                <div key={index} className='EditProposal-Case-Container'>
+                                    <div className='EditProposal-Case-Title'>Hidden Input:</div>
                                     <TextareaError
                                         placeholder='Enter Hidden Input:'
                                         error=''
                                         value={hiddencase.input}
                                         onValueChange={event => onHiddenCaseChange(index, 'input', event)}/>
-                                    <div className='CreateProposal-Case-Title'>Hidden Output:</div>
+                                    <div className='EditProposal-Case-Title'>Hidden Output:</div>
                                     <TextareaError
                                         placeholder='Enter Hidden Output:'
                                         error=''
@@ -249,7 +303,7 @@ const CreateProposal = (props) => {
                             )
                         })
                     }
-                    <div className='CreateProposal-Add-Case-Button'>
+                    <div className='EditProposal-Add-Case-Button'>
                         <DarkIconButton
                             icon={AddIcon}
                             alt='Addcase'
@@ -257,8 +311,8 @@ const CreateProposal = (props) => {
                             onClick={onAddHiddenCase}/>
                     </div>
                 </div>
-                <div className='CreateProposal-Field'>
-                    <div className='CreateProposal-Field-Title'>
+                <div className='EditProposal-Field'>
+                    <div className='EditProposal-Field-Title'>
                         Constraints:
                     </div>
                     <TextareaError
@@ -267,8 +321,8 @@ const CreateProposal = (props) => {
                         value={constraints}
                         onValueChange={onConstraintsChange}/>
                 </div>
-                <div className='CreateProposal-Field'>
-                    <div className='CreateProposal-Field-Title'>
+                <div className='EditProposal-Field'>
+                    <div className='EditProposal-Field-Title'>
                         Time Limit:
                     </div>
                     <InputError
@@ -278,8 +332,8 @@ const CreateProposal = (props) => {
                         value={timeLimit}
                         onValueChange={onTimeLimitChange}/>
                 </div>
-                <div className='CreateProposal-Field'>
-                    <div className='CreateProposal-Field-Title'>
+                <div className='EditProposal-Field'>
+                    <div className='EditProposal-Field-Title'>
                         Memory Limit:
                     </div>
                     <InputError
@@ -289,8 +343,8 @@ const CreateProposal = (props) => {
                         value={memoryLimit}
                         onValueChange={onMemoryLimitChange}/>
                 </div>
-                <div className='CreateProposal-Field'>
-                    <div className='CreateProposal-Field-Title'>
+                <div className='EditProposal-Field'>
+                    <div className='EditProposal-Field-Title'>
                         Tags:
                     </div>
                     <TagInput
@@ -303,4 +357,4 @@ const CreateProposal = (props) => {
     )
 }
 
-export default CreateProposal;
+export default EditProposal;

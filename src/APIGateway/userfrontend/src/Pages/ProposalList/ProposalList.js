@@ -18,6 +18,7 @@ const ProposalList = (props) => {
                 setProposals(response.data.proposals);
             }
             catch(error) {
+                console.log(error);
                 if(error.response.status === 401) {
                     history.push('/login', {from: 'Proposal List'});
                 }

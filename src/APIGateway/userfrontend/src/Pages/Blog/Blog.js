@@ -51,7 +51,7 @@ const Blog = (props) => {
         try {
             const response = await axiosInterceptor.delete(`/api/blog/${blog._id}`);
 
-            history.goBack();
+            history.push('/blog');
         }
         catch(error) {
             if(error.response.status === 401) {
