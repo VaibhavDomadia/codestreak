@@ -7,16 +7,24 @@ exports.getBlog = async (req, res, next) => {
     const blogID = req.params.blogID;
 
     try {
-        const blog = await Blog.findById(blogID);
-        if(!blog) {
-            throw new Error();
+        let blog;
+        try {
+            blog = await Blog.findById(blogID);
+            if(!blog) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Blog doesn't exists";
+            error.statusCode = 404;
+            throw error;
         }
 
-        res.status(200).json({blog});
+        blog.views++;
+        const result = await blog.save();
+        res.status(200).json({blog: result});
     }
     catch(error) {
-        error.message = "Blog doesn't exists";
-        error.statusCode = 404;
         next(error);
     }
 }

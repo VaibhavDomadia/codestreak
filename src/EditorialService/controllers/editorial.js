@@ -7,16 +7,25 @@ exports.getEditorial = async (req, res, next) => {
     const editorialID = req.params.editorialID;
 
     try {
-        const editorial = await Editorial.findById(editorialID);
-        if (!editorial) {
-            throw new Error();
+        let editorial;
+        try {
+            editorial = await Editorial.findById(editorialID);
+            if (!editorial) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Editorial doesn't exists";
+            error.statusCode = 404;
+            throw error;
         }
 
-        res.status(200).json({ editorial });
+        editorial.views++;
+        const result = await editorial.save();
+        res.status(200).json({ editorial: result });
     }
     catch (error) {
-        error.message = "Editorial doesn't exists";
-        error.statusCode = 404;
+        
         next(error);
     }
 }
