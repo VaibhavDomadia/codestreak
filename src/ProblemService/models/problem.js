@@ -64,6 +64,14 @@ const problemSchema = new Schema({
     tags: {
         type: [String],
         required: true
+    },
+    accessTime: {
+        type: Date,
+        required: true
+    },
+    duration: {
+        type: Number,
+        required: true
     }
 });
 

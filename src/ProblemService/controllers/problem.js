@@ -7,16 +7,30 @@ exports.getProblem = async (req, res, next) => {
     const problemID = req.params.problemID;
 
     try {
-        const problem = await Problem.findById(problemID);
-        if(!problem) {
-            throw Error();
+        let problem;
+        try {
+            problem = await Problem.findById(problemID);
+            if(!problem) {
+                throw Error();
+            }
+        }
+        catch(error) {
+            error.message = "Problem doesn't exists";
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const currentTime = new Date().getTime();
+        const accessTime = new Date(problem.accessTime).getTime();
+        if(currentTime < accessTime) {
+            const error = new Error("Access Denied!");
+            error.statusCode = 403;
+            throw error;
         }
 
         res.status(200).json({problem});
     }
     catch(error) {
-        error.message = "Problem doesn't exists";
-        error.statusCode = 404;
         next(error);
     }
 }
@@ -26,18 +40,20 @@ exports.getProblem = async (req, res, next) => {
  */
 exports.getProblems = async (req, res, next) => {
     const currentPage = req.query.page || 1;
-    const problemsPerPage = 2;
+    const problemsPerPage = 10;
     let problemIDs = req.query.problemIDs;
     if(problemIDs) {
         problemIDs = problemIDs.split(',');
     }
 
     try {
-        const totalNumberOfProblems = await Problem.find().countDocuments();
+        let totalNumberOfProblems = 0;
         let problems = [];
+        const currentTime = new Date().getTime();
         if(problemIDs) {
             try {
-                problems = await Problem.find({_id: problemIDs}, 'name difficulty solvedBy tags', {skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
+                problems = await Problem.find({_id: problemIDs, accessTime: {$lte: currentTime}}, 'name difficulty solvedBy tags', {skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
+                totalNumberOfProblems = await Problem.find({_id: problemIDs, accessTime: {$lte: currentTime}}).countDocuments();
             }
             catch(error) {
                 error.message = "Please Enter valid problem IDs";
@@ -46,7 +62,8 @@ exports.getProblems = async (req, res, next) => {
             }            
         }
         else {
-            problems = await Problem.find({}, 'name difficulty solvedBy tags', {skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
+            problems = await Problem.find({accessTime: {$lte: currentTime}}, 'name difficulty solvedBy tags', {skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
+            totalNumberOfProblems = await Problem.find({accessTime: {$lte: currentTime}}).countDocuments();
         }        
 
         res.status(200).json({problems, totalNumberOfProblems});
@@ -63,7 +80,7 @@ exports.getTestCases = async (req, res, next) => {
     const problemID = req.params.problemID;
 
     try {
-        const problem = await Problem.findById(problemID, 'samplecases hiddencases timeLimit memory');
+        const problem = await Problem.findById(problemID, 'samplecases hiddencases timeLimit memory accessTime, duration');
         if(!problem) {
             throw Error();
         }
@@ -71,7 +88,9 @@ exports.getTestCases = async (req, res, next) => {
             samplecases: problem.samplecases,
             hiddencases: problem.hiddencases,
             timeLimit: problem.timeLimit,
-            memory: problem.memory
+            memory: problem.memory,
+            accessTime: problem.accessTime,
+            duration: problem.duration
         });
     }
     catch(error) {
@@ -85,10 +104,10 @@ exports.getTestCases = async (req, res, next) => {
  * Controller to add problem
  */
 exports.addProblem = async (req, res, next) => {
-    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags} = req.body;
+    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime} = req.body;
 
     try {
-        const problem = new Problem({name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags});
+        const problem = new Problem({name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime});
 
         const problemExists = await Problem.findOne({name});
         if(problemExists) {
@@ -137,7 +156,7 @@ exports.deleteProblem = async (req, res, next) => {
  */
 exports.updateProblem = async (req, res, next) => {
     const problemID = req.params.problemID;
-    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags} = req.body;
+    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime} = req.body;
 
     try {
         const problem = await Problem.findById(problemID);
@@ -145,7 +164,7 @@ exports.updateProblem = async (req, res, next) => {
             throw new Error();
         }
         
-        const result = await Problem.findByIdAndUpdate(problemID, {name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags})
+        const result = await Problem.findByIdAndUpdate(problemID, {name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime})
         res.status(200).json({
             message: "Problem Updated!"
         });

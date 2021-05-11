@@ -74,6 +74,9 @@ const Problem = (props) => {
                 if(error.response.status === 500) {
                     history.replace('/500');
                 }
+                else if(error.response.status === 403) {
+                    history.replace('/403');
+                }
                 else {
                     history.replace('/404');
                 }

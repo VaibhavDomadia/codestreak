@@ -9,7 +9,7 @@ const ProblemList = (props) => {
     const [problems, setProblems] = useState([]);
     const [numberOfProblems, setNumberOfProblems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const problemsPerPage = 2;
+    const problemsPerPage = 10;
     const history = useHistory();
 
     useEffect(() => {
