@@ -34,12 +34,33 @@ exports.getBlog = async (req, res, next) => {
  */
 exports.getAllBlogs = async (req, res, next) => {
     const currentPage = req.query.page || 1;
+    let sort = req.query.sort || '-createdAt';
+    let tags = req.query.tags;
     const blogsPerPage = 10;
 
-    try {
-        const totalNumberOfBlogs = await Blog.find().countDocuments();
+    let sortOptions = ['createdAt', 'title', 'views', 'numberOfComments', '-createdAt', '-title', '-views', '-numberOfComments'];
+    if(!sortOptions.includes(sort)) {
+        sort = '-createdAt';
+    }
 
-        const blogs = await Blog.find({}, '-content -comments', {skip: (currentPage-1)*blogsPerPage, limit: blogsPerPage});
+    let sortOrder = 1;
+    if(sort.startsWith('-')) {
+        sortOrder = -1;
+        sort = sort.substring(1);
+    }
+
+    const sortObject = {};
+    sortObject[sort] = sortOrder;
+
+    const filters = {};
+    if(tags && tags.length !== 0) {
+        filters.tags = { $in: tags.split(',') };
+    }
+
+    try {
+        const totalNumberOfBlogs = await Blog.find(filters).countDocuments();
+
+        const blogs = await Blog.find(filters, '-content -comments', {sort: sortObject, skip: (currentPage-1)*blogsPerPage, limit: blogsPerPage});
 
         res.status(200).json({blogs, totalNumberOfBlogs});
     }

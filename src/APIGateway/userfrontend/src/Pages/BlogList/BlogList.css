@@ -6,13 +6,32 @@
 
 .BlogList-Header {
     display: grid;
+    gap: 16px;
+    padding: 16px 0px;
+}
+
+.BlogList-Header-Top {
+    display: grid;
     grid-template-columns: auto max-content;
-    padding: 16px;
 }
 
 .BlogList-Header-Title {
     color: #606060;
     font-size: 24px;
+}
+
+.BlogTile-Header-SortBy {
+    justify-self: start;
+}
+
+.BlogList-NoBlogsFound {
+    justify-self: center;
+    font-size: 20px;
+    color: #808080;
+}
+
+.BlogList-BlogsFound {
+    display: grid;
 }
 
 .BlogList-Blog-Container {

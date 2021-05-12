@@ -93,15 +93,23 @@ const ProblemList = (props) => {
                     </div>
                 </div>
                 {
-                    problems.map(problem => {
-                        return <ProblemTile key={problem._id} problem={problem}/>
-                    })
+                    problems.length === 0 ?
+                    <div className='ProblemList-NoProblemsFound'>
+                        No Problems Found
+                    </div> :
+                    <div className='ProblemList-ProblemsFound'>
+                        {
+                            problems.map(problem => {
+                                return <ProblemTile key={problem._id} problem={problem}/>
+                            })
+                        }
+                        <Pagination 
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            numberOfItems={numberOfProblems}
+                            itemsPerPage={problemsPerPage}/>
+                    </div>
                 }
-                <Pagination 
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    numberOfItems={numberOfProblems}
-                    itemsPerPage={problemsPerPage}/>
             </div>
         )
     }

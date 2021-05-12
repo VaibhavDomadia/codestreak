@@ -24,3 +24,16 @@
 .ProblemList-Header-Sort {
     justify-self: start;
 }
+
+.ProblemList-NoProblemsFound {
+    display: grid;
+    justify-self: center;
+    font-size: 20px;
+    color: #808080;
+    padding: 16px;
+}
+
+.ProblemList-ProblemsFound {
+    display: grid;
+    padding: 16px 0px;
+}

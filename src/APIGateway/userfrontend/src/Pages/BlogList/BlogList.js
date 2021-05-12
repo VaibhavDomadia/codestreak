@@ -6,6 +6,8 @@ import BlogTile from '../../Components/Blog/BlogTile/BlogTile';
 import Pagination from '../../Components/Pagination/Pagination';
 import DarkLinkIconButton from '../../Components/DarkLinkIconButton/DarkLinkIconButton';
 import AddIcon from '../../Icons/plus-solid.svg';
+import TagInput from '../../Components/TagInput/TagInput';
+import SortBy from '../../Components/SortBy/SortBy';
 
 const BlogList = (props) => {
     const [blogs, setBlogs] = useState(null);
@@ -14,10 +16,44 @@ const BlogList = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const blogsPerPage = 10;
 
+    const [filterTags, setFilterTags] = useState([]);
+    const [sortSelected, setSortSelected] = useState('Creation Time');
+    const [sortOrder, setSortOrder] = useState(1);
+
+    const onSortSelectedChange = (value) => {
+        if(value === sortSelected) {
+            setSortOrder(currentOrder => 1 - currentOrder);
+        }
+        else {
+            setSortSelected(value);
+            setSortOrder(1);
+        }
+    }
+
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get(`/api/blog/blogs?page=${currentPage}`);
+                let sortBy = 'createdAt';
+                if(sortSelected === 'Title') {
+                    sortBy = 'title';
+                }
+                else if(sortSelected === 'Views') {
+                    sortBy = 'views';
+                }
+                else if(sortSelected === 'Interactivity') {
+                    sortBy = 'numberOfComments';
+                }
+
+                if(sortOrder === 1) {
+                    sortBy = `-${sortBy}`
+                }
+
+                let filterQuery = '';
+                if(filterTags.length !== 0) {
+                    filterQuery = `&tags=${filterTags.join(',')}`
+                }
+
+                const response = await axios.get(`/api/blog/blogs?page=${currentPage}&sort=${sortBy}${filterQuery}`);
 
                 setBlogs(response.data.blogs);
                 setNumberOfBlogs(response.data.totalNumberOfBlogs);
@@ -33,34 +69,55 @@ const BlogList = (props) => {
         }
 
         fetchBlogs();
-    }, [currentPage]);
+    }, [currentPage, filterTags, sortSelected, sortOrder]);
 
     let allBlogs = null;
     if(blogs) {
         allBlogs = (
             <div className='BlogList-Container'>
                 <div className='BlogList-Header'>
-                    <div className='BlogList-Header-Title'>
-                        { blogs.length === 0 ? 'No Blogs Found' : 'All Blogs'}
+                    <div className='BlogList-Header-Top'>
+                        <div className='BlogList-Header-Title'>
+                            All Blogs
+                        </div>
+                        <DarkLinkIconButton to='/create/blog' icon={AddIcon} alt='Add' title='New Blog'/>
                     </div>
-                    <DarkLinkIconButton to='/create/blog' icon={AddIcon} alt='Add' title='New Blog'/>
+                    <TagInput
+                        tags={filterTags}
+                        setTags={setFilterTags}
+                        placeholder='Search for tags, (e.g. Stack, tree, graph)'/>
+                    <div className='BlogTile-Header-SortBy'>
+                        <SortBy
+                            values={['Creation Time', 'Title', 'Views', 'Interactivity']}
+                            order={sortOrder}
+                            selected={sortSelected}
+                            setSelected={onSortSelectedChange}/>
+                    </div>
                 </div>
-                <div className='BlogList-Blog-Container'>
-                    {
-                        blogs.map(blog => {
-                            return (
-                                <div key={blog._id} className='BlogList-Blog'>
-                                    <BlogTile blog={blog}/>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                <Pagination
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    numberOfItems={numberOfBlogs}
-                    itemsPerPage={blogsPerPage}/>
+                {
+                    blogs.length === 0 ?
+                    <div className='BlogList-NoBlogsFound'>
+                        No Blogs Found
+                    </div> :
+                    <div className='BlogList-BlogsFound'>
+                        <div className='BlogList-Blog-Container'>
+                            {
+                                blogs.map(blog => {
+                                    return (
+                                        <div key={blog._id} className='BlogList-Blog'>
+                                            <BlogTile blog={blog}/>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <Pagination
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            numberOfItems={numberOfBlogs}
+                            itemsPerPage={blogsPerPage}/>
+                    </div>
+                }
             </div>
         )
     }
