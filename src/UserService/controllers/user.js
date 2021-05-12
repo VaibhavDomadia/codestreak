@@ -132,20 +132,10 @@ exports.updateProfile = async (req, res, next) => {
         });
     }
     
-    const userID = req.params.userID;
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const handle = req.body.handle;
-    const country = req.body.country;
-    const organization = req.body.organization;
+    const { firstName, lastName, handle, country, organization } = req.body;
+    const userID = req.userID;
 
     try {
-        if(userID != req.userID) {
-            const error = new Error("Not Authorized!");
-            error.statusCode = 403;
-            throw error;
-        }
-
         const user = await User.findById(userID);
         if(!user) {
             const error = new Error("User doesn't exist");

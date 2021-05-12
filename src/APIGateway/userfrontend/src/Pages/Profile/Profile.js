@@ -11,6 +11,8 @@ import { getDate } from '../../util/helper';
 import SubmissionTile from '../../Components/Submission/SubmissionTile/SubmissionTile';
 import { Link, useHistory } from 'react-router-dom';
 import BlogTile from '../../Components/Blog/BlogTile/BlogTile';
+import { getUserID } from '../../util/authentication';
+import EditIcon from '../../Icons/pen-solid-dark.svg';
 
 const Profile = (props) => {
     const [user, setUser] = useState(null);
@@ -41,10 +43,21 @@ const Profile = (props) => {
 
     let userProfile = null;
     if(user) {
+        const loggedInUserID = getUserID(localStorage.getItem('token'));
+        const isLoggedInUserProfile = loggedInUserID === userID;
         userProfile = (
             <div className='Profile-Container'>
                 <div className='Profile-Card Profile-Card-UserInfoCard'>
-                    <div className='Profile-Card-Title'>User Info</div>
+                    <div className='Profile-Card-Title'>
+                        User Info
+                        {
+                            isLoggedInUserProfile &&
+                            <Link to={`/edit/user/${userID}`} className='Profile-Card-EditProfile-Button'>
+                                <img src={EditIcon} alt='Edit' className='Profile-Card-EditProfile-Button-Icon'></img>
+                                Edit
+                            </Link>
+                        }
+                    </div>
                     <div className='Profile-Card-UserInfo'>
                         <div className='Profile-Picture-Container'>
                             <img src={ProfilePicture} alt='Profile' className='Profile-Picture'></img>

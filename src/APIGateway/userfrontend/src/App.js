@@ -27,6 +27,7 @@ import CreateBlog from './Pages/CreateBlog/CreateBlog';
 import CreateProposal from './Pages/CreateProposal/CreateProposal';
 import EditBlog from './Pages/EditBlog/EditBlog';
 import EditProposal from './Pages/EditProposal/EditProposal';
+import EditProfile from './Pages/EditProfile/EditProfile';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -55,6 +56,7 @@ const App = (props) => {
                     <Login user={user} setUser={setUser}/>
                 </Route>
                 <Route path='/user/:userID' component={Profile}/>
+                <Route path='/edit/user/:userID' component={EditProfile}/>
                 <Route path='/problem' exact component={ProblemList}/>
                 <Route path='/problem/:problemID' component={Problem}/>
                 <Route path='/contest' exact component={ContestList}/>

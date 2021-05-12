@@ -1,0 +1,38 @@
+.EditProfile {
+    display: grid;
+    margin: 32px 64px;
+    gap: 16px;
+}
+
+.EditProfile-Header {
+    display: grid;
+    grid-template-columns: auto max-content;
+}
+
+.EditProfile-Header-Title {
+    font-size: 28px;
+    color: #404040;
+}
+
+.EditProfile-Error {
+    display: grid;
+    padding: 8px 16px;
+    color: rgb(235, 64, 52);
+    border-left: 4px solid rgb(235, 64, 52);
+    background-color: rgba(235, 64, 52, 0.1);
+}
+
+.EditProfile-Field-Container {
+    display: grid;
+    gap: 16px;
+}
+
+.EditProfile-Field {
+    display: grid;
+    gap: 8px;
+}
+
+.EditProfile-Field-Title {
+    font-size: 20px;
+    color: #808080;
+}
