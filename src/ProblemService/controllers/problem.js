@@ -40,20 +40,48 @@ exports.getProblem = async (req, res, next) => {
  */
 exports.getProblems = async (req, res, next) => {
     const currentPage = req.query.page || 1;
+    let sortBy = req.query.sort || '-accessTime';
+    let tags = req.query.tags;
+    let difficulty = req.query.difficulty || 'All';
     const problemsPerPage = 10;
     let problemIDs = req.query.problemIDs;
     if(problemIDs) {
         problemIDs = problemIDs.split(',');
     }
 
+    let sortObject = {};
+    let sortOptions = ['accessTime', 'name', 'solvedBy', '-accessTime', '-name', '-solvedBy'];
+    if(!sortOptions.includes(sortBy)) {
+        sortBy = '-accessTime';
+    }
+
+    let sortOrder = 1;
+    if(sortBy.startsWith('-')) {
+        sortOrder = -1;
+        sortBy = sortBy.substring(1);
+    }
+
+    sortObject[sortBy] = sortOrder;
+
+    const currentTime = new Date().getTime();
+    let filters = { accessTime: {$lte: currentTime}};
+    if(tags && tags.length !== 0) {
+        filters.tags = { $in: tags.split(',') };
+    }
+    
+    let difficultyOptions = ['Easy', 'Medium', 'Hard'];
+    if(difficulty !== 'All' && difficultyOptions.includes(difficulty)) {
+        filters.difficulty = difficulty;
+    }
+
     try {
         let totalNumberOfProblems = 0;
         let problems = [];
-        const currentTime = new Date().getTime();
+        
         if(problemIDs) {
             try {
-                problems = await Problem.find({_id: problemIDs, accessTime: {$lte: currentTime}}, 'name difficulty solvedBy tags', {skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
-                totalNumberOfProblems = await Problem.find({_id: problemIDs, accessTime: {$lte: currentTime}}).countDocuments();
+                problems = await Problem.find({_id: problemIDs, ...filters}, 'name difficulty solvedBy tags accessTime', {sort: sortObject, skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
+                totalNumberOfProblems = await Problem.find({_id: problemIDs, ...filters}).countDocuments();
             }
             catch(error) {
                 error.message = "Please Enter valid problem IDs";
@@ -62,8 +90,8 @@ exports.getProblems = async (req, res, next) => {
             }            
         }
         else {
-            problems = await Problem.find({accessTime: {$lte: currentTime}}, 'name difficulty solvedBy tags', {skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
-            totalNumberOfProblems = await Problem.find({accessTime: {$lte: currentTime}}).countDocuments();
+            problems = await Problem.find({...filters}, 'name difficulty solvedBy tags accessTime', {sort: sortObject, skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
+            totalNumberOfProblems = await Problem.find({...filters}).countDocuments();
         }        
 
         res.status(200).json({problems, totalNumberOfProblems});
@@ -139,10 +167,10 @@ exports.updateNumberOfSubmissions = async (req, res, next) => {
  * Controller to add problem
  */
 exports.addProblem = async (req, res, next) => {
-    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime} = req.body;
+    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration} = req.body;
 
     try {
-        const problem = new Problem({name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime});
+        const problem = new Problem({name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration});
 
         const problemExists = await Problem.findOne({name});
         if(problemExists) {
@@ -191,7 +219,7 @@ exports.deleteProblem = async (req, res, next) => {
  */
 exports.updateProblem = async (req, res, next) => {
     const problemID = req.params.problemID;
-    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime} = req.body;
+    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration} = req.body;
 
     try {
         const problem = await Problem.findById(problemID);
@@ -199,7 +227,7 @@ exports.updateProblem = async (req, res, next) => {
             throw new Error();
         }
         
-        const result = await Problem.findByIdAndUpdate(problemID, {name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime})
+        const result = await Problem.findByIdAndUpdate(problemID, {name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration})
         res.status(200).json({
             message: "Problem Updated!"
         });

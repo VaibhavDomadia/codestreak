@@ -4,6 +4,23 @@
 }
 
 .ProblemList-Header {
-    color: #808080;
+    display: grid;
+    gap: 24px;
+    padding: 16px 0px;
+}
+
+.ProblemList-Header-Title {
+    color: #404040;
     font-weight: normal;
+    margin: 0px;
+}
+
+.ProblemList-Header-Filter {
+    display: grid;
+    grid-template-columns: auto max-content;
+    gap: 32px;
+}
+
+.ProblemList-Header-Sort {
+    justify-self: start;
 }
