@@ -28,6 +28,7 @@ import CreateProposal from './Pages/CreateProposal/CreateProposal';
 import EditBlog from './Pages/EditBlog/EditBlog';
 import EditProposal from './Pages/EditProposal/EditProposal';
 import EditProfile from './Pages/EditProfile/EditProfile';
+import HomePage from './Pages/HomePage/HomePage';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -52,6 +53,7 @@ const App = (props) => {
             <Header user={user} setUser={setUser}/>
             <NavigationBar />
             <Switch>
+                <Route path='/' exact component={HomePage}/>
                 <Route path='/login'>
                     <Login user={user} setUser={setUser}/>
                 </Route>
