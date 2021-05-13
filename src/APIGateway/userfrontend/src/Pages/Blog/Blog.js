@@ -1,5 +1,3 @@
-import axios from 'axios';
-import axiosInterceptor from '../../util/interceptor';
 import React, { useEffect, useState } from 'react';
 import './Blog.css';
 import ProfileIcon from '../../Icons/user-circle-solid.svg';
@@ -14,10 +12,12 @@ import Comment from '../../Components/Comment/Comment';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import 'github-markdown-css';
-import { getUserID } from '../../util/authentication';
+import { getToken, getUserID } from '../../util/authentication';
 import DarkSmallIconButton from '../../Components/DarkSmallIconButton/DarkSmallIconButton';
 import DarkSmallLinkIconButton from '../../Components/DarkSmallLinkIconButton/DarkSmallLinkIconButton';
 import MarkdownEditorComment from '../../Components/MarkdownEditorComment/MarkdownEditorComment';
+import axiosInterceptor from '../../util/interceptor';
+import axios from 'axios';
 
 const Blog = (props) => {
     const [blog, setBlog] = useState(null);
@@ -75,23 +75,22 @@ const Blog = (props) => {
         setCommentContent(event.target.value);
     }
 
-    console.log(commentContent);
-
-    const onComment = async (event) => {
+    const onComment = async () => {
         let isErrorPresent = false;
         if(commentContent.trim() === '') {
             setCommentContentError('This Field is Required');
             isErrorPresent = true;
         }
+
         if(!isErrorPresent) {
             try {
-                const response = await axiosInterceptor.post(`/api/blog/${blogID}/comment`, {content: commentContent});
+                const response = await axiosInterceptor.post(`/api/blog/${blogID}/comment`, {
+                    content: commentContent
+                });
 
                 setBlog(response.data.blog);
             }
             catch(error) {
-                console.log('What is wrong');
-                console.log(error);
                 if(error.response.status === 401) {
                     history.push('/login', {from: 'Blog'});
                 }
@@ -108,10 +107,130 @@ const Blog = (props) => {
         }
     }
 
+    const onCommentEdit = async (commentID, value) => {
+        try {
+            const response = await axiosInterceptor.put(`/api/blog/${blogID}/comment/${commentID}`, {
+                content: value
+            });
+
+            setBlog(response.data.blog);
+        }
+        catch(error) {
+            if(error.response.status === 401) {
+                history.push('/login', {from: 'Blog'});
+            }
+            else if(error.response.status === 403) {
+                history.push('/403');
+            }
+            else if(error.response.status === 500) {
+                history.push('/500');
+            }
+            else {
+                history.push('/404');
+            }
+        }
+    }
+
+    const onCommentDelete = async (commentID) => {
+        try {
+            const response = await axiosInterceptor.delete(`/api/blog/${blogID}/comment/${commentID}`);
+
+            setBlog(response.data.blog);
+        }
+        catch(error) {
+            if(error.response.status === 401) {
+                history.push('/login', {from: 'Blog'});
+            }
+            else if(error.response.status === 403) {
+                history.push('/403');
+            }
+            else if(error.response.status === 500) {
+                history.push('/500');
+            }
+            else {
+                history.push('/404');
+            }
+        }
+    }
+
+    const onReply = async (commentID, value) => {
+        try {
+            const response = await axiosInterceptor.post(`/api/blog/${blogID}/comment/${commentID}/reply`, {
+                content: value
+            });
+
+            setBlog(response.data.blog);
+        }
+        catch(error) {
+            if(error.response.status === 401) {
+                history.push('/login', {from: 'Blog'});
+            }
+            else if(error.response.status === 403) {
+                history.push('/403');
+            }
+            else if(error.response.status === 500) {
+                history.push('/500');
+            }
+            else {
+                history.push('/404');
+            }
+        }
+    }
+
+    const onReplyEdit = async (commentID, replyID, value) => {
+        try {
+            const response = await axiosInterceptor.put(`/api/blog/${blogID}/comment/${commentID}/reply/${replyID}`, {
+                content: value
+            });
+
+            setBlog(response.data.blog);
+        }
+        catch(error) {
+            if(error.response.status === 401) {
+                history.push('/login', {from: 'Blog'});
+            }
+            else if(error.response.status === 403) {
+                history.push('/403');
+            }
+            else if(error.response.status === 500) {
+                history.push('/500');
+            }
+            else {
+                history.push('/404');
+            }
+        }
+    }
+
+    const onReplyDelete = async (commentID, replyID) => {
+        try {
+            const response = await axiosInterceptor.delete(`/api/blog/${blogID}/comment/${commentID}/reply/${replyID}`);
+
+            setBlog(response.data.blog);
+        }
+        catch(error) {
+            if(error.response.status === 401) {
+                history.push('/login', {from: 'Blog'});
+            }
+            else if(error.response.status === 403) {
+                history.push('/403');
+            }
+            else if(error.response.status === 500) {
+                history.push('/500');
+            }
+            else {
+                history.push('/404');
+            }
+        }
+    }
+
     let renderBlog = null;
     if(blog) {
+        const renderComments = [...blog.comments];
+        renderComments.reverse();
+        
         const userID = getUserID(localStorage.getItem('token'));
         const doesUserWroteBlog = userID === blog.userID;
+
         renderBlog = (
             <div className='Blog-Container'>
                 <div className='Blog-Header'>
@@ -166,8 +285,18 @@ const Blog = (props) => {
                         saveTitle='Comment'
                         onSave={onComment}/>
                     {
-                        blog.comments.map(comment => {
-                            return <Comment key={comment._id} comment={comment} userID={userID}/>
+                        renderComments.map(comment => {
+                            return (
+                                <Comment 
+                                    key={comment._id}
+                                    comment={comment}
+                                    userID={userID}
+                                    onCommentEdit={onCommentEdit}
+                                    onCommentDelete={onCommentDelete}
+                                    onCommentReply={onReply}
+                                    onCommentReplyEdit={onReplyEdit}
+                                    onCommentReplyDelete={onReplyDelete}/>
+                            )
                         })
                     }
                 </div>

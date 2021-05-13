@@ -6,8 +6,6 @@ const Blog = require('../models/blog');
 exports.addComment = async (req, res, next) => {
     const blogID = req.params.blogID;
     const content = req.body.content;
-    console.log(content);
-    console.log('Hello Route are you living????');
 
     try {
         let blog;
@@ -82,6 +80,7 @@ exports.updateComment = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Comment Updated!',
+            blog: result
         });
     }
     catch(error) {
@@ -128,6 +127,7 @@ exports.deleteComment = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Comment Deleted!',
+            blog: result
         });
     }
     catch(error) {
@@ -228,6 +228,7 @@ exports.updateReply = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Reply Updated!',
+            blog: result
         });
     }
     catch(error) {
@@ -281,6 +282,7 @@ exports.deleteReply = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Reply Removed!',
+            blog: result
         });
     }
     catch(error) {

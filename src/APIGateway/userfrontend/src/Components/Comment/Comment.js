@@ -5,20 +5,82 @@ import ProfileIcon from '../../Icons/user-circle-solid.svg';
 import CommentsIcon from '../../Icons/comment-dots-solid.svg';
 import EditIcon from '../../Icons/pen-solid-dark.svg';
 import DeleteIcon from '../../Icons/trash-solid-dark.svg';
+import ReplyIcon from '../../Icons/reply-solid.svg';
 import { Link } from 'react-router-dom';
 
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import 'github-markdown-css';
-import MarkdownEditor from '../MarkdownEditor/MarkdownEditor';
+import MarkdownEditorComment from '../MarkdownEditorComment/MarkdownEditorComment';
+import Reply from '../Reply/Reply';
 
 const Comment = (props) => {
-    const { comment, userID } = props;
+    const { comment, userID, onCommentEdit, onCommentDelete, onCommentReply, onCommentReplyEdit, onCommentReplyDelete } = props;
     const [showReply, setShowReply] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+    const [content, setContent] = useState(comment.content);
+    const [contentError, setContentError] = useState('');
+    const [replyEditor, setReplyEditor] = useState(false);
+    const [replyContent, setReplyContent] = useState('');
+    const [replyContentError, setReplyContentError] = useState('');
+
+    const doesUserWroteComment = comment.userID === userID;
 
     const toggleShowReply = () => {
         setShowReply(showReply => !showReply);
     }
+
+    const toggleEditMode = () => {
+        setEditMode(currentEditMode => !currentEditMode);
+    }
+
+    const onContentChange = (event) => {
+        setContentError('');
+        setContent(event.target.value);
+    }
+
+    const onEdit = () => {
+        let isErrorPresent = false;
+        if(content.trim() === '') {
+            setContentError('This Field is Required');
+            isErrorPresent = true;
+        }
+        if(!isErrorPresent) {
+            onCommentEdit(comment._id, content);
+            setEditMode(currentEditMode => !currentEditMode);
+        }
+    }
+
+    const onDelete = () => {
+        onCommentDelete(comment._id);
+    }
+
+    const toggleReplyEditor = () => {
+        setReplyEditor(replyEditor => !replyEditor);
+    }
+
+    const onReplyContentChange = (event) => {
+        setReplyContentError('');
+        setReplyContent(event.target.value);
+    }
+
+    const onReply = () => {
+        let isErrorPresent = false;
+        if(replyContent.trim() === '') {
+            setReplyContentError('This Field is Required');
+            isErrorPresent = true;
+        }
+
+        if(!isErrorPresent) {
+            onCommentReply(comment._id, replyContent);
+            setShowReply(true);
+            setReplyContent('');
+            setReplyEditor(false);
+        }
+    }
+
+    const renderReplies = [...comment.replies];
+    renderReplies.reverse();
 
     return (
         <div className='Comment'>
@@ -32,9 +94,18 @@ const Comment = (props) => {
                 </div>
             </div>
             <div className='Comment-Content-Container'>
-                <ReactMarkdown remarkPlugins={[gfm]} className='markdown-body'>
-                    {comment.content}
-                </ReactMarkdown>
+                {
+                    editMode ?
+                    <MarkdownEditorComment
+                        content={content}
+                        onContentChange={onContentChange}
+                        error={contentError}
+                        saveTitle='Save'
+                        onSave={onEdit}/> :
+                    <ReactMarkdown remarkPlugins={[gfm]} className='markdown-body'>
+                        {comment.content}
+                    </ReactMarkdown>
+                }
             </div>
             <div className='Comment-Controls'>
                 <div className='Comment-Controls-Field' onClick={toggleShowReply}>
@@ -45,43 +116,49 @@ const Comment = (props) => {
                         }
                     </div>
                 </div>
+                <div className='Comment-Controls-Field' onClick={toggleReplyEditor}>
+                    <img src={ReplyIcon} alt='Reply' className='Comment-Icon'></img>
+                    <div className='Comment-Controls-Field-Value'>Reply</div>
+                </div>
                 {
-                    userID &&
-                    <div className='Comment-Controls-Field'>
+                    doesUserWroteComment &&
+                    <div className='Comment-Controls-Field' onClick={toggleEditMode}>
                         <img src={EditIcon} alt='Edit' className='Comment-Icon'></img>
                         <div className='Comment-Controls-Field-Value'>Edit</div>
                     </div>
                 }
                 {
-                    userID &&
-                    <div className='Comment-Controls-Field'>
+                    doesUserWroteComment &&
+                    <div className='Comment-Controls-Field' onClick={onDelete}>
                         <img src={DeleteIcon} alt='Delete' className='Comment-Icon'></img>
                         <div className='Comment-Controls-Field-Value'>Delete</div>
                     </div>
                 }
             </div>
             {
+                replyEditor &&
+                <div className='Comment-Reply-Editor'>
+                    <MarkdownEditorComment
+                        content={replyContent}
+                        onContentChange={onReplyContentChange}
+                        error={replyContentError}
+                        saveTitle='Reply'
+                        onSave={onReply}/>
+                </div>
+            }
+            {
                 showReply &&
                 <div className='Reply-Container'>
                     {
-                        comment.replies.map(reply => {
+                        renderReplies.map(reply => {
                             return (
-                                <div key={reply._id} className='Reply'>
-                                    <div className='Reply-Info-Container'>
-                                        <img src={ProfileIcon} alt='ProfileImage' className='Reply-Info-ProfileImage'></img>
-                                        <Link to={`/user/${reply.userID}`} className='Reply-Info-Handle'>
-                                            {reply.handle}
-                                        </Link>
-                                        <div className='Reply-Info-CreatedAt'>
-                                            Written At: {getDateAndTime(reply.createdAt)}
-                                        </div>
-                                    </div>
-                                    <div className='Reply-Content-Container'>
-                                        <ReactMarkdown remarkPlugins={[gfm]} className='markdown-body'>
-                                            {reply.content}
-                                        </ReactMarkdown>
-                                    </div>
-                                </div>
+                                <Reply
+                                    key={reply._id}
+                                    reply={reply}
+                                    userID={userID}
+                                    commentID={comment._id}
+                                    onCommentReplyEdit={onCommentReplyEdit}
+                                    onCommentReplyDelete={onCommentReplyDelete}/>
                             )
                         })
                     }
