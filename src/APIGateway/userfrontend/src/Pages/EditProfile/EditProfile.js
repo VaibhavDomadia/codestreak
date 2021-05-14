@@ -5,6 +5,7 @@ import InputError from '../../Components/InputError/InputError';
 import axios from '../../util/interceptor';
 import { useHistory } from 'react-router';
 import DarkIconButton from '../../Components/DarkIconButton/DarkIconButton';
+import { getToken } from '../../util/authentication';
 
 const EditProfile = (props) => {
     const [firstName, setFirstName] = useState('');
@@ -16,6 +17,7 @@ const EditProfile = (props) => {
     const [lastNameError, setLastNameError] = useState('');
     const [handleError, setHandleError] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
+    const [profileImage, setProfileImage] = useState(null);
 
     const userID = props.match.params.userID;
     const history = useHistory();
@@ -43,6 +45,10 @@ const EditProfile = (props) => {
         setOrganization(event.target.value);
     }
 
+    const onProfileImageChange = (event) => {
+        setProfileImage(event.target.files[0]);
+    }
+
     const onEdit = async () => {
         let isErrorPresent = false;
         if(firstName.trim() === '') {
@@ -59,18 +65,26 @@ const EditProfile = (props) => {
         }
         if(!isErrorPresent) {
             try {
-                let userData = { firstName, lastName, handle };
+                const formData = new FormData();
+                formData.append('firstName', firstName);
+                formData.append('lastName', lastName);
+                formData.append('handle', handle);
                 if(country.trim() !== '') {
-                    userData.country = country;
+                    formData.append('country', country.trim());
                 }
                 if(organization.trim() !== '') {
-                    userData.organization = organization;
+                    formData.append('organization', organization.trim());
                 }
-                const response = await axios.put(`/api/user/${userID}`, userData);
+                if(profileImage !== null) {
+                    formData.append('image', profileImage);
+                }
+
+                const response = await axios.put(`/api/user/${userID}`, formData);
 
                 history.push(`/user/${userID}`);
             }
             catch(error) {
+                console.log(error.response);
                 if(error.response.status === 401) {
                     history.push('/login', {from: 'Proposal List'});
                 }
@@ -195,6 +209,12 @@ const EditProfile = (props) => {
                         error=''
                         value={organization}
                         onValueChange={onOrganizationChange}/>
+                </div>
+                <div className='EditProfile-Field'>
+                    <div className='EditProfile-Field-Title'>
+                        Profile Picture:
+                    </div>
+                    <input type='file' name='image' onChange={onProfileImageChange} className='EditProfile-UploadImage'/>
                 </div>
             </div>
         </div>

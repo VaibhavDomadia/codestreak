@@ -132,8 +132,13 @@ exports.updateProfile = async (req, res, next) => {
         });
     }
     
-    const { firstName, lastName, handle, country, organization } = req.body;
+    const { firstName, lastName, handle, country, organization, profileImage } = req.body;
     const userID = req.userID;
+
+    const saveData = { firstName, lastName, handle, country, organization };
+    if(profileImage) {
+        saveData.profileImage = profileImage;
+    }
 
     try {
         const user = await User.findById(userID);
@@ -152,7 +157,7 @@ exports.updateProfile = async (req, res, next) => {
             }
         }
 
-        const updatedUser = await User.findByIdAndUpdate(userID, {firstName, lastName, handle, country, organization}, {new: true});
+        const updatedUser = await User.findByIdAndUpdate(userID, saveData, {new: true})
         res.status(200).json({message: "Profile Updated!"});
     }
     catch(error) {

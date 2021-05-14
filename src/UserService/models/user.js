@@ -32,7 +32,8 @@ const userSchema = new Schema({
         default: 0
     },
     following: [mongoose.Types.ObjectId],
-    followedBy: [mongoose.Types.ObjectId]
+    followedBy: [mongoose.Types.ObjectId],
+    profileImage: String
 }, {timestamps: true});
 
 module.exports = mongoose.model('User', userSchema);

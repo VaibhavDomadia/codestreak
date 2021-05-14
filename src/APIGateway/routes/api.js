@@ -25,6 +25,26 @@ const sendRequest = async (host, path, method, headers, body) => {
     }
 }
 
+router.put('/user/:userID', async (req, res, next) => {
+    const host = 'http://localhost:8001';
+    const path = `${req.url}`;
+    const { method, headers, body } = req;
+    if(req.file) {
+        body.profileImage = req.file.filename;
+    }
+
+    const sendHeaders = { authorization: headers.authorization };
+
+    try {
+        const response = await sendRequest(host, path, method, sendHeaders, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
+
 router.use('/user', async (req, res, next) => {
     const host = 'http://localhost:8001';
     const path = `/user${req.url}`;
