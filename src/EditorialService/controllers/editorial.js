@@ -25,7 +25,6 @@ exports.getEditorial = async (req, res, next) => {
         res.status(200).json({ editorial: result });
     }
     catch (error) {
-        
         next(error);
     }
 }
