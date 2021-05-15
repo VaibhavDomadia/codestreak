@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { getDateAndTime } from '../../util/helper';
 import './Comment.css';
-import ProfileIcon from '../../Icons/user-circle-solid.svg';
 import CommentsIcon from '../../Icons/comment-dots-solid.svg';
 import EditIcon from '../../Icons/pen-solid-dark.svg';
 import DeleteIcon from '../../Icons/trash-solid-dark.svg';
@@ -13,6 +12,7 @@ import gfm from 'remark-gfm';
 import 'github-markdown-css';
 import MarkdownEditorComment from '../MarkdownEditorComment/MarkdownEditorComment';
 import Reply from '../Reply/Reply';
+import ProfileImage from '../ProfileImage/ProfileImage';
 
 const Comment = (props) => {
     const { comment, userID, onCommentEdit, onCommentDelete, onCommentReply, onCommentReplyEdit, onCommentReplyDelete } = props;
@@ -85,7 +85,7 @@ const Comment = (props) => {
     return (
         <div className='Comment'>
             <div className='Comment-Info-Container'>
-                <img src={ProfileIcon} alt='ProfileImage' className='Comment-Info-ProfileImage'></img>
+                <ProfileImage link={`/images/${comment.userID}`} size={32}/>
                 <Link to={`/user/${comment.userID}`} className='Comment-Info-Handle'>
                     {comment.handle}
                 </Link>

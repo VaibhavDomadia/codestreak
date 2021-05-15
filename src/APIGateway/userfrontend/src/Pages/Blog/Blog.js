@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './Blog.css';
-import ProfileIcon from '../../Icons/user-circle-solid.svg';
 import CommentsIcon from '../../Icons/comment-dots-regular.svg';
 import ViewsIcon from '../../Icons/eye-regular.svg';
 import DeleteIcon from '../../Icons/trash-solid.svg';
@@ -12,12 +11,13 @@ import Comment from '../../Components/Comment/Comment';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import 'github-markdown-css';
-import { getToken, getUserID } from '../../util/authentication';
+import { getUserID } from '../../util/authentication';
 import DarkSmallIconButton from '../../Components/DarkSmallIconButton/DarkSmallIconButton';
 import DarkSmallLinkIconButton from '../../Components/DarkSmallLinkIconButton/DarkSmallLinkIconButton';
 import MarkdownEditorComment from '../../Components/MarkdownEditorComment/MarkdownEditorComment';
 import axiosInterceptor from '../../util/interceptor';
 import axios from 'axios';
+import ProfileImage from '../../Components/ProfileImage/ProfileImage';
 
 const Blog = (props) => {
     const [blog, setBlog] = useState(null);
@@ -240,7 +240,7 @@ const Blog = (props) => {
                 </div>
                 
                 <div className='Blog-Info-Container'>
-                    <img src={ProfileIcon} alt='ProfileImage' className='Blog-Profile-Image'></img>
+                    <ProfileImage link={`/images/${blog.userID}`} size={32}/>
                     <Link to={`/user/${blog.userID}`} className='Blog-Info-Handle'>
                         {blog.handle}
                     </Link>

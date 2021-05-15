@@ -2,17 +2,15 @@ import React, { useState } from 'react';
 import { getDateAndTime } from '../../util/helper';
 import './Reply.css';
 
-import ProfileIcon from '../../Icons/user-circle-solid.svg';
-import CommentsIcon from '../../Icons/comment-dots-solid.svg';
 import EditIcon from '../../Icons/pen-solid-dark.svg';
 import DeleteIcon from '../../Icons/trash-solid-dark.svg';
-import ReplyIcon from '../../Icons/reply-solid.svg';
 
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import 'github-markdown-css';
 import { Link } from 'react-router-dom';
 import MarkdownEditorComment from '../MarkdownEditorComment/MarkdownEditorComment';
+import ProfileImage from '../ProfileImage/ProfileImage';
 
 const Reply = (props) => {
     const { reply, userID, commentID, onCommentReplyEdit, onCommentReplyDelete } = props;
@@ -51,7 +49,7 @@ const Reply = (props) => {
     return (
         <div className='Reply'>
             <div className='Reply-Info-Container'>
-                <img src={ProfileIcon} alt='ProfileImage' className='Reply-Info-ProfileImage'></img>
+                <ProfileImage link={`/images/${reply.userID}`} size={32}/>
                 <Link to={`/user/${reply.userID}`} className='Reply-Info-Handle'>
                     {reply.handle}
                 </Link>
