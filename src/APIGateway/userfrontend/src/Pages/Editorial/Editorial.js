@@ -89,6 +89,7 @@ const Editorial = (props) => {
                 });
 
                 setEditorial(response.data.editorial);
+                setCommentContent('');
             }
             catch(error) {
                 if(error.response.status === 401) {
@@ -246,6 +247,9 @@ const Editorial = (props) => {
                     </Link>
                     <div className='Editorial-Info-CreatedAt'>
                         Created At: {getDateAndTime(editorial.createdAt)}
+                    </div>
+                    <div className='Editorial-Info-ProblemName'>
+                        For: <Link to={`/problem/${editorial.problemID}`} className='Editorial-Info-Problem-Link'>{editorial.problemName}</Link>
                     </div>
                     <div className='Editorial-Views'>
                         <img src={ViewsIcon} alt='Views' className='Editorial-Views-Icon'></img>

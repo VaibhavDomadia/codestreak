@@ -27,6 +27,8 @@ exports.addComment = async (req, res, next) => {
             content
         });
 
+        editorial.numberOfComments++;
+
         const result = await editorial.save();
 
         res.status(201).json({
@@ -79,6 +81,7 @@ exports.updateComment = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Comment Updated!',
+            editorial: result
         });
     }
     catch(error) {
@@ -121,10 +124,13 @@ exports.updateComment = async (req, res, next) => {
 
         comment.remove();
 
+        editorial.numberOfComments--;
+
         const result = await editorial.save();
 
         res.status(200).json({
             message: 'Comment Deleted!',
+            editorial: result
         });
     }
     catch(error) {
@@ -225,6 +231,7 @@ exports.updateComment = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Reply Updated!',
+            editorial: result
         });
     }
     catch(error) {
@@ -278,6 +285,7 @@ exports.updateComment = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Reply Removed!',
+            editorial: result
         });
     }
     catch(error) {

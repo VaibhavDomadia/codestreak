@@ -21,7 +21,7 @@
 
 .Editorial-Info-Container {
     display: grid;
-    grid-template-columns: max-content max-content auto max-content;
+    grid-template-columns: max-content max-content max-content auto max-content;
     align-items: center;
     gap: 16px;
     padding: 8px 16px;
@@ -37,6 +37,19 @@
 .Editorial-Info-CreatedAt {
     color: #a0a0a0;
     font-size: 12px;
+}
+
+.Editorial-Info-ProblemName {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    color: #a0a0a0;
+    font-size: 12px;
+}
+
+.Editorial-Info-Problem-Link {
+    text-decoration: none;
+    color: #1389f4;
 }
 
 .Editorial-Views {
