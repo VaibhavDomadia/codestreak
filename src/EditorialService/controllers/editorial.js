@@ -53,7 +53,9 @@ exports.getProblemEditorials = async (req, res, next) => {
  * Controller to create a Editorial
  */
 exports.createEditorial = async (req, res, next) => {
-    const { userID, problemID, problemName, handle, title, content, tags } = req.body;
+    const { problemID, problemName, title, content, tags } = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
         const editorial = new Editorial({ userID, problemID, problemName, handle, title, content, tags });
