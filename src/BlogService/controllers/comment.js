@@ -27,6 +27,8 @@ exports.addComment = async (req, res, next) => {
             content
         });
 
+        blog.numberOfComments++;
+
         const result = await blog.save();
 
         res.status(201).json({
@@ -122,6 +124,8 @@ exports.deleteComment = async (req, res, next) => {
         }
 
         comment.remove();
+
+        blog.numberOfComments--;
 
         const result = await blog.save();
 
