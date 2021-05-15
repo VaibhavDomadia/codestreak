@@ -132,10 +132,10 @@ exports.updateProfile = async (req, res, next) => {
         });
     }
     
-    const { firstName, lastName, handle, country, organization, profileImage } = req.body;
+    const { firstName, lastName, country, organization, profileImage } = req.body;
     const userID = req.userID;
 
-    const saveData = { firstName, lastName, handle, country, organization };
+    const saveData = { firstName, lastName, country, organization };
     if(profileImage) {
         saveData.profileImage = profileImage;
     }
@@ -148,16 +148,7 @@ exports.updateProfile = async (req, res, next) => {
             throw error;
         }
 
-        if(user.handle !== handle) {
-            const isHandleTaken = await User.findOne({handle});
-            if(isHandleTaken) {
-                const error = new Error("Handle already taken, please select any other handle");
-                error.statusCode = 409;
-                throw error;
-            }
-        }
-
-        const updatedUser = await User.findByIdAndUpdate(userID, saveData, {new: true})
+        const updatedUser = await User.findByIdAndUpdate(userID, saveData)
         res.status(200).json({message: "Profile Updated!"});
     }
     catch(error) {

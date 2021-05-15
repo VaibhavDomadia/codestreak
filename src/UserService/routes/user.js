@@ -27,8 +27,7 @@ router.post('/signup', [
  */
 router.put('/:userID', auth.isAuthenticated, [
     body('firstName').trim().isLength({min: 1}).withMessage('Please provide first name'),
-    body('lastName').trim().isLength({min: 1}).withMessage('Please provide last name'),
-    body('handle').trim().isLength({min: 1}).withMessage('Please provide handle')
+    body('lastName').trim().isLength({min: 1}).withMessage('Please provide last name')
 ], userController.updateProfile);
 
 /**

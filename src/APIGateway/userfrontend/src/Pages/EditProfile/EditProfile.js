@@ -5,17 +5,14 @@ import InputError from '../../Components/InputError/InputError';
 import axios from '../../util/interceptor';
 import { useHistory } from 'react-router';
 import DarkIconButton from '../../Components/DarkIconButton/DarkIconButton';
-import { getToken } from '../../util/authentication';
 
 const EditProfile = (props) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [handle, setHandle] = useState('');
     const [country, setCountry] = useState('');
     const [organization, setOrganization] = useState('');
     const [firstNameError, setFirstNameError] = useState('');
     const [lastNameError, setLastNameError] = useState('');
-    const [handleError, setHandleError] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
 
@@ -30,11 +27,6 @@ const EditProfile = (props) => {
     const onLastNameChange = (event) => {
         setLastNameError('');
         setLastName(event.target.value);
-    }
-
-    const onHandleChange = (event) => {
-        setHandleError('');
-        setHandle(event.target.value);
     }
 
     const onCountryChange = (event) => {
@@ -59,16 +51,11 @@ const EditProfile = (props) => {
             setLastNameError('This Field is Required');
             isErrorPresent = true;
         }
-        if(handle.trim() === '') {
-            setHandleError('This Field is Required');
-            isErrorPresent = true;
-        }
         if(!isErrorPresent) {
             try {
                 const formData = new FormData();
                 formData.append('firstName', firstName);
-                formData.append('lastName', lastName);
-                formData.append('handle', handle);
+                formData.append('lastName', lastName);                
                 if(country.trim() !== '') {
                     formData.append('country', country.trim());
                 }
@@ -84,7 +71,6 @@ const EditProfile = (props) => {
                 history.push(`/user/${userID}`);
             }
             catch(error) {
-                console.log(error.response);
                 if(error.response.status === 401) {
                     history.push('/login', {from: 'Proposal List'});
                 }
@@ -109,11 +95,10 @@ const EditProfile = (props) => {
             try {
                 const response = await axios.get(`/api/user/${userID}`);
 
-                const { firstName, lastName, handle, country, organization } = response.data.user;
+                const { firstName, lastName, country, organization } = response.data.user;
 
                 setFirstName(firstName);
                 setLastName(lastName);
-                setHandle(handle);
                 if(country) {
                     setCountry(country);
                 }
@@ -176,17 +161,6 @@ const EditProfile = (props) => {
                         error={lastNameError}
                         value={lastName}
                         onValueChange={onLastNameChange}/>
-                </div>
-                <div className='EditProfile-Field'>
-                    <div className='EditProfile-Field-Title'>
-                        Handle:
-                    </div>
-                    <InputError
-                        inputType='text'
-                        placeholder='Enter Handle'
-                        error={handleError}
-                        value={handle}
-                        onValueChange={onHandleChange}/>
                 </div>
                 <div className='EditProfile-Field'>
                     <div className='EditProfile-Field-Title'>

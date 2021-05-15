@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './Profile.css';
-import ProfilePicture from '../../Icons/user-circle-solid.svg';
 import ProfileInfoBar from '../../Components/Profile/ProfileInfoBar/ProfileInfoBar';
 import RatingIcon from '../../Icons/signal-solid.svg';
 import ClockIcon from '../../Icons/clock-regular.svg';
@@ -13,6 +12,7 @@ import { Link, useHistory } from 'react-router-dom';
 import BlogTile from '../../Components/Blog/BlogTile/BlogTile';
 import { getUserID } from '../../util/authentication';
 import EditIcon from '../../Icons/pen-solid-dark.svg';
+import ProfileImage from '../../Components/ProfileImage/ProfileImage';
 
 const Profile = (props) => {
     const [user, setUser] = useState(null);
@@ -60,7 +60,9 @@ const Profile = (props) => {
                     </div>
                     <div className='Profile-Card-UserInfo'>
                         <div className='Profile-Picture-Container'>
-                            <img src={ProfilePicture} alt='Profile' className='Profile-Picture'></img>
+                            <div className='Profile-Picture'>
+                                <ProfileImage link={`/images/${user._id}`} size={100}/>
+                            </div>
                         </div>
                         <div className='Profile-NameHandleContainer'>
                             <div className='Profile-Name'>{`${user.firstName} ${user.lastName}`}</div>
