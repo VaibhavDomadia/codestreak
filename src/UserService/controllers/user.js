@@ -174,15 +174,12 @@ exports.followUser = async (req, res, next) => {
         let userToFollow;
         try {
             userToFollow = await User.findById(userIDToFollow);
+            if(!userToFollow) {
+                throw Error();
+            }
         }
         catch(error) {
             error.message = "Please provide a valid user id";
-            error.statusCode = 404;
-            throw error;
-        }
-
-        if(!userToFollow) {
-            const error = new Error("Please provide a valid user id");
             error.statusCode = 404;
             throw error;
         }
@@ -195,14 +192,10 @@ exports.followUser = async (req, res, next) => {
         }
 
         const isUserFollowed = user.following.includes(userIDToFollow);
-        if(isUserFollowed) {
-            const error = new Error("You are already following the user");
-            error.statusCode = 409;
-            throw error;
+        if(!isUserFollowed) {
+            user.following.push(userIDToFollow);
+            userToFollow.followedBy.push(req.userID);
         }
-
-        user.following.push(userIDToFollow);
-        userToFollow.followedBy.push(req.userID);
 
         await user.save();
         await userToFollow.save();
@@ -234,15 +227,12 @@ exports.unfollowUser = async (req, res, next) => {
         let userToUnfollow;
         try {
             userToUnfollow = await User.findById(userIDToUnfollow);
+            if(!userToUnfollow) {
+                throw Error();
+            }
         }
         catch(error) {
             error.message = "Please provide a valid user id";
-            error.statusCode = 404;
-            throw error;
-        }
-
-        if(!userToUnfollow) {
-            const error = new Error("Please provide a valid user id");
             error.statusCode = 404;
             throw error;
         }
@@ -255,14 +245,10 @@ exports.unfollowUser = async (req, res, next) => {
         }
 
         const isUserFollowed = user.following.includes(userIDToUnfollow);
-        if(!isUserFollowed) {
-            const error = new Error("You are already not following the user");
-            error.statusCode = 409;
-            throw error;
+        if(isUserFollowed) {
+            user.following = user.following.filter(userID => userID != userIDToUnfollow);
+            userToUnfollow.followedBy = userToUnfollow.followedBy.filter(userID => userID != req.userID);    
         }
-
-        user.following = user.following.filter(userID => userID != userIDToUnfollow);
-        userToUnfollow.followedBy = userToUnfollow.followedBy.filter(userID => userID != req.userID);
 
         await user.save();
         await userToUnfollow.save();
