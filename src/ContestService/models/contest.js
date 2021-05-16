@@ -52,6 +52,25 @@ const contestSchema = new Schema({
             }
         }],
         required: true
+    },
+    standings: {
+        type: [{
+            userID: {
+                type: mongoose.Types.ObjectId,
+                required: true
+            },
+            handle: {
+                type: String,
+                required: true
+            },
+            timeTaken: {
+                type: Number,
+                required: true
+            },
+            problemSolved: {
+                type: [mongoose.Types.ObjectId]
+            }
+        }]
     }
 });
 

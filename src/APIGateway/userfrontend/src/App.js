@@ -33,6 +33,7 @@ import CreateEditorial from './Pages/CreateEditorial/CreateEditorial';
 import Editorial from './Pages/Editorial/Editorial';
 import EditEditorial from './Pages/EditEditorial/EditEditorial';
 import ProblemEditorials from './Pages/ProblemEditorials/ProblemEditorials';
+import Standings from './Pages/Standings/Standings';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -66,7 +67,8 @@ const App = (props) => {
                 <Route path='/problem' exact component={ProblemList}/>
                 <Route path='/problem/:problemID' component={Problem}/>
                 <Route path='/contest' exact component={ContestList}/>
-                <Route path='/contest/:contestID' component={Contest}/>
+                <Route path='/contest/:contestID' exact component={Contest}/>
+                <Route path='/contest/:contestID/standings' component={Standings}/>
                 <Route path='/blog/user/:userID' component={UserBlogs}/>
                 <Route path='/blog/:blogID' component={Blog}/>
                 <Route path='/blog' exact component={BlogList}/>

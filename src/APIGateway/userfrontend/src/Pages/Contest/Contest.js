@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import Button from '../../Components/Button/Button';
 import { getUserID } from '../../util/authentication';
 import ProblemTile from '../../Components/Problem/ProblemTile/ProblemTile';
+import LinkButton from '../../Components/LinkButton/LinkButton';
 
 const Contest = (props) => {
     const [contest, setContest] = useState(null);
@@ -100,7 +101,7 @@ const Contest = (props) => {
                         <div className='ContestPage-Header-ContestName'>{contest.name}</div>
                         {
                             isContestStartedOrEnded ? 
-                                null :
+                                <LinkButton name='Standings' color='#1389f4' path={`/contest/${contestID}/standings`}/> :
                                 isUserRegistered ?
                                     <Button name='Unregister' color='#eb4034' onClick={onUnregister}/> :
                                     <Button name='Register' color='#1389fd' onClick={onRegister}/>

@@ -108,7 +108,7 @@ exports.getTestCases = async (req, res, next) => {
     const problemID = req.params.problemID;
 
     try {
-        const problem = await Problem.findById(problemID, 'samplecases hiddencases timeLimit memory accessTime duration');
+        const problem = await Problem.findById(problemID, 'samplecases hiddencases timeLimit memory accessTime duration contestID');
         if(!problem) {
             throw Error();
         }
@@ -118,7 +118,8 @@ exports.getTestCases = async (req, res, next) => {
             timeLimit: problem.timeLimit,
             memory: problem.memory,
             accessTime: problem.accessTime,
-            duration: problem.duration
+            duration: problem.duration,
+            contestID: problem.contestID
         });
     }
     catch(error) {
@@ -167,10 +168,10 @@ exports.updateNumberOfSubmissions = async (req, res, next) => {
  * Controller to add problem
  */
 exports.addProblem = async (req, res, next) => {
-    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration} = req.body;
+    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration, contestID} = req.body;
 
     try {
-        const problem = new Problem({name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration});
+        const problem = new Problem({name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration, contestID});
 
         const problemExists = await Problem.findOne({name});
         if(problemExists) {
@@ -219,7 +220,7 @@ exports.deleteProblem = async (req, res, next) => {
  */
 exports.updateProblem = async (req, res, next) => {
     const problemID = req.params.problemID;
-    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration} = req.body;
+    const { name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration, contestID} = req.body;
 
     try {
         const problem = await Problem.findById(problemID);
@@ -227,7 +228,7 @@ exports.updateProblem = async (req, res, next) => {
             throw new Error();
         }
         
-        const result = await Problem.findByIdAndUpdate(problemID, {name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration})
+        const result = await Problem.findByIdAndUpdate(problemID, {name, difficulty, statement, samplecases, hiddencases, constraints, timeLimit, memoryLimit, tags, accessTime, duration, contestID});
         res.status(200).json({
             message: "Problem Updated!"
         });

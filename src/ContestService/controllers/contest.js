@@ -236,3 +236,102 @@ exports.unregisterForContest = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to update contest standings when a submission is made
+ */
+exports.updateStandings = async (req, res, next) => {
+    const contestID = req.params.contestID;
+    const { problemID, userID, handle, time, solved} = req.body;
+
+    try {
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+            if(!contest) {
+                throw Error();
+            }
+        }
+        catch(error) {
+            error.message = 'Contest Not Found';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const isUserRegistered = contest.registeredParticipants.find(participant => participant.userID.toString() === userID);
+
+        if(isUserRegistered) {
+            const userFound = contest.standings.find(participant => participant.userID.toString() === userID);
+            if(userFound) {
+                userFound.timeTaken += time;
+                if(solved) {
+                    const isProblemPresent = userFound.problemSolved.find(problemSolvedID => problemSolvedID.toString() === problemID);
+                    if(isProblemPresent) {
+                        userFound.timeTaken -= time;
+                    }
+                    else {
+                        userFound.problemSolved.push(problemID);
+                    }
+                }
+            }
+            else {
+                console.log('Hello');
+                const user = {
+                    userID,
+                    handle,
+                    timeTaken: time,
+                    problemSolved: []
+                }
+
+                if(solved) {
+                    user.problemSolved.push(problemID);
+                }
+
+                contest.standings.push(user);
+            }
+        }
+
+        await contest.save();
+
+        res.status(201).json({
+            message: 'Standings Updated'
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to get contest standings
+ */
+exports.getStandings = async (req, res, next) => {
+    const contestID = req.params.contestID;
+
+    try {
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+            if(!contest) {
+                throw Error();
+            }
+        }
+        catch(error) {
+            error.message = 'Contest Not Found';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        contest.standings.sort((user1, user2) => {
+            if(user1.problemSolved.length === user2.problemSolved.length) {
+                return user1.timeTaken - user2.timeTaken;
+            }
+            return user2.problemSolved.length - user1.problemSolved.length;
+        });
+
+        res.status(200).json({contest});
+    }
+    catch(error) {
+        next(error);
+    }
+}

@@ -40,4 +40,14 @@ router.post('/contest/:contestID/register', auth.isAuthenticated, contestControl
  */
 router.post('/contest/:contestID/unregister', auth.isAuthenticated, contestController.unregisterForContest);
 
+/**
+ * REST Endpoint: POST /contest/:contestID/submission
+ */
+router.post('/contest/:contestID/submission', contestController.updateStandings);
+
+/**
+ * REST Endpoint: GET /contest/:contestID/standings
+ */
+router.get('/contest/:contestID/standings', contestController.getStandings);
+
 module.exports = router;

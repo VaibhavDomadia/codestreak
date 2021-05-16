@@ -1,13 +1,12 @@
 .LinkButton {
     text-decoration: none;
-    color: #1389f4;
+    padding: 8px 16px;
+    text-transform: uppercase;
     border-radius: 4px;
-    padding: 8px 24px;
-    font-size: 16px;
-    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+    font-weight: bold;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .LinkButton:hover {
-    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-    background-color: rgba(0, 0, 0, 0.02);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
 }

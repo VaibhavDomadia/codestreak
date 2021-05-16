@@ -94,6 +94,7 @@ exports.createSubmission = async (req, res, next) => {
         let memory = response.data.memory;
         let accessTime = new Date(response.data.accessTime).getTime();
         let duration = response.data.duration;
+        let contestID = response.data.contestID;
 
         let currentTime = new Date().getTime();
 
@@ -111,6 +112,18 @@ exports.createSubmission = async (req, res, next) => {
         const result = await submission.save();
 
         await axios.post(`http://localhost:8002/problem/${problemID}/submission`, {result: verdict.result});
+
+        if(currentTime >= accessTime && currentTime < accessTime + duration) {
+            const isProblemSolved = verdict.result === 'Accepted';
+            const penalty = 300000;
+            await axios.post(`http://localhost:8003/contest/${contestID}/submission`, {
+                userID,
+                handle,
+                problemID,
+                time: isProblemSolved ? currentTime-accessTime : penalty,
+                solved: isProblemSolved
+            });
+        }
 
         res.status(201).json({
             message: 'Submission Created!',
