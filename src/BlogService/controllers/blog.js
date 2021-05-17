@@ -77,7 +77,7 @@ exports.getUserBlogs = async (req, res, next) => {
     const limit = parseInt(req.query.limit) || 0;
 
     try {
-        const blogs = await Blog.find({userID}, '-content -comments', {limit});
+        const blogs = await Blog.find({userID}, '-content -comments', {sort: {createdAt: -1}, limit});
 
         res.status(200).json({blogs});
     }
