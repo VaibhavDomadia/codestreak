@@ -28,7 +28,7 @@ exports.login = async (req, res, next) => {
             throw error;
         }
 
-        const token = jsonWebToken.sign({email, userID: user._id.toString(), handle: user.handle}, 'secretKey', {expiresIn: '1h'});
+        const token = jsonWebToken.sign({email, userID: user._id.toString(), handle: user.handle}, 'secretKey', {expiresIn: '24h'});
         res.status(200).json({
             token,
             userID: user._id.toString()
