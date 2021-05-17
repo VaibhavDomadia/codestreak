@@ -50,7 +50,7 @@ exports.getUserSubmissions = async (req, res, next) => {
     const limit = parseInt(req.query.limit) || 0;
 
     try {
-        const submissions = await Submission.find({ userID }, '-content', {limit});
+        const submissions = await Submission.find({ userID }, '-content', {sort: {createdAt: -1}, limit});
 
         res.status(200).json({ submissions });
     }
@@ -68,7 +68,7 @@ exports.getProblemSubmissions = async (req, res, next) => {
     const problemID = req.params.problemID;
 
     try {
-        const submissions = await Submission.find({ problemID });
+        const submissions = await Submission.find({ problemID }, '-content', {sort: {createdAt: -1}});
 
         res.status(200).json({ submissions });
     }
