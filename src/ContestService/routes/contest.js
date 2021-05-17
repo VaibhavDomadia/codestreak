@@ -50,4 +50,9 @@ router.post('/contest/:contestID/submission', contestController.updateStandings)
  */
 router.get('/contest/:contestID/standings', contestController.getStandings);
 
+/**
+ * REST Endpoint: POST /contest/:contestID/ratings
+ */
+router.post('/contest/:contestID/ratings', auth.isAuthenticated, contestController.updateRatings);
+
 module.exports = router;

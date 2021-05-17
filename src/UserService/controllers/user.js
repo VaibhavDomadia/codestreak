@@ -4,6 +4,7 @@ const axios = require('axios');
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
+const user = require('../models/user');
 
 /**
  * Controller to login into user account
@@ -275,6 +276,65 @@ exports.getFollowingList = async (req, res, next) => {
 
         res.status(200).json({
             users: followingUsers
+        })
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to get ratings of users
+ */
+exports.ratings = async (req, res, next) => {
+    const { users } = req.body;
+
+    try {
+        let userRatings;
+        try {
+            userRatings = await User.find({_id: { $in: users }}, 'rating');
+        }
+        catch(error) {
+            error.message = 'Users Not Found';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        res.status(200).json({users: userRatings});
+    }
+    catch(error) {
+        next(error)
+    }
+}
+
+/**
+ * Controller to update ratings of users
+ */
+exports.updateRatings = async (req, res, next) => {
+    const { users, ratingsChange } = req.body;
+
+    try {
+        for(let i=0 ; i<users.length ; i++) {
+            let user;
+            try {
+                user = await User.findById(users[i]);
+                if(!user) {
+                    throw Error();
+                }
+            }
+            catch(error) {
+                error.message = 'User Not Found';
+                error.statusCode = 404;
+                throw error;
+            }
+
+            user.rating += ratingsChange[i];
+
+            await user.save();
+        }
+
+        res.status(200).json({
+            message: 'Ratings Updated'
         })
     }
     catch(error) {

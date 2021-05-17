@@ -40,6 +40,10 @@ const contestSchema = new Schema({
         type: [mongoose.Types.ObjectId],
         required: true
     },
+    ratingsUpdated: {
+        type: Boolean,
+        default: false
+    },
     registeredParticipants: {
         type: [{
             handle: {

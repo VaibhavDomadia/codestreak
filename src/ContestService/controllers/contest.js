@@ -275,7 +275,6 @@ exports.updateStandings = async (req, res, next) => {
                 }
             }
             else {
-                console.log('Hello');
                 const user = {
                     userID,
                     handle,
@@ -330,6 +329,85 @@ exports.getStandings = async (req, res, next) => {
         });
 
         res.status(200).json({contest});
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to update user rating once contest is over
+ */
+exports.updateRatings = async (req, res, next) => {
+    const contestID = req.params.contestID;
+
+    try {
+        if(!req.isAdmin) {
+            const error = new Error('Not Authorized');
+            error.statusCode = 403;
+            throw error;
+        }
+
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+        }
+        catch(error) {
+            error.message = 'Contest Not Found';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const standings = contest.standings;
+
+        standings.sort((user1, user2) => {
+            if(user1.problemSolved.length === user2.problemSolved.length) {
+                return user1.timeTaken - user2.timeTaken;
+            }
+            return user2.problemSolved.length - user1.problemSolved.length;
+        });
+
+        const userIDs = [];
+        for(const user of standings) {
+            userIDs.push(user.userID);
+        }
+
+        const response = await axios.post('http://localhost:8001/user/ratings', {
+            users: userIDs
+        });
+
+        const users = response.data.users;
+
+        const ratings = [];
+        for(const user of users) {
+            ratings.push(user.rating);
+        }
+
+        const ratingsChange = [];
+
+        for(let i=0 ; i<users.length ; i++) {
+            let currentRatingChange = 0;
+            for(let j=0 ; j<i ; j++) {
+                const eab = 1/(1 + (10**((ratings[j]-ratings[i])/400)));
+                currentRatingChange += (0 - eab);
+            }
+            for(let j=i+1 ; j<users.length ; j++) {
+                const eab = 1/(1 + (10**((ratings[j]-ratings[i])/400)));
+                currentRatingChange += (1 - eab);
+            }
+            ratingsChange.push(Math.round(currentRatingChange));
+        }
+
+        await axios.put('http://localhost:8001/user/ratings', {
+            users: userIDs,
+            ratingsChange
+        });
+
+        await Contest.findByIdAndUpdate(contestID, {$set: {ratingsChanged: true}});
+
+        res.status(200).json({
+            message: 'Ratings Updated'
+        });
     }
     catch(error) {
         next(error);

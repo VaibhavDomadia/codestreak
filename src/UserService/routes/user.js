@@ -23,6 +23,16 @@ router.post('/signup', [
 ], userController.signup);
 
 /**
+ * REST Endpoint: POST /user/ratings
+ */
+ router.post('/ratings', userController.ratings);
+
+ /**
+  * REST Endpoint: PUT /user/ratings
+  */
+ router.put('/ratings', userController.updateRatings);
+
+/**
  * REST Endpoint: PUT /user/:userID
  */
 router.put('/:userID', auth.isAuthenticated, [

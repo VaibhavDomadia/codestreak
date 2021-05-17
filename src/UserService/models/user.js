@@ -29,7 +29,7 @@ const userSchema = new Schema({
     organization: String,
     rating: {
         type: Number,
-        default: 0
+        default: 2000
     },
     following: [mongoose.Types.ObjectId],
     followedBy: [mongoose.Types.ObjectId],
