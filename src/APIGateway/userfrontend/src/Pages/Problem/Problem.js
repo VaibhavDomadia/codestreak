@@ -12,7 +12,7 @@ import MonacoEditor from '../../Components/MonacoEditor/MonacoEditor';
 import ProblemDetails from '../../Components/Problem/ProblemDetails/ProblemDetails';
 import { useHistory } from 'react-router';
 import VerdictCard from '../../Components/VerdictCard/VerdictCard';
-import LinkButton from '../../Components/LinkButton/LinkButton';
+import LightLinkButton from '../../Components/LightLinkButton/LightLinkButton';
 
 
 const Problem = (props) => {
@@ -113,8 +113,8 @@ const Problem = (props) => {
                         <TagCard icon={Tag} alt='Tag' title='Tags' value={problem.tags.join(', ')}/>
                     </div>
                     <div className='Problem-Buttons-Container'>
-                        <LinkButton path={`/submission/problem/${problem._id}`} value='View All Submissions' color='#1389f4'/>
-                        <LinkButton path={`/editorial/problem/${problem._id}`} value='View All Editorials' color='#1389f4'/>
+                        <LightLinkButton path={`/submission/problem/${problem._id}`} name='View All Submissions' color='#1389f4'/>
+                        <LightLinkButton path={`/editorial/problem/${problem._id}`} name='View All Editorials' color='#1389f4'/>
                     </div>
                 </div>
 
