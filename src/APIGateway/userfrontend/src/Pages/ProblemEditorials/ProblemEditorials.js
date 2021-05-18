@@ -9,6 +9,7 @@ import AddIcon from '../../Icons/plus-solid.svg';
 import TagInput from '../../Components/TagInput/TagInput';
 import SortBy from '../../Components/SortBy/SortBy';
 import { Link } from 'react-router-dom';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const ProblemEditorials = (props) => {
     const [editorials, setEditorials] = useState(null);
@@ -95,7 +96,7 @@ const ProblemEditorials = (props) => {
         fetchEditorials();
     }, [currentPage, filterTags, sortSelected, sortOrder]);
 
-    let allEditorials = null;
+    let allEditorials = <Spinner/>;
     if(editorials && problem) {
         allEditorials = (
             <div className='ProblemEditorials-Container'>

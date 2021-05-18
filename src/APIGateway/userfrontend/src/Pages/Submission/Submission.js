@@ -6,6 +6,7 @@ import { getDateAndTime } from '../../util/helper';
 import './Submission.css';
 import CodeEditor from '@monaco-editor/react';
 import VerdictCard from '../../Components/VerdictCard/VerdictCard';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const Submission = (props) => {
     const [submission, setSubmission] = useState(null);
@@ -39,7 +40,7 @@ const Submission = (props) => {
 
     console.log(submission);
 
-    let renderSubmission = null;
+    let renderSubmission = <Spinner/>;
     if(submission) {
         renderSubmission = (
             <div className='Submission-Container'>

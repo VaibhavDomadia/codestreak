@@ -13,6 +13,7 @@ import ProblemDetails from '../../Components/Problem/ProblemDetails/ProblemDetai
 import { useHistory } from 'react-router';
 import VerdictCard from '../../Components/VerdictCard/VerdictCard';
 import LightLinkButton from '../../Components/LightLinkButton/LightLinkButton';
+import Spinner from '../../Components/Spinner/Spinner';
 
 
 const Problem = (props) => {
@@ -20,6 +21,7 @@ const Problem = (props) => {
     const [code, setCode] = useState('');
     const [language, setLanguage] = useState('Java');
     const [verdict, setVerdict] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const history = useHistory();
 
@@ -33,6 +35,8 @@ const Problem = (props) => {
 
     const onCodeSubmit = async () => {
         try {
+            setVerdict(null);
+            setLoading(true);
             const response = await axiosInterceptor.post('/api/submission', {
                 problemID: problem._id,
                 problemName: problem.name,
@@ -40,6 +44,7 @@ const Problem = (props) => {
                 language
             });
 
+            setLoading(false);
             setVerdict(response.data.submission.verdict);
         }
         catch(error) {
@@ -60,6 +65,8 @@ const Problem = (props) => {
 
     const onCodeSampleTest = async () => {
         try {
+            setVerdict(null);
+            setLoading(true);
             const response = await axiosInterceptor.post('/api/submission/sampletest', {
                 problemID: problem._id,
                 problemName: problem.name,
@@ -67,6 +74,7 @@ const Problem = (props) => {
                 language
             });
 
+            setLoading(false);
             setVerdict(response.data.verdict);
         }
         catch(error) {
@@ -111,7 +119,7 @@ const Problem = (props) => {
         fetchProblem();
     }, [problemID]);
 
-    let renderProblem = null;
+    let renderProblem = <Spinner/>;
     if(problem) {
         let difficultyColor = '#32a852';
         if(problem.difficulty === 'Medium') {
@@ -153,6 +161,10 @@ const Problem = (props) => {
                     onCodeSubmit={onCodeSubmit}
                     onCodeSampleTest={onCodeSampleTest}
                     />
+                
+                {
+                    loading && <Spinner/>
+                }
 
                 {
                     verdict &&

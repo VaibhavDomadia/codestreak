@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import Spinner from '../../Components/Spinner/Spinner';
 import SubmissionTile from '../../Components/Submission/SubmissionTile/SubmissionTile';
 import './UserSubmissions.css';
 
@@ -31,7 +32,7 @@ const UserSubmissions = (props) => {
 
     console.log(submissions);
 
-    let userSubmission = null;
+    let userSubmission = <Spinner/>;
     if(submissions) {
         userSubmission = (
             <div className='UserSubmissions-Container'>

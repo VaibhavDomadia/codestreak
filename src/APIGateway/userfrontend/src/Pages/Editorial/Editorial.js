@@ -18,6 +18,7 @@ import MarkdownEditorComment from '../../Components/MarkdownEditorComment/Markdo
 import axiosInterceptor from '../../util/interceptor';
 import axios from 'axios';
 import ProfileImage from '../../Components/ProfileImage/ProfileImage';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const Editorial = (props) => {
     const [editorial, setEditorial] = useState(null);
@@ -224,7 +225,7 @@ const Editorial = (props) => {
         }
     }
 
-    let renderEditorial = null;
+    let renderEditorial = <Spinner/>;
     if(editorial) {
         const renderComments = [...editorial.comments];
         renderComments.reverse();

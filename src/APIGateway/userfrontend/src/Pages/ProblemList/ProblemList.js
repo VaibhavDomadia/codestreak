@@ -7,9 +7,10 @@ import { useHistory } from 'react-router';
 import SortBy from '../../Components/SortBy/SortBy';
 import TagInput from '../../Components/TagInput/TagInput';
 import Select from '../../Components/Select/Select';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const ProblemList = (props) => {
-    const [problems, setProblems] = useState([]);
+    const [problems, setProblems] = useState(null);
     const [numberOfProblems, setNumberOfProblems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const problemsPerPage = 10;
@@ -68,7 +69,7 @@ const ProblemList = (props) => {
         fetchProblems();
     }, [currentPage, sortSelected, sortOrder, filterTags, filterDifficulty]);
 
-    let renderProblems = null;
+    let renderProblems = <Spinner/>;
     if(problems) {
         renderProblems = (
             <div className='ProblemList-Container'>

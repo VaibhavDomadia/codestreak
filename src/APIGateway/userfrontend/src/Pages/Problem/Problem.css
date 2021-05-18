@@ -1,4 +1,5 @@
 .Problem-Container {
+    display: grid;
     margin: 32px 64px;
 }
 

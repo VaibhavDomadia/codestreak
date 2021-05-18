@@ -17,6 +17,7 @@ import MemoryIcon from '../../Icons/database-solid.svg';
 import TagIcon from '../../Icons/tag-solid.svg';
 import DeleteIcon from '../../Icons/trash-solid.svg';
 import EditIcon from '../../Icons/pen-solid.svg';
+import Spinner from '../../Components/Spinner/Spinner';
 
 
 const Proposal = (props) => {
@@ -117,7 +118,7 @@ const Proposal = (props) => {
         }
     }
 
-    let renderProposal = null;
+    let renderProposal = <Spinner/>;
     if(proposal) {
         renderProposal = (
             <div className='Proposal'>

@@ -18,6 +18,7 @@ import MarkdownEditorComment from '../../Components/MarkdownEditorComment/Markdo
 import axiosInterceptor from '../../util/interceptor';
 import axios from 'axios';
 import ProfileImage from '../../Components/ProfileImage/ProfileImage';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const Blog = (props) => {
     const [blog, setBlog] = useState(null);
@@ -224,7 +225,7 @@ const Blog = (props) => {
         }
     }
 
-    let renderBlog = null;
+    let renderBlog = <Spinner/>;
     if(blog) {
         const renderComments = [...blog.comments];
         renderComments.reverse();

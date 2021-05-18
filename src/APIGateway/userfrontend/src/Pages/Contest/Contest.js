@@ -17,6 +17,7 @@ import Button from '../../Components/Button/Button';
 import { getUserID } from '../../util/authentication';
 import ProblemTile from '../../Components/Problem/ProblemTile/ProblemTile';
 import LinkButton from '../../Components/LinkButton/LinkButton';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const Contest = (props) => {
     const [contest, setContest] = useState(null);
@@ -88,7 +89,7 @@ const Contest = (props) => {
         }
     }
 
-    let renderContest = null;
+    let renderContest = <Spinner/>;
     if(contest) {
         const userID = getUserID(localStorage.getItem('token'));
         const isUserRegistered = contest.registeredParticipants.find(user => user.userID === userID);

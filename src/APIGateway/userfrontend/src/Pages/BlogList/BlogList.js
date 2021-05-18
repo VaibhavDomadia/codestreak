@@ -8,6 +8,7 @@ import DarkLinkIconButton from '../../Components/DarkLinkIconButton/DarkLinkIcon
 import AddIcon from '../../Icons/plus-solid.svg';
 import TagInput from '../../Components/TagInput/TagInput';
 import SortBy from '../../Components/SortBy/SortBy';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const BlogList = (props) => {
     const [blogs, setBlogs] = useState(null);
@@ -71,7 +72,7 @@ const BlogList = (props) => {
         fetchBlogs();
     }, [currentPage, filterTags, sortSelected, sortOrder]);
 
-    let allBlogs = null;
+    let allBlogs = <Spinner/>;
     if(blogs) {
         allBlogs = (
             <div className='BlogList-Container'>

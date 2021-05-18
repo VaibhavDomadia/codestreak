@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './ProblemSubmissions.css';
 import SubmissionTile from '../../Components/Submission/SubmissionTile/SubmissionTile';
 import { useHistory } from 'react-router';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const ProblemSubmissions = (props) => {
     const [submissions, setSubmissions] = useState(null);
@@ -32,7 +33,7 @@ const ProblemSubmissions = (props) => {
     
     console.log(submissions);
 
-    let renderSubmissions = null;
+    let renderSubmissions = <Spinner/>;
     if(submissions) {
         renderSubmissions = (
             <div className='ProblemSubmissionsPage-Container'>

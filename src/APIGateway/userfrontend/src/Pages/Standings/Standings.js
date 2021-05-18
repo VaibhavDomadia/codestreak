@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import Spinner from '../../Components/Spinner/Spinner';
 import StandingTile from '../../Components/StandingTile/StandingTile';
 import './Standings.css';
 
@@ -34,7 +35,7 @@ const Standings = (props) => {
 
     console.log(contest);
 
-    let renderStandings = null;
+    let renderStandings = <Spinner/>;
     if(contest) {
         renderStandings = (
             <div className='Standings'>

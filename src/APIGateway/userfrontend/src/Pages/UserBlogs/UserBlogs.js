@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import BlogTile from '../../Components/Blog/BlogTile/BlogTile';
+import Spinner from '../../Components/Spinner/Spinner';
 import './UserBlogs.css';
 
 const UserBlogs = (props) => {
@@ -31,7 +32,7 @@ const UserBlogs = (props) => {
         fetchUserBlogs();
     }, [userID]);
 
-    let userBlogs = null;
+    let userBlogs = <Spinner/>;
     if(blogs) {
         userBlogs = (
             <div className='UserBlogs-Container'>

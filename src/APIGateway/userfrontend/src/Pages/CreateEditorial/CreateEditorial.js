@@ -8,6 +8,7 @@ import DarkIconButton from '../../Components/DarkIconButton/DarkIconButton';
 import axios from '../../util/interceptor';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const CreateEditorial = (props) => {
     const [tags, setTags] = useState([]);
@@ -90,7 +91,7 @@ const CreateEditorial = (props) => {
         }
     }
 
-    let renderCreateEditorialPage = null;
+    let renderCreateEditorialPage = <Spinner/>;
     if(problem) {
         renderCreateEditorialPage = (
             <div className='CreateEditorial-Container'>

@@ -5,6 +5,7 @@ import ProposalTile from '../../Components/Proposal/ProposalTile/ProposalTile';
 import { useHistory } from 'react-router';
 import DarkLinkIconButton from '../../Components/DarkLinkIconButton/DarkLinkIconButton';
 import AddIcon from '../../Icons/plus-solid.svg';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const ProposalList = (props) => {
     const [proposals, setProposals] = useState();
@@ -34,7 +35,7 @@ const ProposalList = (props) => {
         fetchProposals();
     }, []);
 
-    let userProposals = null;
+    let userProposals = <Spinner/>;
     if(proposals) {
         userProposals = (
             <div className='ProposalList-Container'>

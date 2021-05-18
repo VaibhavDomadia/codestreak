@@ -15,6 +15,7 @@ import { getUserID } from '../../util/authentication';
 import EditIcon from '../../Icons/pen-solid-dark.svg';
 import PlusIcon from '../../Icons/plus-solid-dark.svg';
 import ProfileImage from '../../Components/ProfileImage/ProfileImage';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const Profile = (props) => {
     const [user, setUser] = useState(null);
@@ -117,7 +118,7 @@ const Profile = (props) => {
         }
     }
 
-    let userProfile = null;
+    let userProfile = <Spinner/>;
     if(user) {
         userProfile = (
             <div className='Profile-Container'>

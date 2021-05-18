@@ -4,9 +4,10 @@ import ContestTile from '../../Components/Contest/ContestTile/ContestTile';
 import './ContestList.css';
 import { useHistory } from 'react-router';
 import Pagination from '../../Components/Pagination/Pagination';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const ContestList = (props) => {
-    const [contests, setContests] = useState([]);
+    const [contests, setContests] = useState(null);
     const history = useHistory();
     const [numberOfContests, setNumberOfContests] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -34,27 +35,27 @@ const ContestList = (props) => {
         fetchContests();
     }, [currentPage]);
 
-    const upcomingContests = [];
-    const ongoingContests = [];
-    const pastContests = [];
-
-    for(const contest of contests) {
-        const startTime = new Date(contest.startTime).getTime();
-        const endTime = startTime + parseInt(contest.duration);
-        const currentTime = new Date().getTime();
-        if(currentTime >= endTime) {
-            pastContests.push(<ContestTile key={contest._id} contest={contest}/>);
-        }
-        else if(currentTime > startTime && currentTime < endTime) {
-            ongoingContests.push(<ContestTile key={contest._id} contest={contest}/>);
-        }
-        else {
-            upcomingContests.push(<ContestTile key={contest._id} contest={contest}/>);
-        }
-    }
-
-    let renderContests = null;
+    let renderContests = <Spinner/>;
     if(contests) {
+        const upcomingContests = [];
+        const ongoingContests = [];
+        const pastContests = [];
+
+        for(const contest of contests) {
+            const startTime = new Date(contest.startTime).getTime();
+            const endTime = startTime + parseInt(contest.duration);
+            const currentTime = new Date().getTime();
+            if(currentTime >= endTime) {
+                pastContests.push(<ContestTile key={contest._id} contest={contest}/>);
+            }
+            else if(currentTime > startTime && currentTime < endTime) {
+                ongoingContests.push(<ContestTile key={contest._id} contest={contest}/>);
+            }
+            else {
+                upcomingContests.push(<ContestTile key={contest._id} contest={contest}/>);
+            }
+        }
+        
         renderContests = (
             <div className='ContestList'>
                 {
