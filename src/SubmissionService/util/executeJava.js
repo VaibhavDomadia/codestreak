@@ -61,7 +61,7 @@ exports.executeJava = async (code, testcases, timeLimit, memory) => {
                     result: 'Failed',
                     message: 'Wrong Answer',
                     time: maxTime,
-                    log: ['Your Code fails on Hidden Test Cases']
+                    log: ['Your Code fails on Few Test Cases']
                 }
             }
         }
@@ -70,7 +70,7 @@ exports.executeJava = async (code, testcases, timeLimit, memory) => {
             result: 'Accepted',
             message: 'Correct Answer',
             time: maxTime,
-            log: ['Your Code Passes all Hidden Test Cases']
+            log: ['Your Code Passes all Test Cases']
         }
     }
     catch(error) {

@@ -5,13 +5,13 @@ import Select from '../Select/Select';
 import Button from '../Button/Button';
 
 const MonacoEditor = (props) => {
-    const { code, language, onCodeChange, onLanguageChange, onCodeSubmit } = props;
+    const { code, language, onCodeChange, onLanguageChange, onCodeSubmit, onCodeSampleTest } = props;
     return (
         <div className='MonacoEditor-Container'>
             <div className='MonacoEditor-Controls'>
                 <div className='MonacoEditor-Language-Control'>
                     <div className='MonacoEditor-Language-Title'>Language</div>
-                    <Select value={language} setValue={onLanguageChange} options={['Java', 'Cpp', 'Python']}/>
+                    <Select value={language} setValue={onLanguageChange} options={['Java', 'Python']}/>
                 </div>
             </div>
             <div className='MonacoEditor-Editor'>
@@ -24,6 +24,7 @@ const MonacoEditor = (props) => {
                     />
             </div>
             <div className='MonacoEditor-Code-Submission-Buttons'>
+                <Button name='Sample Test' type='solid' color='#1389f4' onClick={onCodeSampleTest}/>
                 <Button name='Submit' type='solid' color='#1389f4' onClick={onCodeSubmit}/>
             </div>
         </div>

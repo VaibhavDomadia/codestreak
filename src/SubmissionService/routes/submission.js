@@ -21,6 +21,11 @@ router.get('/user/:userID', submissionController.getUserSubmissions);
 router.post('/', auth.isAuthenticated, submissionController.createSubmission);
 
 /**
+ * REST Endpoint: POST /submission/sampletest
+ */
+router.post('/sampletest', auth.isAuthenticated, submissionController.sampletest);
+
+/**
  * REST Endpoint: GET /submission/problem/:problemID
  */
  router.get('/problem/:problemID', submissionController.getProblemSubmissions);

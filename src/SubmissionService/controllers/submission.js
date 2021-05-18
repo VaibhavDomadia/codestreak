@@ -141,3 +141,41 @@ exports.createSubmission = async (req, res, next) => {
         next(error);
     }
 }
+
+/**
+ * Controller to check a code for correctness on sample test cases
+ */
+exports.sampletest = async (req, res, next) => {
+    const { problemID, problemName, language, code } = req.body;
+
+    try {
+        const response = await axios.get(`http://localhost:8002/problem/${problemID}/testcases`);
+        let testcases = response.data.samplecases;
+        let timeLimit = response.data.timeLimit;
+        let memory = response.data.memory;
+        let accessTime = new Date(response.data.accessTime).getTime();
+
+        let currentTime = new Date().getTime();
+
+        if(currentTime < accessTime) {
+            const error = new Error("Access Denied!");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        let verdict;
+        if(language === 'Java') {
+            verdict = await executeJava(code, testcases, timeLimit, memory);
+
+            await cleanupJava();
+        }
+        else {
+            verdict = await executePython(code, testcases, timeLimit, memory);
+        }
+
+        res.status(201).json({verdict});
+    }
+    catch(error) {
+        next(error);
+    }
+}

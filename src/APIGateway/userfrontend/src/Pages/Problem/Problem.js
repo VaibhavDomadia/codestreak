@@ -40,11 +40,36 @@ const Problem = (props) => {
                 language
             });
 
-            console.log(response.data.submission.verdict);
             setVerdict(response.data.submission.verdict);
         }
         catch(error) {
-            console.log(error.response);
+            if(error.response.status === 401) {
+                history.push('/login', {from: 'Proposal List'});
+            }
+            else if(error.response.status === 403) {
+                history.push('/403');
+            }
+            else if(error.response.status === 500) {
+                history.push('/500');
+            }
+            else {
+                history.push('/404');
+            }
+        }
+    }
+
+    const onCodeSampleTest = async () => {
+        try {
+            const response = await axiosInterceptor.post('/api/submission/sampletest', {
+                problemID: problem._id,
+                problemName: problem.name,
+                code,
+                language
+            });
+
+            setVerdict(response.data.verdict);
+        }
+        catch(error) {
             if(error.response.status === 401) {
                 history.push('/login', {from: 'Proposal List'});
             }
@@ -126,6 +151,7 @@ const Problem = (props) => {
                     onCodeChange={onCodeChange}
                     onLanguageChange={onLanguageChange}
                     onCodeSubmit={onCodeSubmit}
+                    onCodeSampleTest={onCodeSampleTest}
                     />
 
                 {
@@ -138,7 +164,6 @@ const Problem = (props) => {
                             time={verdict.time}
                             logs={verdict.log}/>
                     </div>
-                    
                 }
             </div>
         )
