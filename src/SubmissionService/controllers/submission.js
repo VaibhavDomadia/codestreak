@@ -2,6 +2,7 @@ const axios = require('axios');
 
 const Submission = require('../models/submission');
 const { executeJava } = require('../util/executeJava');
+const { executePython } = require('../util/executePython');
 const { cleanupJava } = require('../util/helper');
 
 /**
@@ -104,9 +105,15 @@ exports.createSubmission = async (req, res, next) => {
             throw error;
         }
 
-        const verdict = await executeJava(code, testcases, timeLimit, memory);
+        let verdict;
+        if(language === 'Java') {
+            verdict = await executeJava(code, testcases, timeLimit, memory);
 
-        await cleanupJava();
+            await cleanupJava();
+        }
+        else {
+            verdict = await executePython(code, testcases, timeLimit, memory);
+        }
 
         const submission = new Submission({ problemID, problemName, userID, handle, language, code, verdict, accessTime: accessTime + duration });
         const result = await submission.save();

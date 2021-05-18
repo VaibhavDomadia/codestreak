@@ -2,3 +2,6 @@
 **/config
 **/images/*
 !**/images/user.svg
+**/code
+!**/code/input.txt
+!**/code/output.txt
