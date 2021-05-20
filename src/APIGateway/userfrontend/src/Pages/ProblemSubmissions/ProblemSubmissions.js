@@ -30,8 +30,6 @@ const ProblemSubmissions = (props) => {
 
         fetchSubmissions();
     }, [problemID]);
-    
-    console.log(submissions);
 
     let renderSubmissions = <Spinner/>;
     if(submissions) {

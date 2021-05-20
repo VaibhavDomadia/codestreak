@@ -30,8 +30,6 @@ const UserSubmissions = (props) => {
         fetchUserSubmissions();
     }, [userID]);
 
-    console.log(submissions);
-
     let userSubmission = <Spinner/>;
     if(submissions) {
         userSubmission = (

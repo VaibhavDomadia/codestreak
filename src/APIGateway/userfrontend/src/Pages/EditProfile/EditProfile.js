@@ -72,7 +72,7 @@ const EditProfile = (props) => {
             }
             catch(error) {
                 if(error.response.status === 401) {
-                    history.push('/login', {from: 'Proposal List'});
+                    history.push('/login', {from: 'Edit Profile'});
                 }
                 else if(error.response.status === 404) {
                     history.replace('/404');
@@ -108,7 +108,7 @@ const EditProfile = (props) => {
             }
             catch(error) {
                 if(error.response.status === 401) {
-                    history.push('/login', {from: 'Proposal List'});
+                    history.push('/login', {from: 'Edit Profile'});
                 }
                 else if(error.response.status === 403) {
                     history.push('/403');

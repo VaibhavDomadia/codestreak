@@ -65,7 +65,7 @@ const EditProposal = (props) => {
             }
             catch(error) {
                 if(error.response.status === 401) {
-                    history.push('/login', {from: 'Edit Blog Page'});
+                    history.push('/login', {from: 'Edit Proposal'});
                 }
                 else if(error.response.status === 403) {
                     history.replace('/403');
@@ -81,8 +81,6 @@ const EditProposal = (props) => {
 
         fetchProposal();
     }, [proposalID]);
-
-    console.log('Memory Limit', memoryLimit);
 
     const onNameChange = (event) => {
         setNameError('');
@@ -181,13 +179,11 @@ const EditProposal = (props) => {
             try {
                 const response = await axios.put(`/api/proposal/${proposalID}`, { problem });
 
-                console.log(response);
-
                 history.push(`/proposal/${proposalID}`);
             }
             catch(error) {
                 if(error.response.status === 401) {
-                    history.push('/login', {from: 'Proposal List'});
+                    history.push('/login', {from: 'Edit Proposal'});
                 }
                 else if(error.response.status === 403) {
                     history.push('/403');

@@ -33,8 +33,6 @@ const Standings = (props) => {
         fetchContest();
     }, [contestID]);
 
-    console.log(contest);
-
     let renderStandings = <Spinner/>;
     if(contest) {
         renderStandings = (

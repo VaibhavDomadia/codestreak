@@ -74,8 +74,6 @@ const EditBlog = (props) => {
                 history.push(`/blog/${blogID}`);
             }
             catch(error) {
-                console.log('Gone Wrong');
-                console.log(error);
                 if(error.response.status === 401) {
                     history.push('/login', {from: 'Edit Blog Page'});
                 }

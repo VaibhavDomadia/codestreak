@@ -126,14 +126,12 @@ const CreateProposal = (props) => {
             try {
                 const response = await axios.post('/api/proposal', { problem });
 
-                console.log(response);
-
                 const proposal = response.data.proposal;
                 history.push(`/proposal/${proposal._id}`);
             }
             catch(error) {
                 if(error.response.status === 401) {
-                    history.push('/login', {from: 'Proposal List'});
+                    history.push('/login', {from: 'Create Proposal Page'});
                 }
                 else if(error.response.status === 403) {
                     history.push('/403');

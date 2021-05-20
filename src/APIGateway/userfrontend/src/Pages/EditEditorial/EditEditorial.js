@@ -74,8 +74,6 @@ const EditEditorial = (props) => {
                 history.push(`/editorial/${editorialID}`);
             }
             catch(error) {
-                console.log('Gone Wrong');
-                console.log(error);
                 if(error.response.status === 401) {
                     history.push('/login', {from: 'Edit Editorial Page'});
                 }

@@ -34,7 +34,7 @@ const Proposal = (props) => {
         }
         catch(error) {
             if(error.response.status === 401) {
-                history.push('/login', {from: 'Proposal List'});
+                history.push('/login', {from: 'Proposal'});
             }
             else if(error.response.status === 403) {
                 history.replace('/403');
@@ -56,7 +56,7 @@ const Proposal = (props) => {
         }
         catch(error) {
             if(error.response.status === 401) {
-                history.push('/login', {from: 'Proposal List'});
+                history.push('/login', {from: 'Proposal'});
             }
             else if(error.response.status === 403) {
                 history.replace('/403');
@@ -79,7 +79,7 @@ const Proposal = (props) => {
             }
             catch(error) {
                 if(error.response.status === 401) {
-                    history.push('/login', {from: 'Proposal List'});
+                    history.push('/login', {from: 'Proposal'});
                 }
                 else if(error.response.status === 403) {
                     history.replace('/403');
@@ -104,7 +104,7 @@ const Proposal = (props) => {
         }
         catch(error) {
             if(error.response.status === 401) {
-                history.push('/login', {from: 'Proposal List'});
+                history.push('/login', {from: 'Proposal'});
             }
             else if(error.response.status === 403) {
                 history.push('/403');

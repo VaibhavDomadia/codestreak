@@ -82,7 +82,7 @@ const Profile = (props) => {
         }
         catch(error) {
             if(error.response.status === 401) {
-                history.push('/login', {from: 'Proposal List'});
+                history.push('/login', {from: 'Profile Page'});
             }
             else if(error.response.status === 403) {
                 history.push('/403');
@@ -104,7 +104,7 @@ const Profile = (props) => {
         }
         catch(error) {
             if(error.response.status === 401) {
-                history.push('/login', {from: 'Proposal List'});
+                history.push('/login', {from: 'Profile Page'});
             }
             else if(error.response.status === 403) {
                 history.push('/403');
