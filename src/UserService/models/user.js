@@ -33,7 +33,10 @@ const userSchema = new Schema({
     },
     following: [mongoose.Types.ObjectId],
     followedBy: [mongoose.Types.ObjectId],
-    profileImage: String
+    profileImage: String,
+    emailVerificationToken: String,
+    resetPasswordToken: String,
+    resetPasswordTokenExpiryTime: Date
 }, {timestamps: true});
 
 module.exports = mongoose.model('User', userSchema);

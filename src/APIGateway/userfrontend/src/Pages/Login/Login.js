@@ -6,6 +6,8 @@ import { getUser, isTokenExpired } from '../../util/authentication';
 import LogoCard from '../../Components/LogoCard/LogoCard';
 import ResponseMessageCard from '../../Components/ResponseMessageCard/ResponseMessageCard';
 import InputError from '../../Components/InputError/InputError';
+import Button from '../../Components/Button/Button';
+import LinkButton from '../../Components/LinkButton/LinkButton';
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -72,7 +74,7 @@ const Login = (props) => {
 
     return (
         <div className='LoginPage-Container'>
-            <form onSubmit={login} className='LoginPage-Form'>
+            <form className='LoginPage-Form'>
                 <LogoCard />
                 { error && <ResponseMessageCard color='eb4034' title={error}/>}
                 <div className='LoginPage-Field'>
@@ -97,7 +99,10 @@ const Login = (props) => {
                         value={password}
                         onValueChange={onPasswordChange}/>
                 </div>
-                <input type='submit' value='Login' className='LoginPage-SubmitButton'/>
+                <div className='LoginPage-Buttons'>
+                    <Button name='Login' type='solid' onClick={login}/>
+                    <LinkButton path='/forgotpassword' type='solid' name='Reset Password'/>
+                </div>
             </form>
         </div>
     )

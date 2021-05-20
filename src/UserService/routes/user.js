@@ -64,4 +64,19 @@ router.post('/unfollow', auth.isAuthenticated, [
     body('userID').trim().isLength({min: 1}).withMessage('Please provide user id')
 ], userController.unfollowUser);
 
+/**
+ * REST Endpoint: POST /user/verify
+ */
+router.post('/verify', userController.verifyToken);
+
+/**
+ * REST Endpoint: POST /user/forgotpassword
+ */
+router.post('/forgotpassword', userController.forgotPassword);
+
+/**
+ * REST Endpoint: POST /user/resetpassword
+ */
+router.post('/resetpassword', userController.resetPassword);
+
 module.exports = router;

@@ -1,10 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jsonWebToken = require('jsonwebtoken');
 const axios = require('axios');
+const crypto = require('crypto');
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
-const user = require('../models/user');
 
 /**
  * Controller to login into user account
@@ -17,6 +17,12 @@ exports.login = async (req, res, next) => {
         const user = await User.findOne({email});
         if(!user) {
             const error = new Error("Email or Password is Wrong.");
+            error.statusCode = 401;
+            throw error;
+        }
+
+        if(user.emailVerificationToken) {
+            const error = new Error("Please Verify Your Email Address.");
             error.statusCode = 401;
             throw error;
         }
@@ -74,10 +80,128 @@ exports.signup = async (req, res, next) => {
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        const user = new User({firstName, lastName, email, password: hashedPassword, handle});
-        const result = await user.save();
-        res.status(201).json({
-            message: "Account Created!"
+        crypto.randomBytes(32, async (error, buffer) => {
+            if(error) {
+                throw error;
+            }
+            else {
+                const emailVerificationToken = buffer.toString('hex');
+
+                const user = new User({firstName, lastName, email, password: hashedPassword, handle, emailVerificationToken});
+                const result = await user.save();
+
+                const response = await axios.post('http://localhost:8008/email/user/verify', {
+                    emailID: email,
+                    handle,
+                    token: emailVerificationToken
+                });
+
+                res.status(201).json({
+                    message: "Account Created!, An Email has been sent to your email address, please verify your email to proceed"
+                });
+            }
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to verify email verification token
+ */
+exports.verifyToken = async (req, res, next) => {
+    const { token } = req.body;
+
+    try {
+        const user = await User.findOne({emailVerificationToken: token});
+        if(!user) {
+            const error = new Error("No Such Email Verification Token Found");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        user.emailVerificationToken = null;
+        await user.save();
+        res.status(200).json({
+            message: "Email Verification Successful"
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to send email for resetting the password
+ */
+exports.forgotPassword = async (req, res, next) => {
+    const email = req.body.email;
+
+    try {
+        let user;
+        try {
+            user = await User.findOne({email});
+            if(!user) {
+                throw Error();
+            }
+        }
+        catch(error) {
+            error.message = `Email Address doesn't Exist. Please Enter a valid email address.`
+            error.statusCode = 404;
+            throw error;
+        }
+
+        crypto.randomBytes(32, async (error, buffer) => {
+            if(error) {
+                throw error;
+            }
+            else {
+                const resetPasswordToken = buffer.toString('hex'); 
+                user.resetPasswordToken = resetPasswordToken;
+                user.resetPasswordTokenExpiryTime = new Date().getTime() + 3600000;
+                await user.save();
+
+                const response = await axios.post('http://localhost:8008/email/user/resetpassword', {
+                    emailID: user.email,
+                    handle: user.handle,
+                    token: resetPasswordToken
+                });
+
+                res.status(200).json({
+                    message: "An Email has been sent to your Email Address. Please follow the instruction given in email to reset your password."
+                });
+            }
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to reset user password
+ */
+exports.resetPassword = async (req, res, next) => {
+    const { token, password } = req.body;
+
+    try {
+        const user = await User.findOne({resetPasswordToken: token, resetPasswordTokenExpiryTime: {$gt: new Date().getTime()}});
+        if(!user) {
+            const error = new Error("No Such Password Reset Token Found");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        user.password = hashedPassword;
+        user.resetPasswordToken = null;
+        user.resetPasswordTokenExpiryTime = null;
+        await user.save();
+
+        res.status(200).json({
+            message: 'Your Password has been updated, Login to continue.'
         });
     }
     catch(error) {
@@ -95,7 +219,7 @@ exports.getProfile = async (req, res, next) => {
     try {
         let user;
         try {
-            user = await User.findById(userID, '-email -password -following -followedBy');
+            user = await User.findById(userID, '-email -password -following -followedBy -emailVerificationToken -resetPasswordToken -resetPasswordTokenExpiryTime');
             if(!user) {
                 throw Error();
             }

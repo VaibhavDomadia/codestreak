@@ -34,6 +34,10 @@ import Editorial from './Pages/Editorial/Editorial';
 import EditEditorial from './Pages/EditEditorial/EditEditorial';
 import ProblemEditorials from './Pages/ProblemEditorials/ProblemEditorials';
 import Standings from './Pages/Standings/Standings';
+import SignUp from './Pages/SignUp/SignUp';
+import Verified from './Pages/Verified/Verified';
+import ForgotPassword from './Pages/ForgotPassword/ForgotPassword';
+import ResetPassword from './Pages/ResetPassword/ResetPassword';
 
 const App = (props) => {
     const [user, setUser] = useState(null);
@@ -62,6 +66,11 @@ const App = (props) => {
                 <Route path='/login'>
                     <Login user={user} setUser={setUser}/>
                 </Route>
+                <Route path='/signup'>
+                    <SignUp user={user} setUser={setUser}/>
+                </Route>
+                <Route path='/forgotpassword' component={ForgotPassword}/>
+                <Route path='/resetpassword/:token' component={ResetPassword}/>
                 <Route path='/user/:userID' component={Profile}/>
                 <Route path='/edit/user/:userID' component={EditProfile}/>
                 <Route path='/problem' exact component={ProblemList}/>
@@ -85,6 +94,7 @@ const App = (props) => {
                 <Route path='/submission/:submissionID' exact component={Submission}/>
                 <Route path='/submission/user/:userID' component={UserSubmissions}/>
                 <Route path='/submission/problem/:problemID' component={ProblemSubmissions}/>
+                <Route path='/verify/:token' component={Verified}/>
                 <Route path='/403' exact component={Error403}/>
                 <Route path='/500' exact component={Error500}/>
                 <Route path='*' exact component={Error404}/>

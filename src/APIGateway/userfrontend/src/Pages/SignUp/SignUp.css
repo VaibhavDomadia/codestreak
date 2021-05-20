@@ -1,32 +1,36 @@
-.LoginPage-Container {
+.SignUp {
     display: grid;
+    margin: 32px;
     justify-self: center;
-    margin: 32px 64px;
+    width: 500px;
     padding: 32px;
     border-radius: 16px;
     box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.1);
-    width: 500px;
+    gap: 32px;
 }
 
-.LoginPage-Form {
+.Signup-Form {
     display: grid;
     gap: 16px;
 }
 
-.LoginPage-Field {
+.Signup-Form-UserName {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.Signup-Form-Field {
     display: grid;
     gap: 8px;
 }
 
-.LoginPage-Field-Title {
-    color: #606060;
+.Signup-Form-Field-Title {
     font-size: 20px;
+    color: #606060;
 }
 
-.LoginPage-Buttons {
-    display: grid;
-    grid-template-columns: max-content max-content;
-    gap: 16px;
+.Singup-Form-SubmitButton {
     padding: 16px;
     justify-self: center;
 }

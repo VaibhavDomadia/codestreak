@@ -1,0 +1,35 @@
+.Verified {
+    display: grid;
+    margin: 64px;
+    justify-self: center;
+    justify-items: center;
+    gap: 32px;
+}
+
+.Verfied-Message {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    padding: 16px 32px;
+    gap: 16px;
+    align-items: center;
+    background-color: rgba(50, 168, 78, 0.1);
+    color: #32a852;
+}
+
+.Verified-Icon {
+    width: 32px;
+    height: 32px;
+}
+
+.Verified-Login {
+    display: grid;
+    font-size: 24px;
+    color: #404040;
+    grid-template-columns: max-content max-content max-content;
+    gap: 8px;
+}
+
+.Verified-Login-Link {
+    color: #1389f4;
+    text-decoration: none;
+}
