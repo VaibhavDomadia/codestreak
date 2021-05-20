@@ -1,0 +1,118 @@
+.Blog-Container {
+    display: grid;
+    margin: 32px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+.Blog-Header {
+    display: grid;
+    grid-template-columns: auto max-content max-content;
+    
+    gap: 16px;
+    padding: 8px 32px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.Blog-Header-Title {
+    font-size: 20px;
+    color: #404040;
+    align-self: center;
+}
+
+.Blog-Info-Container {
+    display: grid;
+    grid-template-columns: max-content max-content auto max-content;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 16px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #fdfdfd;
+}
+
+.Blog-Info-Handle {
+    color: #1389f4;
+    text-decoration: none;
+}
+
+.Blog-Info-CreatedAt {
+    color: #a0a0a0;
+    font-size: 12px;
+}
+
+.Blog-Views {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    align-items: center;
+}
+
+.Blog-Views-Icon {
+    width: 16px;
+    height: 16px;
+}
+
+.Blog-Views-Value {
+    font-size: 16px;
+    color: #a0a0a0;
+}
+
+.Blog-Tags-Container {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 16px;
+    padding: 8px 16px;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.Blog-Tags-Title {
+    font-size: 16px;
+    color: #808080;
+}
+
+.Blogs-NoTags {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.Blogs-Tags {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content max-content;
+    gap: 8px;
+}
+
+.Blog-Tag {
+    font-size: 12px;
+    color: #808080;
+    border: 1px solid #e0e0e0;
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+.Blog-Content-Container {
+    padding: 16px 32px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.Blog-Comments-Header {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+    font-size: 12px;
+    color: #808080;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.Blog-Comment-Icon {
+    width: 16px;
+    height: 16px;
+}
+
+.Blog-Comments-Container {
+    display: grid;
+    padding: 16px;
+    gap: 16px;
+}

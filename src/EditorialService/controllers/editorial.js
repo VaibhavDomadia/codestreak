@@ -7,16 +7,24 @@ exports.getEditorial = async (req, res, next) => {
     const editorialID = req.params.editorialID;
 
     try {
-        const editorial = await Editorial.findById(editorialID);
-        if (!editorial) {
-            throw new Error();
+        let editorial;
+        try {
+            editorial = await Editorial.findById(editorialID);
+            if (!editorial) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Editorial doesn't exists";
+            error.statusCode = 404;
+            throw error;
         }
 
-        res.status(200).json({ editorial });
+        editorial.views++;
+        const result = await editorial.save();
+        res.status(200).json({ editorial: result });
     }
     catch (error) {
-        error.message = "Editorial doesn't exists";
-        error.statusCode = 404;
         next(error);
     }
 }
@@ -26,11 +34,35 @@ exports.getEditorial = async (req, res, next) => {
  */
 exports.getProblemEditorials = async (req, res, next) => {
     const problemID = req.params.problemID;
+    const currentPage = req.query.page || 1;
+    let sort = req.query.sort || '-createdAt';
+    let tags = req.query.tags;
+    const editorialsPerPage = 10;
+
+    let sortOptions = ['createdAt', 'title', 'views', 'numberOfComments', '-createdAt', '-title', '-views', '-numberOfComments'];
+    if(!sortOptions.includes(sort)) {
+        sort = '-createdAt';
+    }
+
+    let sortOrder = 1;
+    if(sort.startsWith('-')) {
+        sortOrder = -1;
+        sort = sort.substring(1);
+    }
+
+    const sortObject = {};
+    sortObject[sort] = sortOrder;
+
+    const filters = { problemID };
+    if(tags && tags.length !== 0) {
+        filters.tags = { $in: tags.split(',') };
+    }
 
     try {
-        const editorials = await Editorial.find({ problemID });
+        const totalNumberOfEditorials = await Editorial.find(filters).countDocuments();
+        const editorials = await Editorial.find(filters, '-content -comments', {sort: sortObject, skip: (currentPage-1)*editorialsPerPage, limit: editorialsPerPage});
 
-        res.status(200).json({ editorials });
+        res.status(200).json({ editorials, totalNumberOfEditorials });
     }
     catch (error) {
         error.message = "Problem doesn't exists";
@@ -44,7 +76,9 @@ exports.getProblemEditorials = async (req, res, next) => {
  * Controller to create a Editorial
  */
 exports.createEditorial = async (req, res, next) => {
-    const { userID, problemID, problemName, handle, title, content, tags } = req.body;
+    const { problemID, problemName, title, content, tags } = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
         const editorial = new Editorial({ userID, problemID, problemName, handle, title, content, tags });

@@ -1,0 +1,22 @@
+.UserControl {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    text-decoration: none;
+}
+
+.UserControl:hover {
+    background-color: #f0f0f0;
+}
+
+.UserControl-Icon {
+    width: 20px;
+    height: 20px;
+    margin: 8px 16px;
+}
+
+.UserControl-Name {
+    font-size: 16px;
+    padding-right: 64px;
+    color: #606060;
+}

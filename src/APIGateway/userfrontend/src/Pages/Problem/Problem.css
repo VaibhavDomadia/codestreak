@@ -1,0 +1,58 @@
+.Problem-Container {
+    display: grid;
+    margin: 32px 64px;
+}
+
+.Problem-Header-Container {
+    display: grid;
+    gap: 8px;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 16px 0px;
+}
+
+.Problem-Header-Problem-Title {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+}
+
+.Problem-Header-Problem-Title h3 {
+    margin: 0px;
+}
+
+.Problem-Difficulty {
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+    margin: 8px 16px;
+    color: #ffffff;
+}
+
+.Problem-Name {
+    color: #404040;
+    font-size: 20px;
+}
+
+.Problem-Tab-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content max-content;
+}
+
+.Problem-Buttons-Container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 24px;
+    padding: 4px;
+    justify-self: center;
+    justify-items: center;
+}
+
+.Problem-VerdictCard-Container {
+    display: grid;
+    gap: 16px;
+}
+
+.Problem-VerdictCard-Title {
+    font-size: 24px;
+    color: #606060;
+}

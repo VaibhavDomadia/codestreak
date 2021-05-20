@@ -1,0 +1,52 @@
+.ProblemEditorials-Container {
+    display: grid;
+    gap: 16px;
+    margin: 32px 64px;
+}
+
+.ProblemEditorials-Header {
+    display: grid;
+    gap: 16px;
+    padding: 16px 0px;
+}
+
+.ProblemEditorials-Header-Top {
+    display: grid;
+    grid-template-columns: auto max-content;
+}
+
+.ProblemEditorials-Header-Title {
+    color: #606060;
+    font-size: 24px;
+}
+
+.ProblemEditorials-Header-Title-ProblemLink {
+    color: #1389f4;
+    text-decoration: none;
+}
+
+.EditorialTile-Header-SortBy {
+    justify-self: start;
+}
+
+.ProblemEditorials-NoEditorialsFound {
+    justify-self: center;
+    font-size: 20px;
+    color: #808080;
+}
+
+.ProblemEditorials-EditorialsFound {
+    display: grid;
+}
+
+.ProblemEditorials-Editorial-Container {
+    display: grid;
+    border-top: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+}
+
+.ProblemEditorials-Editorial {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 16px;
+}

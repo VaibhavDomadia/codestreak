@@ -1,0 +1,63 @@
+.Reply {
+    display: grid;
+    gap: 8px;
+    padding: 16px 40px;
+}
+
+.Reply-Info-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    gap: 8px;
+    align-items: center;
+}
+
+.Reply-Info-ProfileImage {
+    width: 32px;
+    height: 32px;
+}
+
+.Reply-Info-Handle {
+    color: #808080;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.Reply-Info-CreatedAt {
+    color: #a0a0a0;
+    font-size: 12px;
+}
+
+.Reply-Content-Container {
+    padding-left: 40px;
+}
+
+.Reply-Controls {
+    display: grid;
+    padding-left: 40px;
+    grid-template-columns: max-content max-content max-content max-content;
+    gap: 16px;
+}
+
+.Reply-Controls-Field {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.Reply-Icon {
+    width: 16px;
+    height: 16px;
+}
+
+.Reply-Controls-Field-Value {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.Reply-Controls-Field:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #606060
+}

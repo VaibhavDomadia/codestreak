@@ -1,0 +1,28 @@
+.Standings {
+    display: grid;
+    margin: 32px 64px;
+    gap: 32px;
+}
+
+.Standing-Header {
+    display: grid;
+}
+
+.Standing-Header-Title {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    font-size: 32px;
+    color: #404040;
+    justify-self: center;
+}
+
+.Standing-Header-Title-ContestLink {
+    color: #1389f4;
+    text-decoration: none;
+}
+
+.Standings-Users-Container {
+    display: grid;
+    gap: 16px;
+}

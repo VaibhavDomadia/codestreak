@@ -64,6 +64,15 @@ const problemSchema = new Schema({
     tags: {
         type: [String],
         required: true
+    },
+    contestID: mongoose.Types.ObjectId,
+    accessTime: {
+        type: Date,
+        required: true
+    },
+    duration: {
+        type: Number,
+        required: true
     }
 });
 

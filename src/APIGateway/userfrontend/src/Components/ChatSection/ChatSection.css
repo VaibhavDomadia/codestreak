@@ -1,0 +1,93 @@
+.ChatSection-Container {
+    display: grid;
+    gap: 16px;
+}
+
+.ChatSection-Header {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 8px;
+}
+
+.ChatSection-Header-Icon {
+    width: 24px;
+    height: 24px;
+}
+
+.ChatSection-Header-Title {
+    color: #404040;
+    font-size: 20px;
+}
+
+.Chats-Container {
+    display: grid;
+    gap: 16px;
+}
+
+.Chat-Box {
+    display: grid;
+    justify-items: start;
+}
+
+.Chat-Control-Container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+}
+
+.Chat-Container {
+    display: grid;
+    padding: 4px 16px;
+    gap: 4px;
+    background-color: #f0f0f0;
+}
+
+.Chat-Control-Delete {
+    background-color: #282c34;
+    border: none;
+    padding: 8px 16px;
+    display: grid;
+    align-items: center;
+    cursor: pointer;
+}
+
+.Chat-Control-Delete-Icon {
+    width: 16px;
+    height: 16px;
+}
+
+.Chat-Message {
+    font-size: 14px;
+    color: #606060;
+}
+
+.Chat-CreatedAt {
+    font-size: 10px;
+    color: #a0a0a0;
+}
+
+.ChatSection-Write {
+    display: grid;
+    grid-template-columns: auto max-content;
+}
+
+.ChatSection-Input {
+    padding: 8px 16px;
+    outline: none;
+    border: 1px solid #808080;
+    color: #404040;
+}
+
+.ChatSection-SendButton {
+    padding: 8px 24px;
+    background-color: #282c34;
+    color: #ffffff;
+    outline: none;
+    border: 1px solid #282c34;
+    cursor: pointer;
+}
+
+.ChatSection-SendButton:hover {
+    opacity: 0.8;
+}

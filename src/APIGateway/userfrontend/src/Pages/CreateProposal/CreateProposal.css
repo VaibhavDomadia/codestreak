@@ -1,0 +1,50 @@
+.CreateProposal-Container {
+    display: grid;
+    margin: 32px 64px;
+    gap: 16px;
+}
+
+.CreateProposal-Header {
+    display: grid;
+    grid-template-columns: auto max-content;
+    align-items: center;
+}
+
+.CreateProposal-Header-Title {
+    font-size: 32px;
+    color: #404040;
+}
+
+.CreateProposal-Field-Container {
+    display: grid;
+    gap: 16px;
+}
+
+.CreateProposal-Field {
+    display: grid;
+    gap: 8px;
+}
+
+.CreateProposal-Field-Title {
+    font-size: 20px;
+    color: #606060;
+}
+
+.CreateProposal-Difficulty-Select {
+    display: grid;
+    justify-items: start;
+}
+
+.CreateProposal-Add-Case-Button {
+    display: grid;
+    justify-items: start;
+}
+
+.CreateProposal-Case-Container {
+    display: grid;
+    gap: 8px;
+}
+
+.CreateProposal-Case-Title {
+    color: #606060;
+}

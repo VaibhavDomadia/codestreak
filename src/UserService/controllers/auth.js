@@ -12,7 +12,15 @@ exports.isAuthenticated = (req, res, next) => {
             throw error;
         }
 
-        const decodedToken = jsonWebToken.verify(token, 'secretKey');
+        let decodedToken;
+        try {
+            decodedToken = jsonWebToken.verify(token, 'secretKey');
+        }
+        catch(error) {
+            error.statusCode = 401;
+            throw error;
+        }
+
         if(!decodedToken) {
             const error = new Error("Not Authenticated!");
             error.statusCode = 401;
@@ -20,6 +28,7 @@ exports.isAuthenticated = (req, res, next) => {
         }
 
         req.userID = decodedToken.userID;
+        req.handle = decodedToken.handle;
         req.isAdmin = decodedToken.isAdmin;
         next();
     }

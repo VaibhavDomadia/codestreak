@@ -1,0 +1,14 @@
+.ContestList {
+    display: grid;
+    margin: 32px 64px;
+}
+
+.ContestGroup-Container {
+    display: grid;
+}
+
+.ContestGroup-Title {
+    color: #808080;
+    font-size: 16px;
+    margin: 8px 0px;
+}

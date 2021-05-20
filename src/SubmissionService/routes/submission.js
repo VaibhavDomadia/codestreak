@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * REST Endpoint: GET /submission/:submissionID
  */
-router.get('/:submissionID', submissionController.getSubmission);
+router.get('/:submissionID', auth.optionalAuthentication, submissionController.getSubmission);
 
 /**
  * REST Endpoint: GET /submission/user/:userID
@@ -19,6 +19,11 @@ router.get('/user/:userID', submissionController.getUserSubmissions);
  * REST Endpoint: POST /submission
  */
 router.post('/', auth.isAuthenticated, submissionController.createSubmission);
+
+/**
+ * REST Endpoint: POST /submission/sampletest
+ */
+router.post('/sampletest', auth.isAuthenticated, submissionController.sampletest);
 
 /**
  * REST Endpoint: GET /submission/problem/:problemID

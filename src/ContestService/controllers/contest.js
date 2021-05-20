@@ -22,12 +22,16 @@ exports.getContest = async (req, res, next) => {
             throw error;
         }
 
-        const problemIDs = contest.problemIDs.join(',');
+        const currentTime = new Date().getTime();
 
-        const response = await axios.get(`http://localhost:8002/problems?ids=${problemIDs}`);
-        const problems = response.data.problems;
+        if(currentTime >= contest.startTime) {
+            const problemIDs = contest.problemIDs.join(',');
 
-        contest = {...contest._doc, problems};        
+            const response = await axios.get(`http://localhost:8002/problems?ids=${problemIDs}`);
+            const problems = response.data.problems;
+
+            contest = {...contest._doc, problems};
+        }
 
         res.status(200).json({contest});
     }
@@ -41,11 +45,12 @@ exports.getContest = async (req, res, next) => {
  */
 exports.getContests = async (req, res, next) => {
     const currentPage = req.query.page || 1;
-    const contestPerPage = 2;
+    const contestPerPage = 10;
 
     try {
+        const totalNumberOfContests = await Contest.find().countDocuments();
         const contests = await Contest.find({}, 'name startTime duration setters', {skip: (currentPage-1)*contestPerPage, limit: contestPerPage});
-        res.status(200).json({contests});
+        res.status(200).json({contests, totalNumberOfContests});
     }
     catch(error) {
         next(error);
@@ -59,6 +64,12 @@ exports.addContest = async (req, res, next) => {
     const {name, startTime, duration, setters, information, problemIDs} = req.body;
 
     try {
+        if(!req.isAdmin) {
+            const error = new Error('Not Authorized!');
+            error.statusCode = 403;
+            throw error;
+        }
+
         const contest = new Contest({name, startTime, duration, setters, information, problemIDs});
         
         const result = await contest.save();
@@ -79,6 +90,12 @@ exports.deleteContest = async (req, res, next) => {
     const contestID = req.params.contestID;
 
     try {
+        if(!req.isAdmin) {
+            const error = new Error('Not Authorized!');
+            error.statusCode = 403;
+            throw error;
+        }
+
         const contest = await Contest.findById(contestID);
         if(!contest) {
             throw new Error();
@@ -104,6 +121,12 @@ exports.updateContest = async (req, res, next) => {
     const {name, startTime, duration, setters, information, problemIDs} = req.body;
 
     try {
+        if(!req.isAdmin) {
+            const error = new Error('Not Authorized!');
+            error.statusCode = 403;
+            throw error;
+        }
+
         const contest = await Contest.findById(contestID);
         if(!contest) {
             throw new Error();
@@ -117,6 +140,276 @@ exports.updateContest = async (req, res, next) => {
     catch(error) {
         error.message = 'Please enter a valid Contest ID';
         error.statusCode = 404;
+        next(error);
+    }
+}
+
+/**
+ * Controller to register for a contest
+ */
+exports.registerForContest = async (req, res, next) => {
+    const userID = req.userID;
+    const contestID = req.params.contestID;
+
+    try {
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+            if(!contest) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = 'Please enter a valid Contest ID';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const currentTime = new Date().getTime();
+        if(currentTime >= contest.startTime) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        const userFound = contest.registeredParticipants.find(user => user.userID == userID);
+        if(!userFound) {
+            contest.registeredParticipants.push({
+                userID,
+                handle: req.handle
+            })
+            contest.numberOfRegisteredParticipants++;
+        }
+
+        const result = await contest.save();
+
+        res.status(200).json({
+            contest: result
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to register for a contest
+ */
+exports.unregisterForContest = async (req, res, next) => {
+    const userID = req.userID;
+    const contestID = req.params.contestID;
+
+    try {
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+            if(!contest) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = 'Please enter a valid Contest ID';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const currentTime = new Date().getTime();
+        if(currentTime >= contest.startTime) {
+            const error = new Error("Not Authorized");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        const userFound = contest.registeredParticipants.find(user => user.userID == userID);
+        if(userFound) {
+            userFound.remove();
+            contest.numberOfRegisteredParticipants--;
+        }
+
+        const result = await contest.save();
+
+        res.status(200).json({
+            contest: result
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to update contest standings when a submission is made
+ */
+exports.updateStandings = async (req, res, next) => {
+    const contestID = req.params.contestID;
+    const { problemID, userID, handle, time, solved} = req.body;
+
+    try {
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+            if(!contest) {
+                throw Error();
+            }
+        }
+        catch(error) {
+            error.message = 'Contest Not Found';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const isUserRegistered = contest.registeredParticipants.find(participant => participant.userID.toString() === userID);
+
+        if(isUserRegistered) {
+            const userFound = contest.standings.find(participant => participant.userID.toString() === userID);
+            if(userFound) {
+                userFound.timeTaken += time;
+                if(solved) {
+                    const isProblemPresent = userFound.problemSolved.find(problemSolvedID => problemSolvedID.toString() === problemID);
+                    if(isProblemPresent) {
+                        userFound.timeTaken -= time;
+                    }
+                    else {
+                        userFound.problemSolved.push(problemID);
+                    }
+                }
+            }
+            else {
+                const user = {
+                    userID,
+                    handle,
+                    timeTaken: time,
+                    problemSolved: []
+                }
+
+                if(solved) {
+                    user.problemSolved.push(problemID);
+                }
+
+                contest.standings.push(user);
+            }
+        }
+
+        await contest.save();
+
+        res.status(201).json({
+            message: 'Standings Updated'
+        });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to get contest standings
+ */
+exports.getStandings = async (req, res, next) => {
+    const contestID = req.params.contestID;
+
+    try {
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+            if(!contest) {
+                throw Error();
+            }
+        }
+        catch(error) {
+            error.message = 'Contest Not Found';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        contest.standings.sort((user1, user2) => {
+            if(user1.problemSolved.length === user2.problemSolved.length) {
+                return user1.timeTaken - user2.timeTaken;
+            }
+            return user2.problemSolved.length - user1.problemSolved.length;
+        });
+
+        res.status(200).json({contest});
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Controller to update user rating once contest is over
+ */
+exports.updateRatings = async (req, res, next) => {
+    const contestID = req.params.contestID;
+
+    try {
+        if(!req.isAdmin) {
+            const error = new Error('Not Authorized');
+            error.statusCode = 403;
+            throw error;
+        }
+
+        let contest;
+        try {
+            contest = await Contest.findById(contestID);
+        }
+        catch(error) {
+            error.message = 'Contest Not Found';
+            error.statusCode = 404;
+            throw error;
+        }
+
+        const standings = contest.standings;
+
+        standings.sort((user1, user2) => {
+            if(user1.problemSolved.length === user2.problemSolved.length) {
+                return user1.timeTaken - user2.timeTaken;
+            }
+            return user2.problemSolved.length - user1.problemSolved.length;
+        });
+
+        const userIDs = [];
+        for(const user of standings) {
+            userIDs.push(user.userID);
+        }
+
+        const response = await axios.post('http://localhost:8001/user/ratings', {
+            users: userIDs
+        });
+
+        const users = response.data.users;
+
+        const ratings = [];
+        for(const user of users) {
+            ratings.push(user.rating);
+        }
+
+        const ratingsChange = [];
+
+        for(let i=0 ; i<users.length ; i++) {
+            let currentRatingChange = 0;
+            for(let j=0 ; j<i ; j++) {
+                const eab = 1/(1 + (10**((ratings[j]-ratings[i])/400)));
+                currentRatingChange += (0 - eab);
+            }
+            for(let j=i+1 ; j<users.length ; j++) {
+                const eab = 1/(1 + (10**((ratings[j]-ratings[i])/400)));
+                currentRatingChange += (1 - eab);
+            }
+            ratingsChange.push(Math.round(currentRatingChange));
+        }
+
+        await axios.put('http://localhost:8001/user/ratings', {
+            users: userIDs,
+            ratingsChange
+        });
+
+        await Contest.findByIdAndUpdate(contestID, {$set: {ratingsChanged: true}});
+
+        res.status(200).json({
+            message: 'Ratings Updated'
+        });
+    }
+    catch(error) {
         next(error);
     }
 }

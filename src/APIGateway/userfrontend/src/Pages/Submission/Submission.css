@@ -1,0 +1,49 @@
+.Submission-Container {
+    display: grid;
+    margin: 32px 64px;
+    gap: 16px;
+}
+
+.Submission-Header-Title {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    color: #404040;
+    font-size: 28px;
+}
+
+.Submission-Header-Problem-Name {
+    text-decoration: none;
+    color: #1389f4;
+}
+
+.Submission-Code-Container {
+    display: grid;
+    gap: 8px;
+}
+
+.Submission-Code-Header {
+    font-size: 20px;
+    color: #404040;
+}
+
+.Submission-Code {
+    margin: 16px 0px;
+}
+
+.Submission-Code-Stats {
+    color: #808080;
+    display: grid;
+    gap: 4px;
+    font-size: 14px;
+}
+
+.Submission-Verdict-Container {
+    display: grid;
+    gap: 16px;
+}
+
+.Submission-Verdict-Title {
+    font-size: 20px;
+    color: #606060;
+}

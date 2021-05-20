@@ -6,6 +6,11 @@ const auth = require('../controllers/auth');
 const router = express.Router();
 
 /**
+ * REST Endpoint: GET /proposal/user
+ */
+router.get('/proposal/user', auth.isAuthenticated, proposalController.getUserProblemProposals);
+
+/**
  * REST Endpoint: GET /proposal/:proposalID
  */
 router.get('/proposal/:proposalID', auth.isAuthenticated, proposalController.getProblemProposal);
@@ -34,11 +39,6 @@ router.delete('/proposal/:proposalID', auth.isAuthenticated, proposalController.
  * REST Endpoint: POST /proposal/:proposalID/status
  */
 router.post('/proposal/:proposalID/status', auth.isAuthenticated, proposalController.updateStatus);
-
-/**
- * REST Endpoint: GET /proposal/user/:userID
- */
-router.get('/proposal/user/:userID', auth.isAuthenticated, proposalController.getUserProblemProposals);
 
 /**
  * REST Endpoint: POST /proposal/:proposalID/chat

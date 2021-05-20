@@ -1,0 +1,38 @@
+.Select {
+    display: block;
+    position: relative;
+}
+
+.Select-Value {
+    color: #808080;
+    padding: 8px 16px;
+    border: 1px solid #d0d0d0;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 16px;
+}
+
+.Select-Icon {
+    width: 16px;
+    height: 16px;
+}
+
+.Select-Dropdown {
+    position: absolute;
+    background-color: #f8f8f8;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.Select-Dropdown div {
+    display: grid;
+    justify-items: center;
+    padding: 8px 32px;
+    color: #808080;
+}
+
+.Select-Dropdown div:hover {
+    background-color: #e0e0e0;
+}

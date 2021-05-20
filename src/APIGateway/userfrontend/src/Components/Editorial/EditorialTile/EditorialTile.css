@@ -1,0 +1,71 @@
+.EditorialTile-Container {
+    display: grid;
+    grid-template-columns: auto max-content;
+    color: #404040;
+    text-decoration: none;
+    gap: 8px;
+    padding: 8px 16px;
+}
+
+.EditorialTile-Title {
+    color: #1389f4;
+}
+
+.EditorialTile-Stats-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content;
+    gap: 16px;
+}
+
+.EditorialTile-Stats {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    align-items: center;
+}
+
+.EditorialTile-Stats-Icon {
+    width: 16px;
+    height: 16px;
+}
+
+.EditorialTile-Stats-Value {
+    color: #808080;
+    font-size: 12px;
+}
+
+.EditorialTile-EditorialInfo {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 32px;
+    grid-column: 1/3;
+}
+
+.EditorialTile-CreationInfo {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content;
+    color: #a0a0a0;
+    font-size: 12px;
+    gap: 8px;
+}
+
+.EditorialTile-CreationInfo-Value {
+    text-decoration: none;
+    color: #808080;
+}
+
+.EditorialTile-Tags-Container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+}
+
+.EditorialTile-Tag-Title {
+    color: #a0a0a0;
+    font-size: 12px;
+}
+
+.EditorialTile-Tag-Value {
+    color: #808080;
+    font-size: 12px;
+}

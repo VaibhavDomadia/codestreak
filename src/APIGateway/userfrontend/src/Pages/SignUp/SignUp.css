@@ -1,0 +1,36 @@
+.SignUp {
+    display: grid;
+    margin: 32px;
+    justify-self: center;
+    width: 500px;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.1);
+    gap: 32px;
+}
+
+.Signup-Form {
+    display: grid;
+    gap: 16px;
+}
+
+.Signup-Form-UserName {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.Signup-Form-Field {
+    display: grid;
+    gap: 8px;
+}
+
+.Signup-Form-Field-Title {
+    font-size: 20px;
+    color: #606060;
+}
+
+.Singup-Form-SubmitButton {
+    padding: 16px;
+    justify-self: center;
+}

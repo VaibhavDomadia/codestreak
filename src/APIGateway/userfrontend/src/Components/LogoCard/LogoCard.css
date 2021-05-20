@@ -1,0 +1,19 @@
+.LogoCard {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-self: center;
+    align-items: center;
+    margin: 16px;
+}
+
+.LogoCard-Icon {
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+}
+
+.LogoCard-Title {
+    font-size: 32px;
+    color: #1389f4;
+    margin: 8px;
+}

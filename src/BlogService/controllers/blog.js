@@ -7,16 +7,64 @@ exports.getBlog = async (req, res, next) => {
     const blogID = req.params.blogID;
 
     try {
-        const blog = await Blog.findById(blogID);
-        if(!blog) {
-            throw new Error();
+        let blog;
+        try {
+            blog = await Blog.findById(blogID);
+            if(!blog) {
+                throw new Error();
+            }
+        }
+        catch(error) {
+            error.message = "Blog doesn't exists";
+            error.statusCode = 404;
+            throw error;
         }
 
-        res.status(200).json({blog});
+        blog.views++;
+        const result = await blog.save();
+        res.status(200).json({blog: result});
     }
     catch(error) {
-        error.message = "Blog doesn't exists";
-        error.statusCode = 404;
+        next(error);
+    }
+}
+
+/**
+ * Controller to fetch all blogs
+ */
+exports.getAllBlogs = async (req, res, next) => {
+    const currentPage = req.query.page || 1;
+    let sort = req.query.sort || '-createdAt';
+    let tags = req.query.tags;
+    const blogsPerPage = 10;
+
+    let sortOptions = ['createdAt', 'title', 'views', 'numberOfComments', '-createdAt', '-title', '-views', '-numberOfComments'];
+    if(!sortOptions.includes(sort)) {
+        sort = '-createdAt';
+    }
+
+    let sortOrder = 1;
+    if(sort.startsWith('-')) {
+        sortOrder = -1;
+        sort = sort.substring(1);
+    }
+
+    const sortObject = {};
+    sortObject[sort] = sortOrder;
+
+    const filters = {};
+    if(tags && tags.length !== 0) {
+        filters.tags = { $in: tags.split(',') };
+    }
+
+    try {
+        const totalNumberOfBlogs = await Blog.find(filters).countDocuments();
+
+        const blogs = await Blog.find(filters, '-content -comments', {sort: sortObject, skip: (currentPage-1)*blogsPerPage, limit: blogsPerPage});
+
+        res.status(200).json({blogs, totalNumberOfBlogs});
+    }
+    catch(error) {
         next(error);
     }
 }
@@ -29,7 +77,7 @@ exports.getUserBlogs = async (req, res, next) => {
     const limit = parseInt(req.query.limit) || 0;
 
     try {
-        const blogs = await Blog.find({userID}, '-content -comments', {limit});
+        const blogs = await Blog.find({userID}, '-content -comments', {sort: {createdAt: -1}, limit});
 
         res.status(200).json({blogs});
     }
@@ -45,7 +93,9 @@ exports.getUserBlogs = async (req, res, next) => {
  * Controller to create a blog
  */
 exports.createBlog = async (req, res, next) => {
-    const {userID, handle, title, content, tags} = req.body;
+    const {title, content, tags} = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
         const blog = new Blog({userID, handle, title, content, tags});
@@ -66,7 +116,9 @@ exports.createBlog = async (req, res, next) => {
  */
 exports.updateBlog = async (req, res, next) => {
     const blogID = req.params.blogID;
-    const {userID, handle, title, content, tags} = req.body;
+    const {title, content, tags} = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
         let blog;

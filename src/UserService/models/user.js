@@ -29,10 +29,14 @@ const userSchema = new Schema({
     organization: String,
     rating: {
         type: Number,
-        default: 0
+        default: 2000
     },
     following: [mongoose.Types.ObjectId],
-    followedBy: [mongoose.Types.ObjectId]
+    followedBy: [mongoose.Types.ObjectId],
+    profileImage: String,
+    emailVerificationToken: String,
+    resetPasswordToken: String,
+    resetPasswordTokenExpiryTime: Date
 }, {timestamps: true});
 
 module.exports = mongoose.model('User', userSchema);

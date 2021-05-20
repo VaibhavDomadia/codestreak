@@ -1,0 +1,62 @@
+.Header-Container {
+    display: grid;
+    grid-template-columns: min-content auto max-content;
+    align-items: center;
+    padding: 8px;
+}
+
+.Header-Title {
+    font-size: 24px;
+    color: #1389f4;
+    margin: 8px;
+    font-weight: bold;
+}
+
+.Header-Icon {
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+}
+
+.Header-LoginButton {
+    text-decoration: none;
+    color: #1389f4;
+    border: 2px solid #1389f4;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 4px 24px;
+    margin: 4px;
+    font-size: 12px;
+}
+
+.Header-LoginButton:hover {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Header-UserControlls {
+    display: block;
+    grid-template-columns: 1fr;
+    margin: 0px 8px;
+    padding: 8px;
+    position: relative;
+}
+
+.Header-UserControlls-UserIcon {
+    display: grid;
+    width: 32px;
+    height: 32px;
+}
+
+.Header-UserControlls-Dropdown-Container {
+    display: none;
+    position: absolute;
+    right: 0px;
+    padding: 8px 0px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Header-UserControlls:hover .Header-UserControlls-Dropdown-Container {
+    display: block;
+}

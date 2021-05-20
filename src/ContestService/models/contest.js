@@ -21,7 +21,7 @@ const contestSchema = new Schema({
     },
     setters: {
         type: [{
-            name: {
+            handle: {
                 type: String,
                 required: true
             },
@@ -40,8 +40,41 @@ const contestSchema = new Schema({
         type: [mongoose.Types.ObjectId],
         required: true
     },
+    ratingsUpdated: {
+        type: Boolean,
+        default: false
+    },
     registeredParticipants: {
-        type: [mongoose.Types.ObjectId]
+        type: [{
+            handle: {
+                type: String,
+                required: true
+            },
+            userID: {
+                type: mongoose.Types.ObjectId,
+                required: true
+            }
+        }],
+        required: true
+    },
+    standings: {
+        type: [{
+            userID: {
+                type: mongoose.Types.ObjectId,
+                required: true
+            },
+            handle: {
+                type: String,
+                required: true
+            },
+            timeTaken: {
+                type: Number,
+                required: true
+            },
+            problemSolved: {
+                type: [mongoose.Types.ObjectId]
+            }
+        }]
     }
 });
 

@@ -1,0 +1,26 @@
+.EditEditorial-Container {
+    display: grid;
+    margin: 32px 64px;
+    gap: 16px;
+}
+
+.EditEditorial-Header {
+    display: grid;
+    grid-template-columns: auto max-content;
+    align-items: center;
+}
+
+.EditEditorial-Header-Title {
+    font-size: 32px;
+    color: #404040;
+}
+
+.EditEditorial-EditorialTitle, .EditEditorial-EditorialContent, .EditEditorial-EditorialTags {
+    display: grid;
+    gap: 8px;
+}
+
+.EditEditorial-EditorialTitle-Title, .EditEditorial-EditorialContent-Title, .EditEditorial-EditorialTags-Title {
+    color: #606060;
+    font-size: 20px;
+}

@@ -7,6 +7,11 @@ const auth = require('../controllers/auth');
 const router = express.Router();
 
 /**
+ * REST Endpoint: GET /blog/blogs
+ */
+router.get('/blogs', blogController.getAllBlogs);
+
+/**
  * REST Endpoint: GET /blog/:blogID
  */
 router.get('/:blogID', blogController.getBlog);

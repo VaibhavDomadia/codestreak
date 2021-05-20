@@ -1,5 +1,7 @@
 const express = require('express');
 const axios = require('axios');
+const multer = require('multer');
+const auth = require('../controllers/auth');
 
 const router = express.Router();
 
@@ -24,6 +26,46 @@ const sendRequest = async (host, path, method, headers, body) => {
         throw customError;
     }
 }
+
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images');
+    },
+    filename: (req, file, cb) => {
+        cb(null, req.userID);
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+        cb(null, true);
+    }
+    else {
+        cb(null, false);
+    }
+}
+
+const upload = multer({storage: fileStorage, fileFilter: fileFilter});
+
+router.put('/user/:userID', auth.isAuthenticated, upload.single('image'), async (req, res, next) => {
+    const host = 'http://localhost:8001';
+    const path = `${req.url}`;
+    const { method, headers, body } = req;
+    if(req.file) {
+        body.profileImage = req.file.filename;
+    }
+
+    const sendHeaders = { authorization: headers.authorization };
+
+    try {
+        const response = await sendRequest(host, path, method, sendHeaders, body);
+
+        res.status(response.status).json(response.data);
+    }
+    catch(error) {
+        next(error);
+    }
+})
 
 router.use('/user', async (req, res, next) => {
     const host = 'http://localhost:8001';

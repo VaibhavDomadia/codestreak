@@ -1,0 +1,21 @@
+.ProblemSubmissionsPage-Container {
+    display: grid;
+    gap: 24px;
+    margin: 32px 64px;
+}
+
+.ProblemSubmissionsPage-Header {
+    font-size: 24px;
+    color: #404040;
+    justify-self: center;
+}
+
+.ProblemSubmissionsPage-Submission-Container {
+    display: grid;
+    gap: 8px;
+}
+
+.ProblemSubmissionsPage-NoSubmissionYet {
+    color: #808080;
+    justify-self: center;
+}

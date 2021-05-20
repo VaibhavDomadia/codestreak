@@ -70,15 +70,11 @@ exports.getProblemProposals = async (req, res, next) => {
  * Controller to create a problem proposal
  */
 exports.createProblemProposal = async (req, res, next) => {
-    const { userID, handle, problem } = req.body;
+    const { problem } = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
-        if (userID != req.userID) {
-            const error = new Error("Not Authorized!");
-            error.statusCode = 403;
-            throw error;
-        }
-
         const proposal = new Proposal({ userID, handle, problem });
         const result = await proposal.save();
 
@@ -97,7 +93,9 @@ exports.createProblemProposal = async (req, res, next) => {
  */
 exports.updateProblemProposal = async (req, res, next) => {
     const proposalID = req.params.proposalID;
-    const { userID, handle, problem } = req.body;
+    const { problem } = req.body;
+    const userID = req.userID;
+    const handle = req.handle;
 
     try {
         let proposal;
@@ -116,7 +114,7 @@ exports.updateProblemProposal = async (req, res, next) => {
             throw error;
         }
 
-        if (proposal.userID != req.userID || proposal.userID != userID) {
+        if (proposal.userID != req.userID) {
             const error = new Error("Not Authorized");
             error.statusCode = 403;
             throw error;
@@ -216,15 +214,9 @@ exports.updateStatus = async (req, res, next) => {
  * Controller to fetch a list of problem proposals made by a user
  */
 exports.getUserProblemProposals = async (req, res, next) => {
-    const userID = req.params.userID;
+    const userID = req.userID;
 
     try {
-        if(userID != req.userID) {
-            const error = new Error("Not Authorized!");
-            error.statusCode = 403;
-            throw error;
-        }
-
         const proposals = await Proposal.find({userID});
 
         res.status(200).json({proposals});
@@ -276,7 +268,7 @@ exports.chat = async (req, res, next) => {
         await proposal.save();
 
         res.status(201).json({
-            message: 'Message Sent'
+            proposal
         });
     }
     catch(error) {
@@ -325,7 +317,7 @@ exports.editChatMessage = async (req, res, next) => {
         await proposal.save();
 
         res.status(200).json({
-            message: 'Message Edited'
+            proposal
         });
     }
     catch(error) {
@@ -373,7 +365,7 @@ exports.deleteChatMessage = async (req, res, next) => {
         await proposal.save();
 
         res.status(200).json({
-            message: 'Message Deleted'
+            proposal
         });
     }
     catch(error) {

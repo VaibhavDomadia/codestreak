@@ -1,0 +1,48 @@
+.Proposal {
+    display: grid;
+    margin: 32px;
+    border: 1px solid #e0e0e0;
+}
+
+.Proposal-Header {
+    display: grid;
+    grid-template-columns: max-content auto max-content max-content;
+    gap: 8px;
+    padding: 8px 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.Proposal-Header-Title {
+    color: #404040;
+    align-self: center;
+}
+
+.Proposal-Tag-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content max-content;
+    padding: 4px 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.Proposal-Message-Container {
+    display: grid;
+    padding: 8px 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.Proposal-Message {
+    background-color: #f0f0f0;
+    padding: 8px;
+    display: grid;
+    justify-items: center;
+    color: #404040;    
+}
+
+.Proposal-ProblemDetails {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.Proposal-Chat-Container {
+    display: grid;
+    padding: 32px;
+}

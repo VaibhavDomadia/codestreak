@@ -1,0 +1,11 @@
+.HomePage {
+    display: grid;
+    justify-items: center;
+    margin: 64px;
+    padding: 32px;
+}
+
+.HomePage-WelcomeMessage {
+    color: #606060;
+    font-size: 64px;
+}

@@ -23,12 +23,21 @@ router.post('/signup', [
 ], userController.signup);
 
 /**
+ * REST Endpoint: POST /user/ratings
+ */
+ router.post('/ratings', userController.ratings);
+
+ /**
+  * REST Endpoint: PUT /user/ratings
+  */
+ router.put('/ratings', userController.updateRatings);
+
+/**
  * REST Endpoint: PUT /user/:userID
  */
 router.put('/:userID', auth.isAuthenticated, [
     body('firstName').trim().isLength({min: 1}).withMessage('Please provide first name'),
-    body('lastName').trim().isLength({min: 1}).withMessage('Please provide last name'),
-    body('handle').trim().isLength({min: 1}).withMessage('Please provide handle')
+    body('lastName').trim().isLength({min: 1}).withMessage('Please provide last name')
 ], userController.updateProfile);
 
 /**
@@ -54,5 +63,20 @@ router.post('/follow', auth.isAuthenticated, [
 router.post('/unfollow', auth.isAuthenticated, [
     body('userID').trim().isLength({min: 1}).withMessage('Please provide user id')
 ], userController.unfollowUser);
+
+/**
+ * REST Endpoint: POST /user/verify
+ */
+router.post('/verify', userController.verifyToken);
+
+/**
+ * REST Endpoint: POST /user/forgotpassword
+ */
+router.post('/forgotpassword', userController.forgotPassword);
+
+/**
+ * REST Endpoint: POST /user/resetpassword
+ */
+router.post('/resetpassword', userController.resetPassword);
 
 module.exports = router;

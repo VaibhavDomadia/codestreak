@@ -1,0 +1,15 @@
+.LinkButtonSolid {
+    text-decoration: none;
+    background-color: #1389f4;
+    border: 2px solid #1389f4;
+    color: #ffffff;
+    padding: 4px 24px;
+    margin: 4px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.LinkButtonSolid:hover {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}

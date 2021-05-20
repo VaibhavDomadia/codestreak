@@ -1,0 +1,64 @@
+.ContestTile-Container {
+    display: grid;
+    margin: 8px 0px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 8px 0px;
+}
+
+.ContestTile-Inner-Container {
+    display: grid;
+    grid-template-columns: auto max-content;
+    align-items: center;
+}
+
+.ContestTile-Name {
+    color: #404040;
+    padding: 8px 16px;
+    margin: 0px;
+}
+
+.ContestTile-Go-To-Contest-Link {
+    padding: 8px 16px;
+    color: #1389f4;
+    text-decoration: none;
+}
+
+.ContestTile-Field-Container {
+    display: grid;
+    padding: 0px 16px;
+    grid-template-columns: max-content max-content;
+    background-color: rgba(19, 135, 244, 0.03)
+}
+
+.ContestTile-Collaboration-Container {
+    display: grid;
+    justify-content: center;
+}
+
+.ContestTile-Collaboration-Title {
+    justify-self: center;
+    color: #404040;
+    margin: 8px;
+    font-size: 12px;
+}
+
+.ContestTile-Collaboration-Setters-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content;
+}
+
+.ContestTile-Collaboration-Setter {
+    display: grid;
+    align-items: center;
+    margin: 8px;
+    padding: 2px 16px;
+    border-radius: 8px;
+    border: 1px solid #d0d0d0;
+}
+
+.ContestTile-Collaboration-Setter-Link {
+    text-decoration: none;
+    color: #1389f4;
+    font-size: 12px;
+}

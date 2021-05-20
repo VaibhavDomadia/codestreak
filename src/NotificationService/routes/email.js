@@ -9,4 +9,14 @@ const router = express.Router();
  */
 router.post('/contestannouncement', emailController.sendContestAnnouncement);
 
+/**
+ * REST Endpoint: POST /email/verify
+ */
+router.post('/user/verify', emailController.sendEmailVerification);
+
+/**
+ * REST Endpoint: POST /email/resetpassword
+ */
+router.post('/user/resetpassword', emailController.sendResetPasswordEmail);
+
 module.exports = router;

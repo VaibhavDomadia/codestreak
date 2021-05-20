@@ -1,0 +1,31 @@
+.CreateEditorial-Container {
+    display: grid;
+    margin: 32px 64px;
+    gap: 16px;
+}
+
+.CreateEditorial-Header {
+    display: grid;
+    grid-template-columns: auto max-content;
+    align-items: center;
+}
+
+.CreateEditorial-Header-Title {
+    font-size: 32px;
+    color: #404040;
+}
+
+.CreateEditorial-Header-Title-ProblemLink {
+    color: #1389f4;
+    text-decoration: none;
+}
+
+.CreateEditorial-EditorialTitle, .CreateEditorial-EditorialContent, .CreateEditorial-EditorialTags {
+    display: grid;
+    gap: 8px;
+}
+
+.CreateEditorial-EditorialTitle-Title, .CreateEditorial-EditorialContent-Title, .CreateEditorial-EditorialTags-Title {
+    color: #606060;
+    font-size: 20px;
+}
