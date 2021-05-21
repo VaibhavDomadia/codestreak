@@ -1,0 +1,29 @@
+.ContestList {
+    display: grid;
+    margin: 32px 64px;
+    gap: 16px;
+}
+
+.ContestGroup-Container {
+    display: grid;
+}
+
+.ContestList-Header {
+    display: grid;
+    grid-template-columns: auto max-content;
+}
+
+.ContestList-Header-Title {
+    color: #404040;
+    font-size: 28px;
+}
+
+.ContestList-Header-Buttons {
+    display: grid;
+}
+
+.ContestGroup-Title {
+    color: #808080;
+    font-size: 16px;
+    margin: 8px 0px;
+}
