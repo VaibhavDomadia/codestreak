@@ -5,6 +5,7 @@ import Header from './Components/Header/Header';
 import NavigationBar from './Components/NavigationBar/NavigationBar';
 import Contest from './Pages/Contest/Contest';
 import ContestList from './Pages/ContestList/ContestList';
+import EditProblem from './Pages/EditProblem/EditProblem';
 import Error403 from './Pages/Error/Error403/Error403';
 import Error404 from './Pages/Error/Error404/Error404';
 import Error500 from './Pages/Error/Error500/Error500';
@@ -47,6 +48,7 @@ const App = (props) => {
                 <Route path='/contest/:contestID' component={Contest}/>
                 <Route path='/problem' exact component={ProblemList}/>
                 <Route path='/problem/:problemID' exact component={Problem}/>
+                <Route path='/edit/problem/:problemID' exact component={EditProblem}/>
                 <Route path='/proposal' exact component={ProposalList}/>
                 <Route path='/proposal/:proposalID' exact component={Proposal}/>
                 <Route path='/403' exact component={Error403}/>
