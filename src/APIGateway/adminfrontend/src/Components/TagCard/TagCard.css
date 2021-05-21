@@ -1,0 +1,27 @@
+.TagCard {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #d0d0d0;
+    padding: 2px 16px;
+    margin: 8px;
+}
+
+.TagCard-Icon {
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+}
+
+.TagCard-Title {
+    color: #1389f4;
+    font-size: 12px;
+    padding: 4px;
+}
+
+.TagCard-Value {
+    color: #a0a0a0;
+    font-size: 12px;
+    padding: 4px;
+}

@@ -1,0 +1,50 @@
+.EditProblem-Container {
+    display: grid;
+    margin: 32px 64px;
+    gap: 16px;
+}
+
+.EditProblem-Header {
+    display: grid;
+    grid-template-columns: auto max-content;
+    align-items: center;
+}
+
+.EditProblem-Header-Title {
+    font-size: 32px;
+    color: #404040;
+}
+
+.EditProblem-Field-Container {
+    display: grid;
+    gap: 16px;
+}
+
+.EditProblem-Field {
+    display: grid;
+    gap: 8px;
+}
+
+.EditProblem-Field-Title {
+    font-size: 20px;
+    color: #606060;
+}
+
+.EditProblem-Difficulty-Select {
+    display: grid;
+    justify-items: start;
+}
+
+.EditProblem-Add-Case-Button {
+    display: grid;
+    justify-items: start;
+}
+
+.EditProblem-Case-Container {
+    display: grid;
+    gap: 8px;
+}
+
+.EditProblem-Case-Title {
+    color: #606060;
+}

@@ -1,0 +1,24 @@
+.Pagination-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    align-items: center;
+    margin: 32px;
+    justify-self: center;
+}
+
+.Pagination-Button {
+    display: grid;
+    align-items: center;
+}
+
+.Pagination-Icon {
+    width: 20px;
+    height: 20px;
+    padding: 8px;
+}
+
+.Pagination-CurrentPage {
+    color: #404040;
+    font-size: 24px;
+    padding: 8px;
+}

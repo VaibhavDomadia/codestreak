@@ -1,0 +1,119 @@
+.ContestPage-Container {
+    display: grid;
+    margin: 32px 64px;
+}
+
+.ContestPage-Header {
+    display: grid;
+    gap: 8px;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 0px;
+}
+
+.ContestPage-Header-Main {
+    display: grid;
+    grid-template-columns: auto max-content;
+    gap: 16px;
+    align-items: center;
+}
+
+.ContestPage-Header-ContestName {
+    font-size: 32px;
+    color: #606060;
+    padding: 0px 8px;
+}
+
+.ContestPage-Header-Buttons {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 16px;
+}
+
+.ContestPage-Header-Tag-Container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+}
+
+.ContestPage-Header-ProblemSetters-Container {
+    padding: 8px;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 8px;
+}
+
+.ContestPage-Header-ProblemSetters-Title {
+    color: #606060;
+}
+
+.ContestPage-Header-ProblemSetters {
+    display: grid;
+    grid-template-columns: max-content max-content max-content max-content max-content max-content;
+    gap: 8px
+}
+
+.ContestPage-Header-ProblemSetter {
+    padding: 2px 8px;
+    border-radius: 8px;
+    color: #1389f4;
+    text-decoration: none;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+}
+
+.ContestPage-Info-Container {
+    display: grid;
+    padding: 16px;
+    gap: 16px;
+    color: #808080;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ContestPage-Contest-Information {
+    display: grid;
+    gap: 8px;
+}
+
+.ContestPage-Contest-Information-Title {
+    color: #404040;
+}
+
+.ContestPage-Contest-Information p {
+    margin: 0px;
+}
+
+.ContestPage-ImportantNote {
+    display: grid;
+
+}
+
+.ContestPage-ImportantNote-Title {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    color: #404040;
+    gap: 8px;
+}
+
+.ContestPage-ImportantNote-Title-Icon {
+    width: 16px;
+    height: 16px;
+}
+
+.ContestPage-Problems-Container {
+    display: grid;
+    padding: 8px;
+    gap: 8px;
+}
+
+.ContestPage-Problems-Title {
+    margin: 8px 0px;
+    color: #404040;
+    font-size: 24px;
+}
+
+.ContestPage-Problem-Not-Visible {
+    font-size: 16px;
+    color: #808080;
+    justify-self: center;
+}

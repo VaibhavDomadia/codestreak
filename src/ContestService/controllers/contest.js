@@ -73,6 +73,11 @@ exports.addContest = async (req, res, next) => {
         const contest = new Contest({name, startTime, duration, setters, information, problemIDs});
         
         const result = await contest.save();
+
+        await axios.post('http://localhost:8008/email/contestannouncement', {
+            contest
+        });
+
         res.status(201).json({
             message: 'Contest Created!',
             contest: result

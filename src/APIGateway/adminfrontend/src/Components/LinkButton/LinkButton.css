@@ -1,0 +1,12 @@
+.LinkButton {
+    text-decoration: none;
+    padding: 8px 16px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.LinkButton:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+}

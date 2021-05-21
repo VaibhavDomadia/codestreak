@@ -1,0 +1,21 @@
+.DarkSmallLinkIconButton {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    background-color: #282c34;
+    padding: 4px 12px;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    align-items: center;
+}
+
+.DarkSmallLinkIconButton:hover {
+    opacity: 0.8;
+}
+
+.DarkSmallLinkIconButton-Icon {
+    width: 12px;
+    height: 12px;
+}

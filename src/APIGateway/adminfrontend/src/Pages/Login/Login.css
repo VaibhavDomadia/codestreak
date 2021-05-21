@@ -1,0 +1,32 @@
+.LoginPage-Container {
+    display: grid;
+    justify-self: center;
+    margin: 32px 64px;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.1);
+    width: 500px;
+}
+
+.LoginPage-Form {
+    display: grid;
+    gap: 16px;
+}
+
+.LoginPage-Field {
+    display: grid;
+    gap: 8px;
+}
+
+.LoginPage-Field-Title {
+    color: #606060;
+    font-size: 20px;
+}
+
+.LoginPage-Buttons {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 16px;
+    padding: 16px;
+    justify-self: center;
+}

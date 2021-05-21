@@ -44,7 +44,7 @@ exports.getProblems = async (req, res, next) => {
     let tags = req.query.tags;
     let difficulty = req.query.difficulty || 'All';
     const problemsPerPage = 10;
-    let problemIDs = req.query.problemIDs;
+    let problemIDs = req.query.ids;
     if(problemIDs) {
         problemIDs = problemIDs.split(',');
     }
@@ -80,8 +80,8 @@ exports.getProblems = async (req, res, next) => {
         
         if(problemIDs) {
             try {
-                problems = await Problem.find({_id: problemIDs, ...filters}, 'name difficulty solvedBy tags accessTime', {sort: sortObject, skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
-                totalNumberOfProblems = await Problem.find({_id: problemIDs, ...filters}).countDocuments();
+                problems = await Problem.find({_id: {$in: problemIDs}, ...filters}, 'name difficulty solvedBy tags accessTime', {sort: sortObject, skip: (currentPage-1)*problemsPerPage, limit: problemsPerPage});
+                totalNumberOfProblems = await Problem.find({_id: {$in: problemIDs}, ...filters}).countDocuments();
             }
             catch(error) {
                 error.message = "Please Enter valid problem IDs";

@@ -1,0 +1,22 @@
+.DarkIconButton {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    background-color: #282c34;
+    border: none;
+    padding: 8px 16px;
+    gap: 8px;
+    outline: none;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    align-items: center;
+}
+
+.DarkIconButton:hover {
+    opacity: 0.8;
+}
+
+.DarkIconButton-Icon {
+    width: 16px;
+    height: 16px;
+}

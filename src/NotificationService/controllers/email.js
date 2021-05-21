@@ -1,8 +1,33 @@
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 
 const config = require('../config/config');
 
 const baseURL = 'http://localhost:3000';
+
+const getDuration = (duration) => {
+    duration = parseInt(duration)/1000;
+    
+    let seconds = Math.floor(duration%60);
+    duration /= 60;
+    
+    let minutes = Math.floor(duration%60);
+    duration /= 60;
+    
+    let hours = Math.floor(duration);
+    
+    if(seconds < 10) {
+        seconds = `0${seconds}`;
+    }
+    if(minutes < 10) {
+        minutes = `0${minutes}`;
+    }
+    if(hours < 10) {
+        hours = `0${hours}`;
+    }
+
+    return `${hours}:${minutes}:${seconds}`;
+}
 
 /**
  * Controller to send email to all users to notify about upcoming contest
@@ -17,16 +42,20 @@ exports.sendContestAnnouncement = async (req, res, next) => {
 
     const { name, startTime, duration, setters, information } = contest;
 
+    const setterHandles = setters.map(setter => setter.handle);
+
     const message = `
         <h1>${name} is about to come</h1>
         <h2>The contest will start on ${new Date(startTime)}</h2>
-        <h3>The contest duration is ${duration} milliseconds</h3>
-        <p>The problem setters for this contest are: ${setters.join(', ')}</p>
+        <h3>The contest duration is ${getDuration(duration)} milliseconds</h3>
+        <p>The problem setters for this contest are: ${setterHandles.join(', ')}</p>
         ${information.map(info => `<p>${info}</p>`)}
     `;
 
     try {
-        const users = ['vjdomadia@gmail.com', 'vjdomadia2411@gmail.com'];
+        const response = await axios.get('http://localhost:8001/user/emails');
+
+        const users = response.data.emails;
 
         const transporter = nodemailer.createTransport({
             host: config.NODEMAILER_HOST,
