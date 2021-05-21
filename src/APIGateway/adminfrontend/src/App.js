@@ -8,6 +8,7 @@ import ContestList from './Pages/ContestList/ContestList';
 import Error403 from './Pages/Error/Error403/Error403';
 import Error404 from './Pages/Error/Error404/Error404';
 import Error500 from './Pages/Error/Error500/Error500';
+import HomePage from './Pages/HomePage/HomePage';
 import Login from './Pages/Login/Login';
 import Problem from './Pages/Problem/Problem';
 import ProblemList from './Pages/ProblemList/ProblemList';
@@ -38,6 +39,7 @@ const App = (props) => {
             <Header user={user} setUser={setUser}/>
             <NavigationBar />
             <Switch>
+                <Route path='/' exact component={HomePage}/>
                 <Route path='/login'>
                     <Login user={user} setUser={setUser}/>
                 </Route>
