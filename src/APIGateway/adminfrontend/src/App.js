@@ -11,6 +11,7 @@ import Error500 from './Pages/Error/Error500/Error500';
 import Login from './Pages/Login/Login';
 import Problem from './Pages/Problem/Problem';
 import ProblemList from './Pages/ProblemList/ProblemList';
+import ProposalList from './Pages/ProposalList/ProposalList';
 import { getUser, isTokenExpired } from './util/authentication';
 
 const App = (props) => {
@@ -43,6 +44,7 @@ const App = (props) => {
                 <Route path='/contest/:contestID' component={Contest}/>
                 <Route path='/problem' exact component={ProblemList}/>
                 <Route path='/problem/:problemID' exact component={Problem}/>
+                <Route path='/proposal' exact component={ProposalList}/>
                 <Route path='/403' exact component={Error403}/>
                 <Route path='/500' exact component={Error500}/>
                 <Route path='*' exact component={Error404}/>

@@ -41,7 +41,10 @@ exports.getProblemProposal = async (req, res, next) => {
  * Controller to fetch all problem proposals
  */
 exports.getProblemProposals = async (req, res, next) => {
-    const status = req.query.status;
+    let status = req.query.status;
+    if(status === 'Change Required') {
+        status = 'ChangeRequired';
+    }
 
     try {
         if (!req.isAdmin) {
