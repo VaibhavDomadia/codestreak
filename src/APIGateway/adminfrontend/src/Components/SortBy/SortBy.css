@@ -1,0 +1,46 @@
+.SortBy-Container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+}
+
+.SortBy-Title {
+    color: #808080;
+    padding: 8px 16px;
+    border-right: 1px solid #e0e0e0;
+    font-size: 12px;
+}
+
+.SortBy-Values-Container {
+    display: inline-flex;
+}
+
+.SortBy-Value {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #808080;
+}
+
+.SortBy-Value-Selected {
+    background-color: #282c34;
+    color: #ffffff;
+}
+
+.SortBy-Value-Selected:hover {
+    opacity: 0.8;
+}
+
+.SortBy-Value:hover:not(.SortBy-Value-Selected) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.SortBy-Value-Icon {
+    width: 16px;
+    height: 16px;
+}
