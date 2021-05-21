@@ -202,10 +202,11 @@ exports.updateStatus = async (req, res, next) => {
         proposal.status = status;
         proposal.message = message;
 
-        await proposal.save();
+        const result = await proposal.save();
 
         res.status(200).json({
-            message: 'Status Updated!'
+            message: 'Status Updated!',
+            proposal: result
         });
     }
     catch(error) {
