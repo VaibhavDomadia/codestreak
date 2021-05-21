@@ -41,9 +41,14 @@ router.put('/:userID', auth.isAuthenticated, [
 ], userController.updateProfile);
 
 /**
+ * REST Endpoint: GET /user/emails
+ */
+router.get('/emails', userController.getUserEmails);
+
+/**
  * REST Endpoint: GET /user/following
  */
- router.get('/following', auth.isAuthenticated, userController.getFollowingList);
+router.get('/following', auth.isAuthenticated, userController.getFollowingList);
 
 /**
  * REST Endpoint: GET /user/:userID

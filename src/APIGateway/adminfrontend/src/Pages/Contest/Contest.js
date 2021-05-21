@@ -81,8 +81,7 @@ const Contest = (props) => {
                 <div className='ContestPage-Header'>
                     <div className='ContestPage-Header-Main'>
                         <div className='ContestPage-Header-ContestName'>{contest.name}</div>
-                        <div className='ContestPage-Header-Buttons'>
-                            <DarkLinkIconButton icon={EditIcon} to={`/edit/contest/${contestID}`} alt='Edit' title='Edit Contest'/>
+                        <div className='ContestPage-Header-Buttons'>                            
                             <DarkIconButton icon={DeleteIcon} alt='Delete' title='Delete Contest' onClick={onDeleteContest}/>
                         </div>
                     </div>

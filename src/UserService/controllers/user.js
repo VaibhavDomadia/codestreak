@@ -246,6 +246,22 @@ exports.getProfile = async (req, res, next) => {
 }
 
 /**
+ * Controller to get all user emails
+ */
+exports.getUserEmails = async (req, res, next) => {
+    try {
+        const users = await User.find({}, 'email');
+
+        const emails = users.map(user => user.email);
+
+        res.status(200).json({emails});
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
+/**
  * Controller to update user profile
  */
 exports.updateProfile = async (req, res, next) => {

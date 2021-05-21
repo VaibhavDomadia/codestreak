@@ -1,0 +1,98 @@
+.SelectProposalTile-Container {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 32px;
+    align-items: center;
+}
+
+.SelectProposalTile-SelectButton {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.05);
+    align-items: center;
+    justify-items: center;
+    cursor: pointer;
+}
+
+.SelectProposalTile-SelectButton img {
+    width: 24px;
+    height: 24px;
+}
+
+.SelectProposalTile-SelectButton:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+
+
+.SelectProposalTile {
+    display: grid;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+
+.SelectProposalTile-Header {
+    display: grid;
+    grid-template-columns: max-content auto max-content;
+    gap: 16px;
+    padding: 8px 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.SelectProposalTile-Problem-Difficulty {
+    padding: 4px 12px;
+    color: #ffffff;
+    background-color: #808080;
+    border-radius: 16px;
+    font-size: 12px;
+}
+
+.SelectProposalTile-Problem-Name {
+    color: #404040;
+}
+
+.SelectProposalTile-Go-To-Proposal-Button {
+    text-decoration: none;
+    color: #1389f4;
+}
+
+.SelectProposalTile-Tag-Container {
+    display: grid;
+    grid-template-columns: max-content;
+    padding: 4px 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.SelectProposalTile-Status-Info {
+    display: grid;
+    grid-template-columns: max-content;
+    gap: 8px;
+    padding: 8px 16px;
+}
+
+.SelectProposalTile-Status, .SelectProposalTile-Message {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 8px;
+    align-items: center;
+}
+
+.SelectProposalTile-Status-Title, .SelectProposalTile-Message-Title {
+    color: #1389f4;
+    font-size: 14px;
+}
+
+.SelectProposalTile-Status-Value {
+    color: #ffffff;
+    font-size: 14px;
+    padding: 4px 12px;
+    margin: 0px 4px;
+    border-radius: 16px;
+}
+
+.SelectProposalTile-Message-Value {
+    color: #808080;
+    font-size: 14px;
+}

@@ -5,6 +5,7 @@ import Header from './Components/Header/Header';
 import NavigationBar from './Components/NavigationBar/NavigationBar';
 import Contest from './Pages/Contest/Contest';
 import ContestList from './Pages/ContestList/ContestList';
+import CreateContest from './Pages/CreateContest/CreateContest';
 import EditProblem from './Pages/EditProblem/EditProblem';
 import Error403 from './Pages/Error/Error403/Error403';
 import Error404 from './Pages/Error/Error404/Error404';
@@ -46,6 +47,7 @@ const App = (props) => {
                 </Route>
                 <Route path='/contest' exact component={ContestList}/>
                 <Route path='/contest/:contestID' component={Contest}/>
+                <Route path='/create/contest' component={CreateContest}/>
                 <Route path='/problem' exact component={ProblemList}/>
                 <Route path='/problem/:problemID' exact component={Problem}/>
                 <Route path='/edit/problem/:problemID' exact component={EditProblem}/>

@@ -1,0 +1,56 @@
+.CreateContest-Container {
+    display: grid;
+    margin: 32px 64px;
+    gap: 16px;
+}
+
+.CreateContest-Header {
+    display: grid;
+    grid-template-columns: auto max-content;
+    align-items: center;
+}
+
+.CreateContest-Header-Title {
+    font-size: 32px;
+    color: #404040;
+}
+
+.CreateContest-Field-Container {
+    display: grid;
+    gap: 16px;
+}
+
+.CreateContest-Field {
+    display: grid;
+    gap: 8px;
+}
+
+.CreateContest-Field-Title {
+    font-size: 20px;
+    color: #606060;
+}
+
+.CreateContest-Difficulty-Select {
+    display: grid;
+    justify-items: start;
+}
+
+.CreateContest-Add-Case-Button {
+    display: grid;
+    justify-items: start;
+}
+
+.CreateContest-Case-Container {
+    display: grid;
+    gap: 8px;
+}
+
+.CreateContest-Case-Title {
+    color: #606060;
+}
+
+.CreateContest-Proposals {
+    display: grid;
+    padding: 16px 0px;
+    gap: 16px;
+}
